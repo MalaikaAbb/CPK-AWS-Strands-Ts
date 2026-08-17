@@ -3,7 +3,11 @@ import Link from "next/link";
 import { StatusBadge } from "@/components/route-header";
 import { Panel } from "@/components/ui";
 import { ALL_GAPS, ROUTE_GAPS, type GapSeverity } from "@/lib/doc-gaps";
-import { ALL_ROUTES, DOC_SYNC_DATE, NAV, docUrl } from "@/lib/nav-config";
+import { ALL_ROUTES, NAV, docUrl } from "@/lib/nav-config";
+import { DocSyncedAt } from "@/components/doc-synced-at";
+
+/** Dynamic: the doc-sync readouts below read the snapshot off disk. */
+export const dynamic = "force-dynamic";
 
 const SEVERITY_ORDER: GapSeverity[] = ["blocking", "degraded", "note"];
 
@@ -37,7 +41,7 @@ export default function Page() {
         </h1>
         <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
           The living QA record. Checked against the live docs on{" "}
-          {DOC_SYNC_DATE}.
+          <DocSyncedAt />.
         </p>
         <div className="mt-4 flex flex-wrap gap-4 text-sm">
           {(["working", "partial", "broken", "reference"] as const).map((s) => (

@@ -1,0 +1,456 @@
+{
+  "schema": 1,
+  "docsRoot": "https://docs.copilotkit.ai/strands-typescript",
+  "syncedAt": "2026-08-17T12:33:39.103Z",
+  "pages": {
+    "/strands-typescript": {
+      "file": "strands-typescript.md",
+      "sha256": "89134e43aa0b6f0d585d85c1390908318dc6942983b34c3ad0e51439df8bc012",
+      "bytes": 3139,
+      "lines": 53,
+      "routes": [
+        "/",
+        "/doc-sync"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:39 GMT"
+    },
+    "/strands-typescript/ag-ui": {
+      "file": "strands-typescript__ag-ui.md",
+      "sha256": "53146297885f5d6ddd860bbd6b201adcdd537e189521493a2cac7df58fa89a62",
+      "bytes": 3930,
+      "lines": 123,
+      "routes": [
+        "/ag-ui"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:39 GMT"
+    },
+    "/strands-typescript/agent-config": {
+      "file": "strands-typescript__agent-config.md",
+      "sha256": "068952e79d2d79751d45ea7ff0795ba0e258e2a3dbdd46f9a7443d5d4ea7df8a",
+      "bytes": 5048,
+      "lines": 134,
+      "routes": [
+        "/agent-config"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:39 GMT"
+    },
+    "/strands-typescript/copilot-runtime": {
+      "file": "strands-typescript__copilot-runtime.md",
+      "sha256": "02e6d17baea16dd2ea9cc8d513b74f73a8ce15d0f754d76ff1fe917c6abf08e5",
+      "bytes": 6728,
+      "lines": 180,
+      "routes": [
+        "/copilot-runtime"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:39 GMT"
+    },
+    "/strands-typescript/custom-look-and-feel/css": {
+      "file": "strands-typescript__custom-look-and-feel__css.md",
+      "sha256": "5cfecc1d06b980252382c8ab34078379a1e1a03596524a6d614445865dd621e7",
+      "bytes": 10210,
+      "lines": 301,
+      "routes": [
+        "/custom-look-and-feel/css"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/custom-look-and-feel/headless-ui": {
+      "file": "strands-typescript__custom-look-and-feel__headless-ui.md",
+      "sha256": "d2d5a1752e9abc6a891653fc48f5e929721823258274f5d7e25ddb524f3bdff0",
+      "bytes": 13661,
+      "lines": 363,
+      "routes": [
+        "/custom-look-and-feel/headless-ui"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:39 GMT"
+    },
+    "/strands-typescript/custom-look-and-feel/slots": {
+      "file": "strands-typescript__custom-look-and-feel__slots.md",
+      "sha256": "eb4d3b13128ef9fcf2d58e0224e3a32bf7d14afc8250cf9ea9e9729846cd8e95",
+      "bytes": 6867,
+      "lines": 235,
+      "routes": [
+        "/custom-look-and-feel/slots"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/frontend-tools": {
+      "file": "strands-typescript__frontend-tools.md",
+      "sha256": "6430c6a8b2697fd6f71e87ada69430b9f99b775ddc748ea8f397b3ba3e4c2107",
+      "bytes": 2792,
+      "lines": 77,
+      "routes": [
+        "/frontend-tools"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/generative-ui/a2ui/dynamic-schema": {
+      "file": "strands-typescript__generative-ui__a2ui__dynamic-schema.md",
+      "sha256": "0fe51c0e39a90c0e1382df2ffcc44d9267bda5e51c5e88ea1696eb6b34e1900e",
+      "bytes": 22954,
+      "lines": 688,
+      "routes": [
+        "/generative-ui/a2ui/dynamic-schema"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/generative-ui/a2ui/fixed-schema": {
+      "file": "strands-typescript__generative-ui__a2ui__fixed-schema.md",
+      "sha256": "ddd169791e6f95050f98778b72a817867d7625db420cc7f9e50bc30d457ff239",
+      "bytes": 15059,
+      "lines": 434,
+      "routes": [
+        "/generative-ui/a2ui/fixed-schema"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/generative-ui/tool-based": {
+      "file": "strands-typescript__generative-ui__tool-based.md",
+      "sha256": "decc824b4838a1b743dd7841a2079cbb60d9a84bce9c4c1a5aa225dfd41bd8f7",
+      "bytes": 2477,
+      "lines": 66,
+      "routes": [
+        "/generative-ui/tool-based"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/generative-ui/tool-rendering": {
+      "file": "strands-typescript__generative-ui__tool-rendering.md",
+      "sha256": "de96066aadec1273aab7e92895b82c3b6ea7ea65f8a9616f2f1634ab76f21d51",
+      "bytes": 9860,
+      "lines": 333,
+      "routes": [
+        "/generative-ui/tool-rendering"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/generative-ui/your-components/display-only": {
+      "file": "strands-typescript__generative-ui__your-components__display-only.md",
+      "sha256": "d00340f6adce0a22a6dff5779c9bd2f6d008384d3ee2ba403e8e1964e22d789a",
+      "bytes": 2474,
+      "lines": 89,
+      "routes": [
+        "/generative-ui/your-components/display-only"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/generative-ui/your-components/interactive": {
+      "file": "strands-typescript__generative-ui__your-components__interactive.md",
+      "sha256": "973164f3ba8c56150d94f938adc705bb2c4678d6f6b8ab5404433ad59499508f",
+      "bytes": 156,
+      "lines": 5,
+      "routes": [
+        "/generative-ui/your-components/interactive"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/human-in-the-loop": {
+      "file": "strands-typescript__human-in-the-loop.md",
+      "sha256": "dd068e3b29394d583fdce0b1a9d9650ebb7097789c1efb2c6a202e8bd7d6f6f2",
+      "bytes": 6784,
+      "lines": 189,
+      "routes": [
+        "/human-in-the-loop"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/multi-agent/subagents": {
+      "file": "strands-typescript__multi-agent__subagents.md",
+      "sha256": "3611acf84b953ad991cfad0764feba472bd5e9125cdfd2017931bee8d7158e0c",
+      "bytes": 8317,
+      "lines": 220,
+      "routes": [
+        "/multi-agent/subagents"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/multimodal-attachments": {
+      "file": "strands-typescript__multimodal-attachments.md",
+      "sha256": "7237dfd40119e56ee3057445eaf61f34ef8328b32acd750c95f2857d9defc1ae",
+      "bytes": 6144,
+      "lines": 176,
+      "routes": [
+        "/multimodal-attachments"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/prebuilt-components/chat": {
+      "file": "strands-typescript__prebuilt-components__chat.md",
+      "sha256": "1f9cde3aa93d0e975c1a97c25f254857779efbc9a96570ed8203900dfe1495f9",
+      "bytes": 2931,
+      "lines": 77,
+      "routes": [
+        "/prebuilt-components/chat"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/prebuilt-components/chat-controls": {
+      "file": "strands-typescript__prebuilt-components__chat-controls.md",
+      "sha256": "0886aacb82d463a495dd768926b6c190cdf4d881dd3d86bfb5bbcf5b741b25e8",
+      "bytes": 3873,
+      "lines": 101,
+      "routes": [
+        "/prebuilt-components/chat-controls"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/prebuilt-components/popup": {
+      "file": "strands-typescript__prebuilt-components__popup.md",
+      "sha256": "d9c423271fbda8d696c38ba4f6cdaab1f44d144c9bb65544b37a8dd54e7827db",
+      "bytes": 2479,
+      "lines": 70,
+      "routes": [
+        "/prebuilt-components/popup"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:40 GMT"
+    },
+    "/strands-typescript/prebuilt-components/sidebar": {
+      "file": "strands-typescript__prebuilt-components__sidebar.md",
+      "sha256": "723c6ba9118470d8f3bc4ee6e9c4c9cd0b4dbbe555d056d78630c7c40aac6d68",
+      "bytes": 2530,
+      "lines": 70,
+      "routes": [
+        "/prebuilt-components/sidebar"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:41 GMT"
+    },
+    "/strands-typescript/programmatic-control": {
+      "file": "strands-typescript__programmatic-control.md",
+      "sha256": "44ca3630a7cf8284dfed397f0398de6c9ab7551f30d374adab2d84b4236018ac",
+      "bytes": 11931,
+      "lines": 341,
+      "routes": [
+        "/programmatic-control"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:41 GMT"
+    },
+    "/strands-typescript/quickstart": {
+      "file": "strands-typescript__quickstart.md",
+      "sha256": "fd336c144c20ba63ce82e46eceb8223d347e0507a61b40eae3df6834f23292af",
+      "bytes": 17064,
+      "lines": 474,
+      "routes": [
+        "/quickstart"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:41 GMT"
+    },
+    "/strands-typescript/shared-state/agent-readonly": {
+      "file": "strands-typescript__shared-state__agent-readonly.md",
+      "sha256": "b673976f5f83ca72d4073d1faccce63a952de820ed58ee0344b3af4848f63036",
+      "bytes": 4474,
+      "lines": 129,
+      "routes": [
+        "/shared-state/agent-readonly"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:41 GMT"
+    },
+    "/strands-typescript/shared-state/in-app-agent-read": {
+      "file": "strands-typescript__shared-state__in-app-agent-read.md",
+      "sha256": "5d92cc8f63e77ea794746f48cf1ad5169035ae6e36ebbb386c641ceb252bcdd7",
+      "bytes": 7036,
+      "lines": 208,
+      "routes": [
+        "/shared-state/in-app-agent-read"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:41 GMT"
+    },
+    "/strands-typescript/shared-state/in-app-agent-write": {
+      "file": "strands-typescript__shared-state__in-app-agent-write.md",
+      "sha256": "c5a0126489510120168a3997cb0033f5efe557e69e48375d224a2bbdec8b2eed",
+      "bytes": 6757,
+      "lines": 185,
+      "routes": [
+        "/shared-state/in-app-agent-write"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:41 GMT"
+    },
+    "/strands-typescript/shared-state/rendering-in-app": {
+      "file": "strands-typescript__shared-state__rendering-in-app.md",
+      "sha256": "c7b08d4d3399a9ac9a8ab65101ea5d54cea3d918b48732dbed7f0d257ff9b994",
+      "bytes": 4233,
+      "lines": 115,
+      "routes": [
+        "/shared-state/rendering-in-app"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:41 GMT"
+    },
+    "/strands-typescript/voice": {
+      "file": "strands-typescript__voice.md",
+      "sha256": "811f1f06d916c53e6636716a1153c3faf179bd6ee059aeb216fb6b7cdbd43a51",
+      "bytes": 9065,
+      "lines": 210,
+      "routes": [
+        "/voice"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Mon, 17 Aug 2026 12:33:41 GMT"
+    }
+  },
+  "sitemap": {
+    "fetchedAt": "2026-08-17T12:33:39.103Z",
+    "urlsUnderRoot": 133,
+    "knownUnmapped": [
+      "https://docs.copilotkit.ai/strands-typescript/agent-spec",
+      "https://docs.copilotkit.ai/strands-typescript/agent-spec/human-in-the-loop",
+      "https://docs.copilotkit.ai/strands-typescript/agent-spec/langgraph",
+      "https://docs.copilotkit.ai/strands-typescript/agent-spec/quickstart",
+      "https://docs.copilotkit.ai/strands-typescript/agent-spec/wayflow",
+      "https://docs.copilotkit.ai/strands-typescript/agentic-chat-ui",
+      "https://docs.copilotkit.ai/strands-typescript/agentic-protocols",
+      "https://docs.copilotkit.ai/strands-typescript/agentic-protocols/a2a",
+      "https://docs.copilotkit.ai/strands-typescript/agentic-protocols/ag-ui",
+      "https://docs.copilotkit.ai/strands-typescript/agentic-protocols/ag-ui-middleware",
+      "https://docs.copilotkit.ai/strands-typescript/agentic-protocols/mcp",
+      "https://docs.copilotkit.ai/strands-typescript/auth",
+      "https://docs.copilotkit.ai/strands-typescript/backend/ag-ui",
+      "https://docs.copilotkit.ai/strands-typescript/backend/agent-runner",
+      "https://docs.copilotkit.ai/strands-typescript/backend/copilot-runtime",
+      "https://docs.copilotkit.ai/strands-typescript/backend/custom-agent",
+      "https://docs.copilotkit.ai/strands-typescript/backend/runtime-endpoints",
+      "https://docs.copilotkit.ai/strands-typescript/backend/self-managed-agents",
+      "https://docs.copilotkit.ai/strands-typescript/build-with-agents",
+      "https://docs.copilotkit.ai/strands-typescript/built-in-agent",
+      "https://docs.copilotkit.ai/strands-typescript/cli",
+      "https://docs.copilotkit.ai/strands-typescript/concepts/architecture",
+      "https://docs.copilotkit.ai/strands-typescript/concepts/generative-ui-overview",
+      "https://docs.copilotkit.ai/strands-typescript/concepts/oss-vs-enterprise",
+      "https://docs.copilotkit.ai/strands-typescript/concepts/which-hook",
+      "https://docs.copilotkit.ai/strands-typescript/contributing/code-contributions",
+      "https://docs.copilotkit.ai/strands-typescript/contributing/code-contributions/package-linking",
+      "https://docs.copilotkit.ai/strands-typescript/contributing/docs-contributions",
+      "https://docs.copilotkit.ai/strands-typescript/cookbook",
+      "https://docs.copilotkit.ai/strands-typescript/cookbook/angular-adk-agentic-app",
+      "https://docs.copilotkit.ai/strands-typescript/cookbook/arcade",
+      "https://docs.copilotkit.ai/strands-typescript/cookbook/daytona",
+      "https://docs.copilotkit.ai/strands-typescript/cookbook/openbox-governed-copilotkit",
+      "https://docs.copilotkit.ai/strands-typescript/cookbook/oracle-agent-spec-memory",
+      "https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/reasoning-messages",
+      "https://docs.copilotkit.ai/strands-typescript/deepagents",
+      "https://docs.copilotkit.ai/strands-typescript/deploy-agentcore",
+      "https://docs.copilotkit.ai/strands-typescript/deploy/agentcore",
+      "https://docs.copilotkit.ai/strands-typescript/examples",
+      "https://docs.copilotkit.ai/strands-typescript/faq",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/display",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/hashbrown",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/interactive",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/json-render",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/mcp-apps",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/open-generative-ui",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/open-json-ui",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/reasoning",
+      "https://docs.copilotkit.ai/strands-typescript/generative-ui/state-rendering",
+      "https://docs.copilotkit.ai/strands-typescript/headless",
+      "https://docs.copilotkit.ai/strands-typescript/headless-threads",
+      "https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/headless",
+      "https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/useInterrupt",
+      "https://docs.copilotkit.ai/strands-typescript/inspector",
+      "https://docs.copilotkit.ai/strands-typescript/migrate/1.10.X",
+      "https://docs.copilotkit.ai/strands-typescript/migrate/1.8.2",
+      "https://docs.copilotkit.ai/strands-typescript/migrate/v2",
+      "https://docs.copilotkit.ai/strands-typescript/prebuilt-components",
+      "https://docs.copilotkit.ai/strands-typescript/prebuilt-components/copilot-threads-drawer",
+      "https://docs.copilotkit.ai/strands-typescript/premium/headless-ui",
+      "https://docs.copilotkit.ai/strands-typescript/premium/intelligence-platform",
+      "https://docs.copilotkit.ai/strands-typescript/premium/managed-intelligence-platform",
+      "https://docs.copilotkit.ai/strands-typescript/premium/overview",
+      "https://docs.copilotkit.ai/strands-typescript/premium/self-hosting",
+      "https://docs.copilotkit.ai/strands-typescript/premium/threads-explained",
+      "https://docs.copilotkit.ai/strands-typescript/reference/v2/hooks/useCapabilities",
+      "https://docs.copilotkit.ai/strands-typescript/runtime-server-adapter",
+      "https://docs.copilotkit.ai/strands-typescript/shared-state",
+      "https://docs.copilotkit.ai/strands-typescript/shared-state/streaming",
+      "https://docs.copilotkit.ai/strands-typescript/telemetry",
+      "https://docs.copilotkit.ai/strands-typescript/threads",
+      "https://docs.copilotkit.ai/strands-typescript/threads-import",
+      "https://docs.copilotkit.ai/strands-typescript/threads-lifecycle",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/common-issues",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/debug-mode",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/error-debugging",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/error-reference",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/event-inspector",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/hook-explorer",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/inspector-dev-console",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/migrate-to-1.10.X",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/migrate-to-1.8.2",
+      "https://docs.copilotkit.ai/strands-typescript/troubleshooting/migrate-to-v2",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-powered-textarea/next-steps",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-powered-textarea/overview",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-powered-textarea/step-1-checkout-repo",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-powered-textarea/step-2-setup-copilotkit",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-powered-textarea/step-3-copilot-textarea",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-powered-textarea/step-4-copilot-readable-state",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-todo-app/next-steps",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-todo-app/overview",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-todo-app/step-1-checkout-repo",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-todo-app/step-2-setup-copilotkit",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-todo-app/step-3-copilot-readable-state",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/ai-todo-app/step-4-frontend-tools",
+      "https://docs.copilotkit.ai/strands-typescript/tutorials/multi-conversation-chat",
+      "https://docs.copilotkit.ai/strands-typescript/vs-code-extension",
+      "https://docs.copilotkit.ai/strands-typescript/whats-new",
+      "https://docs.copilotkit.ai/strands-typescript/whats-new/a2a-mcp-handshake",
+      "https://docs.copilotkit.ai/strands-typescript/whats-new/a2ui-launch",
+      "https://docs.copilotkit.ai/strands-typescript/whats-new/generative-ui-spec-support",
+      "https://docs.copilotkit.ai/strands-typescript/whats-new/langgraph-deep-agents",
+      "https://docs.copilotkit.ai/strands-typescript/whats-new/mcp-apps-support",
+      "https://docs.copilotkit.ai/strands-typescript/whats-new/v1-50"
+    ]
+  }
+}

@@ -4,7 +4,12 @@ import { StatusBadge } from "@/components/route-header";
 import { Callout, Panel } from "@/components/ui";
 import { ALL_GAPS } from "@/lib/doc-gaps";
 import { AGENT_IDS } from "@/lib/agents";
-import { ALL_ROUTES, DOCS_ROOT, DOC_SYNC_DATE, NAV } from "@/lib/nav-config";
+import { ALL_ROUTES, DOCS_ROOT, NAV } from "@/lib/nav-config";
+import { DocSyncedAt } from "@/components/doc-synced-at";
+import { DocDriftPanel } from "@/components/doc-drift-panel";
+
+/** Dynamic: the doc-sync readouts below read the snapshot off disk. */
+export const dynamic = "force-dynamic";
 
 export default function Page() {
   const counts = ALL_ROUTES.reduce<Record<string, number>>((acc, r) => {
@@ -34,11 +39,14 @@ export default function Page() {
           what the page teaches or says precisely why it cannot.
         </p>
         <p className="mt-2 text-xs text-slate-500">
-          Doc-sync date {DOC_SYNC_DATE} · {ALL_ROUTES.length} routes ·{" "}
+          Doc-sync date <DocSyncedAt /> · {ALL_ROUTES.length} routes ·{" "}
           {AGENT_IDS.length} agents · {ALL_GAPS.length} doc gaps ({blocking}{" "}
           blocking)
         </p>
       </header>
+
+
+      <DocDriftPanel />
 
       <Panel title="Status at a glance">
         <div className="flex flex-wrap gap-4 text-sm">
