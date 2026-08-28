@@ -24,14 +24,6 @@ import { Canvas } from "../canvas";
 
 const AGENT_ID = "shared-state-read-write";
 
-const SEED = {
-  title: "Launch checklist",
-  items: [
-    { id: "1", label: "Draft the announcement", done: false },
-    { id: "2", label: "Freeze the API surface", done: true },
-    { id: "3", label: "Write the migration guide", done: false },
-  ],
-};
 
 export default function Page() {
   const { agent } = useAgent({ agentId: AGENT_ID });
@@ -44,24 +36,11 @@ export default function Page() {
       <div className="app-shell grid h-full grid-cols-1 lg:grid-cols-[1fr_26rem]">
         <div className="flex min-h-0 flex-col">
           <div className="flex shrink-0 gap-2 border-b border-slate-200 p-3 dark:border-slate-800">
-            {/* <button
-              type="button"
-              onClick={() => agent.setState(SEED)}
-              className="rounded-md border border-slate-300 px-3 py-1 text-xs dark:border-slate-700"
-            >
-              Seed the canvas
-            </button>
-            <button
-              type="button"
-              onClick={() => agent.setState({ title: "Untitled", items: [] })}
-              className="rounded-md border border-slate-300 px-3 py-1 text-xs dark:border-slate-700"
-            >
-              Clear
-            </button> */}
+           
           </div>
           {/* Your app UI, driven by agent.state */}
           <div className="min-h-0 flex-1">
-            <Canvas agentId={AGENT_ID} />
+            <Canvas/>
           </div>
         </div>
         {/* Chat is just another consumer of the same agent */}
