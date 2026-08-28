@@ -12,62 +12,61 @@
  */
 
 import { useAgent } from "@copilotkit/react-core/v2";
-
+import { useEffect } from "react";
 type CanvasState = {
   title: string;
   items: { id: string; label: string; done: boolean }[];
 };
+const INITIAL_CANVAS_STATE: CanvasState = {
+  title: "Project launch",
+  items: [
+    { id: "research", label: "Research user needs", done: true },
+    { id: "prototype", label: "Build a prototype", done: false },
+  ],
+};
 
-export function Canvas({ agentId }: { agentId?: string }) {
+const AGENT_ID = "shared-state-read-write";
+
+export function Canvas() {
   // No agentId means the "default" agent. Pass { agentId } to target another.
-  const { agent } = useAgent({ agentId });
+  const { agent, isReady } = useAgent({agentId: AGENT_ID});
   const state = (agent.state ?? {}) as Partial<CanvasState>;
-
-  // The page's "Writing back from the main view" snippet.
-  //
-  // One annotation added: the printed version is `(agent.state?.items ?? [])
-  // .map((it) => …)`, and `agent.state` is untyped because `useAgent` takes no
-  // type parameter — so `it` is an implicit `any` and the snippet does not
-  // compile under `strict`. The cast below is the smallest fix that keeps the
-  // body identical.
-  function toggleItem(id: string) {
+  
+  useEffect(() => {
+    if (!isReady) return;
     const current = (agent.state ?? {}) as Partial<CanvasState>;
-    agent.setState({
-      ...agent.state,
-      items: (current.items ?? []).map((it) =>
-        it.id === id ? { ...it, done: !it.done } : it,
-      ),
-    });
-  }
+    const updates: Partial<CanvasState> = {};
+    if (current.title === undefined) {
+      updates.title = INITIAL_CANVAS_STATE.title;
+    }
+    if (current.items === undefined) {
+      updates.items = INITIAL_CANVAS_STATE.items;
+    }
+    if (Object.keys(updates).length > 0) {
+      agent.setState({ ...(agent.state ?? {}), ...updates });
+    }
+  }, [agent, isReady, state.title, state.items]);
+
+  function toggleItem(id: string) {
+  agent.setState({
+    ...agent.state,
+    items: (agent.state?.items ?? []).map((it) =>
+      it.id === id ? { ...it, done: !it.done } : it,
+    ),
+  });
+}
+
 
   return (
-    <main className="canvas h-full overflow-y-auto p-8">
-      <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-        {state.title ?? "Untitled"}
-      </h1>
-      <ul className="mt-4 space-y-1.5">
+    <main className="canvas">
+      <h1>{state.title ?? "Untitled"}</h1>
+      <ul>
         {(state.items ?? []).map((item) => (
-          <li key={item.id} data-done={item.done}>
-            <button
-              type="button"
-              onClick={() => toggleItem(item.id)}
-              className={`text-left text-sm ${
-                item.done
-                  ? "text-slate-400 line-through"
-                  : "text-slate-800 dark:text-slate-200"
-              }`}
-            >
-              {item.label}
-            </button>
+          <li key={item.id} data-done={item.done} onClick={()=> toggleItem(item.id)} className={item.done ? "line-through" : ""}>
+            {item.label}
           </li>
         ))}
       </ul>
-      {(state.items ?? []).length === 0 && (
-        <p className="mt-4 text-sm text-slate-500">
-          Nothing on the canvas yet. Use the buttons above to write state, then
-          ask the chat what it can see.
-        </p>
-      )}
     </main>
   );
 }
