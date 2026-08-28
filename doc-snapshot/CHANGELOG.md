@@ -8,6 +8,53 @@ Holds the 3 most recent dated entries. When a change lands on a fourth
 date, the oldest entry is dropped. Entries are counted, not aged, so a gap of
 weeks between changes does not expire anything.
 
+## 2026-08-28
+
+### 11:06 UTC — 5 pages, highest severity low
+
+**Low — Frontend Tools**
+
+`/strands-typescript/frontend-tools` · route `/frontend-tools` · under “Frontend Tools”
+
+12 prose lines changed.
+
+````diff
+- <Callout type="info" title="See this in Inspector">
+- Open Inspector on localhost. Go to **Inspect**, then **Event Snippets**.
+- You can compile a tool call, reasoning, text, or activity, run it on the live
+- agent, and save it. Saved snippets are grouped by recipe. On localhost chat,
+- **Save as snippet** uses the recipe for the thing you click and fills the form.
+- On a tool call, generative UI, or A2UI, the bookmark sits to the right of the
+- block (or to the left if there is no room on the right).
+- Run of a `generateSandboxedUi` tool call paints the sandbox UI in chat.
+````
+
+**Info — Headless Threads**
+
+`/strands-typescript/headless-threads` · route `/headless-threads`
+
+Now tracked for the first time.
+
+**Info — Threads Drawer**
+
+`/strands-typescript/prebuilt-components/copilot-threads-drawer` · route `/prebuilt-components/copilot-threads-drawer`
+
+Now tracked for the first time.
+
+**Info — Synchronize Thread History**
+
+`/strands-typescript/threads-import` · route `/threads-import`
+
+Now tracked for the first time.
+
+**Info — Thread & History Lifecycle**
+
+`/strands-typescript/threads-lifecycle` · route `/threads-lifecycle`
+
+Now tracked for the first time.
+
+---
+
 ## 2026-08-26
 
 ### 09:41 UTC — 14 pages, highest severity high
@@ -239,6 +286,8 @@ weeks between changes does not expire anything.
 - </WhenFrameworkHas>
 + 
 ````
+
+---
 
 ---
 

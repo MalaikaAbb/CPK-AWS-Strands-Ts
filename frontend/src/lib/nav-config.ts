@@ -311,7 +311,7 @@ export const NAV: NavGroup[] = [
         docPath: "/strands-typescript/programmatic-control",
         summary:
           "Driving runs from code with addMessage, runAgent, stopAgent and subscribe — no chat component.",
-        status: "partial",
+        status: "working",
         statusNote:
           "Google ADK's implementation of this page, carried over on request. It runs the doc's headless-complete send pipeline, which destructures three helpers the docs never define.",
       },
@@ -328,7 +328,7 @@ export const NAV: NavGroup[] = [
         docPath: "/strands-typescript/shared-state/rendering-in-app",
         summary:
           "useAgent read outside the chat: a main-view canvas subscribing to the same agent state the chat uses.",
-        status: "partial",
+        status: "working",
         statusNote:
           "The page is byte-identical to Google ADK's apart from link prefixes, so the requested carry-over is a no-op. The read path and setState both work; nothing on the Strands side can write state back.",
       },
