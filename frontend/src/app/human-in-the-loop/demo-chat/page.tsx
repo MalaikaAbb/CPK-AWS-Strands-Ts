@@ -64,6 +64,8 @@ function Chat() {
         .string()
         .describe("Who the call is with (e.g. 'Alice from Sales')"),
     }),
+    // `: any` is the doc's own annotation, kept verbatim.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     render: ({ args, status, respond }: any) => (
       <TimePickerCard
         topic={args?.topic ?? "a call"}

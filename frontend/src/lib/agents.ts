@@ -30,6 +30,7 @@ export const AGENT_IDS = [
   "frontend-tools",
   "hitl-in-chat",
   "programmatic-control",
+  "threads-demo",
   "readonly-state-agent-context",
   "agent-config",
   "subagents",
@@ -75,3 +76,10 @@ export const A2UI_DYNAMIC_AGENT_ID = "declarative-gen-ui";
  * must declare the same id or nothing renders.
  */
 export const A2UI_DYNAMIC_CATALOG_ID = "declarative-gen-ui-catalog";
+
+/**
+ * The one agent the Rich Threads routes bind to, and the only agent registered
+ * on the Intelligence-mode runtime — the client opens a realtime thread channel
+ * per advertised agent, so that runtime must advertise as few as possible.
+ */
+export const THREADS_AGENT_ID = "threads-demo";

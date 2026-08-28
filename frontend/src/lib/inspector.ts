@@ -31,6 +31,9 @@ export const INSPECTOR_ENABLED =
 export const NESTED_PROVIDER_ROUTES = [
   "/voice/demo-chat",
   "/generative-ui/a2ui/dynamic-schema/demo-chat",
+  "/prebuilt-components/copilot-threads-drawer/demo-chat",
+  "/headless-threads/demo-chat",
+  "/threads-lifecycle/demo-chat",
 ] as const;
 
 /**
