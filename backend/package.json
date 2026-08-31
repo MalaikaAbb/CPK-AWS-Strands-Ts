@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ag-ui/a2ui-toolkit": "^0.0.4",
     "@ag-ui/aws-strands": "^0.2.3",
     "@modelcontextprotocol/sdk": "^1.22.0",
     "@strands-agents/sdk": "^1.12.0",

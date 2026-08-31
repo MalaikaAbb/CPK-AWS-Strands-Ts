@@ -142,8 +142,8 @@ const GAP_LIST: DocGap[] = [
     id: "a2ui-flight-schema-json-missing",
     title: "The fixed-schema tool is published; the schema it reads is not",
     detail:
-      "`buildA2uiFixedSchemaAgent` in `agent.ts` is complete — the `display_flight` tool, its Zod input schema, and the `createSurface`/`updateComponents`/`updateDataModel` envelope. It renders `FLIGHT_SCHEMA`, parsed from `./a2ui_schemas/flight_schema.json`. That file appears on no page. The page draws the intended component tree as an ASCII diagram (Card → Column → Title / Row / Row / Button) and never gives it as data. This is why the route ships with no demo: there is a tool and no tree.",
-    severity: "blocking",
+      "`buildA2uiFixedSchemaAgent` in `agent.ts` is complete — the `display_flight` tool, its Zod input schema, and the `createSurface`/`updateComponents`/`updateDataModel` envelope. It renders `FLIGHT_SCHEMA`, parsed from `./a2ui_schemas/flight_schema.json`. That file appears on no page: the tree is drawn as an ASCII diagram (Card → Column → Title / Row / Row / Button) and given as data nowhere. This route runs because the file was carried over from the Google ADK harness, whose backend ships the identical schema for the identical demo — same twelve nodes, same shape, same four data paths (`/origin`, `/destination`, `/airline`, `/price`). A reader following the Strands tree alone still cannot build it, which is why the route is Partial rather than Working.",
+    severity: "degraded",
     docPath: "/strands-typescript/generative-ui/a2ui/fixed-schema",
   },
   {

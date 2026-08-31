@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -o \"d.STATE_SNAPSHOT[^}]\\\\{0,200\\\\}\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \".\\\\{300\\\\}d.STATE_SNAPSHOT,snapshot:e\\\\.state.\\\\{200\\\\}\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \"async\\\\*run\\(.\\\\{0,400\\\\}\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \"d.RUN_STARTED.\\\\{0,400\\\\}\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \"STATE_SNAPSHOT,snapshot:t.\\\\{0,160\\\\}\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \".\\\\{260\\\\}STATE_SNAPSHOT,snapshot:_\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \".\\\\{300\\\\}STATE_SNAPSHOT,snapshot:t}}t&&o.length\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \"let _=.\\\\{0,120\\\\}\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \"_=\\\\[\\\\].\\\\{0,80\\\\}\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(grep -o \".\\\\{1400\\\\}yield\\\\*xe\\(g\\),yield{type:d.STATE_SNAPSHOT,snapshot:_\" node_modules/@ag-ui/aws-strands/dist/index.mjs)",
+      "Bash(node -e ' *)",
+      "Bash(grep -o \"\\\\.run\\(.\\\\{0,60\\\\}\" node_modules/@ag-ui/aws-strands/dist/server.mjs)",
+      "Bash(grep -o \"this.state=[^;,]\\\\{0,60\\\\}\" node_modules/@ag-ui/client/dist/index.mjs)"
+    ]
+  }
+}

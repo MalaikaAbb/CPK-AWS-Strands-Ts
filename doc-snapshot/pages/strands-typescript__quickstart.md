@@ -3,11 +3,8 @@
 > Turn your Strands agent into an agent-native application in 10 minutes.
 
 
-<OpsPlatformCTA
-  variant="card"
-  title="Ship AWS Strands to production"
-  body="Add persistent threads and the inspector with CopilotKit Intelligence."
-  ctaLabel="Create a free account"
+<IntelligenceOnboardingPrompt
+  feature="learning"
   surface="docs_aws_strands_quickstart"
 />
 

@@ -48,12 +48,17 @@ export function Canvas() {
   }, [agent, isReady, state.title, state.items]);
 
   function toggleItem(id: string) {
-  agent.setState({
-    ...agent.state,
-    items: (agent.state?.items ?? []).map((it) =>
-      it.id === id ? { ...it, done: !it.done } : it,
-    ),
-  });
+    // One annotation added: `agent.state` is untyped because `useAgent` takes
+    // no type parameter, so the printed `(it) =>` is an implicit `any` and the
+    // snippet does not compile under `strict`. The cast is the smallest fix
+    // that leaves the body identical.
+    const current = (agent.state ?? {}) as Partial<CanvasState>;
+    agent.setState({
+      ...agent.state,
+      items: (current.items ?? []).map((it) =>
+        it.id === id ? { ...it, done: !it.done } : it,
+      ),
+    });
 }
 
 

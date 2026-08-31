@@ -35,9 +35,6 @@ export function Providers({ children }: { children: ReactNode }) {
     <CopilotKitProvider
       runtimeUrl={RUNTIME_URL}
       showDevConsole={rootInspectorSetting(pathname)}
-      // Bottom-left, because the prebuilt Popup and Sidebar launchers both
-      // live bottom-right and would sit under the inspector button.
-      inspectorDefaultAnchor={{ horizontal: "left", vertical: "bottom" }}
       onError={(event) => {
         console.error(`[CopilotKit ${event.code}]`, event.error);
       }}

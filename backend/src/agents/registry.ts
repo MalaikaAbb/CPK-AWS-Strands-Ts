@@ -16,6 +16,7 @@ import type { StrandsAgent } from "@ag-ui/aws-strands";
 import { CHAT_AGENT_SPECS, buildChatAgent } from "./chat-agents";
 import { buildLanguageAgent, buildStateMirrorAgent } from "./state-agents";
 import { buildA2uiDynamicAgent } from "./a2ui-dynamic-agent";
+import { buildA2uiFixedSchemaAgent } from "./a2ui-fixed-agent";
 
 export interface RegistryEntry {
   id: string;
@@ -67,6 +68,14 @@ export const REGISTRY: RegistryEntry[] = [
     ],
   },
   {
+    id: "a2ui-fixed-schema",
+    mountPath: "/a2ui-fixed-schema",
+    build: buildA2uiFixedSchemaAgent,
+    gaps: [
+      "Runs `buildA2uiFixedSchemaAgent` from the published `agent.ts` verbatim. The component tree it reads — `a2ui_schemas/flight_schema.json` — is published on no Strands page; this copy is carried over from the Google ADK harness, which ships the identical schema for the identical demo.",
+    ],
+  },
+  {
     id: "declarative-gen-ui",
     mountPath: "/declarative-gen-ui",
     build: buildA2uiDynamicAgent,
@@ -83,11 +92,6 @@ export const REGISTRY: RegistryEntry[] = [
  * reads as a documented decision rather than an oversight.
  */
 export const UNSERVED: { id: string; reason: string }[] = [
-  {
-    id: "a2ui-fixed-schema",
-    reason:
-      "`buildA2uiFixedSchemaAgent` is published in full, including the `display_flight` tool body, but it reads its component tree from `./a2ui_schemas/flight_schema.json` — a file no page publishes. Without the tree there is nothing to render.",
-  },
   {
     id: "voice_agent / byoc_hashbrown / byoc_json_render",
     reason:

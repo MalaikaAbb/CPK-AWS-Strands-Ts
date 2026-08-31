@@ -1,6 +1,6 @@
 import { RouteHeader } from "@/components/route-header";
-import { SourceCode } from "@/components/source-code";
-import { Callout, CodeBlock, Panel } from "@/components/ui";
+import { SourceCode, SourceCodeGroup } from "@/components/source-code";
+import { Callout, CodeBlock, Panel, TryIt } from "@/components/ui";
 
 const TREE = `Card
  └─ Column
@@ -21,30 +21,12 @@ operations container per-request. …
 </Step>
 </WhenFrameworkHas>`;
 
-const PUBLISHED_TOOL = `const displayFlight = tool({
-  name: "display_flight",
-  description: "Show a flight card for the given trip. …",
-  inputSchema: z.object({
-    origin: z.string().describe('Origin airport code, e.g. "SFO".'),
-    destination: z.string().describe('Destination airport code, e.g. "JFK".'),
-    airline: z.string().describe('Airline name, e.g. "United".'),
-    price: z.string().describe('Price string, e.g. "$289".'),
-  }),
-  callback: ({ origin, destination, airline, price }) => ({
-    [A2UI_OPERATIONS_KEY]: [
-      createSurface(A2UI_FIXED_SURFACE_ID, A2UI_FIXED_CATALOG_ID),
-      updateComponents(A2UI_FIXED_SURFACE_ID, FLIGHT_SCHEMA),  // ← the missing file
-      updateDataModel(A2UI_FIXED_SURFACE_ID, { origin, destination, airline, price }),
-    ],
-  }),
-});`;
-
 export default function Page() {
   return (
     <>
       <RouteHeader path="/generative-ui/a2ui/fixed-schema" />
 
-      <Panel title="What it would demonstrate">
+      <Panel title="What it demonstrates">
         <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
           The opposite trade from dynamic schema. The component tree is designed
           once, up front, and lives on the agent side; the tool supplies only the
@@ -60,25 +42,45 @@ export default function Page() {
         </div>
       </Panel>
 
-      <Callout tone="warn" title="Why this route has no demo">
-        <p className="mb-3">
-          This is the one route in the harness where the missing piece is data,
-          not code. The agent tool is published <em>in full</em> — it is the
-          most complete backend snippet in the entire Strands TypeScript tree:
-        </p>
-        <CodeBlock
-          code={PUBLISHED_TOOL}
-          language="ts"
-          filename="src/agent/agent.ts, buildA2uiFixedSchemaAgent (as published)"
+      <Panel title="Try it">
+        <TryIt
+          prompts={[
+            "Find me a flight from SFO to JFK",
+            "What about Boston to Seattle on Alaska?",
+          ]}
+          expect="A flight card paints in the chat — 'Flight Details' with an Itinerary label, the two airport codes either side of an arrow, an airline pill and a total, and a Book flight button. The agent's own reply is one short sentence and does not repeat the numbers."
+          fail="A plain text answer with no card. Check that the catalog id agrees in all three places, and that the runtime scopes `injectA2UITool: false` to this agent — if it injects `generate_a2ui` instead, the agent has two ways to draw and will use the wrong one."
         />
-        <p className="mt-3">
-          <code>FLIGHT_SCHEMA</code> is the component tree, parsed at module
-          load from <code>./a2ui_schemas/flight_schema.json</code>. That file is
-          on no page. The tree above is drawn as an ASCII diagram in the doc and
-          given as data nowhere, so there is a tool with nothing to render and a
-          catalog with nothing to receive. Building the JSON here would be
-          inventing the exact artefact the page withholds, so the route stops
-          at the diagram.
+      </Panel>
+
+      <Panel title="The demo">
+        <SourceCode file="frontend/src/app/generative-ui/a2ui/fixed-schema/demo-chat/page.tsx" />
+      </Panel>
+
+      <Callout tone="warn" title="The schema this runs on is not from these docs">
+        <p className="mb-3">
+          The agent below is <code>buildA2uiFixedSchemaAgent</code> from the
+          published <code>agent.ts</code>, verbatim. It reads its component tree
+          from <code>./a2ui_schemas/flight_schema.json</code> — and no Strands
+          page publishes that file. The page draws the tree as an ASCII diagram
+          and gives it as data nowhere.
+        </p>
+        <p className="mb-3">
+          That file here is carried over from the Google ADK harness, whose
+          backend ships the identical schema for the identical demo: the same
+          twelve nodes, the same{" "}
+          <code>Card &gt; Column &gt; [Title, Row, Row, Button]</code> shape the
+          diagram describes, and the same four data paths —{" "}
+          <code>/origin</code>, <code>/destination</code>,{" "}
+          <code>/airline</code>, <code>/price</code> — that{" "}
+          <code>display_flight</code> supplies. It is the same artefact from a
+          sibling repo, not a reconstruction.
+        </p>
+        <p>
+          So the route runs, and the finding is unchanged: the Strands
+          TypeScript tree still publishes no schema, and a reader following it
+          alone still cannot build this. That is why the status is Partial
+          rather than Working.
         </p>
       </Callout>
 
@@ -113,12 +115,40 @@ export default function Page() {
 });`}
         />
         <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
-          This repo does not register that block. Wiring middleware for an agent
-          that cannot exist would make the runtime look configured when nothing
-          can reach it; see{" "}
-          <code>frontend/src/app/api/copilotkit/route.ts</code>, which says so
-          in a comment.
+          This repo now registers exactly that, scoped with{" "}
+          <code>agents: [&quot;a2ui-fixed-schema&quot;]</code> so the other 23
+          agents on the runtime are untouched.{" "}
+          <code>injectA2UITool: false</code> is the load-bearing half: the agent
+          owns its own <code>display_flight</code> and must not also be handed a{" "}
+          <code>generate_a2ui</code>, or it has two ways to draw the same
+          surface.
         </p>
+      </Panel>
+
+      <Panel
+        title="The three files that have to agree"
+        description="The catalog id appears in all of them. A mismatch renders nothing, with no error."
+      >
+        <SourceCodeGroup
+          files={[
+            { file: "backend/src/agents/a2ui-fixed-agent.ts" },
+            { file: "backend/src/agents/a2ui_schemas/flight_schema.json" },
+            { file: "frontend/src/app/generative-ui/a2ui/fixed-schema/a2ui/catalog.ts" },
+          ]}
+        />
+      </Panel>
+
+      <Panel
+        title="The catalog"
+        description="definitions.ts and catalog.ts are the doc's. renderers.tsx is published with no imports, and its four primitives come from a file the page never shows."
+      >
+        <SourceCodeGroup
+          files={[
+            { file: "frontend/src/app/generative-ui/a2ui/fixed-schema/a2ui/definitions.ts" },
+            { file: "frontend/src/app/generative-ui/a2ui/fixed-schema/a2ui/renderers.tsx" },
+            { file: "frontend/src/app/generative-ui/a2ui/_components/primitives.tsx" },
+          ]}
+        />
       </Panel>
 
       <Panel title="The runtime route, as this repo actually has it">
