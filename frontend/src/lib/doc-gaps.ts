@@ -89,18 +89,19 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/quickstart?agent=bring-your-own",
   },
   {
-    id: "quickstart-python-on-ts-page",
-    title: "The TypeScript quickstart tells you to pick Python",
-    detail:
-      'The CLI branch says "**Framework** — pick **AWS Strands (Python)** when prompted", with no TypeScript option mentioned, and the shared Prerequisites list demands "Python 3.12+" alongside Node 20+. Both are unconditional — they do not switch with the Python/TypeScript tab.',
-    severity: "note",
-    docPath: "/strands-typescript/quickstart?agent=bring-your-own",
-  },
-  {
     id: "quickstart-installs-v1-package",
     title: "The install line and the import lines are from different major versions",
     detail:
-      "The Quickstart installs `@copilotkit/react-ui @copilotkit/react-core @copilotkit/runtime @ag-ui/client`, then every subsequent code block imports from `@copilotkit/react-core/v2` — `CopilotKit`, `CopilotSidebar`, and `@copilotkit/react-core/v2/styles.css`. `@copilotkit/react-ui` is the v1 package and nothing on the page uses it.",
+      "The Quickstart installs `@copilotkit/react-ui @copilotkit/react-core @copilotkit/runtime @ag-ui/client`, then every subsequent code block imports from the v2 entry points — `@copilotkit/react-core/v2` for the provider and components, `@copilotkit/runtime/v2` for the runtime and `CopilotKitIntelligence`. `@copilotkit/react-ui` is the v1 package and nothing on the page uses it. The unpinned `@ag-ui/client` is the more damaging half: every CopilotKit package depends on exactly `0.0.57`, npm resolves the bare install to `0.0.58`, and the two copies make `HttpAgent` nominally distinct from the `AbstractAgent` the runtime expects — `agents: { strands_agent: new HttpAgent(...) }` then fails to typecheck with 'separate declarations of a private property _debug'. This repo pins `0.0.57` exactly so the trees dedupe.",
+    severity: "degraded",
+    docPath: "/strands-typescript/quickstart?agent=bring-your-own",
+  },
+  {
+    id: "intelligence-key-assertion",
+    title:
+      "The runtime block asserts a licence key the same page says you can omit",
+    detail:
+      'The published runtime does `intelligence: new CopilotKitIntelligence({ apiKey: process.env.INTELLIGENCE_API_KEY! })` — a non-null assertion. The callout directly beneath it says the opposite is supported: "Drop the `intelligence` and `identifyUser` options and the runtime falls back to SSE mode with an in-memory runner." Following the code literally with no key set does not produce that fallback; it constructs `CopilotKitIntelligence` with `undefined` and asserts otherwise. Getting the documented behaviour means dropping both options, which is a code change the block does not show. This repo does the drop in `frontend/src/lib/intelligence.ts` so the harness runs with or without a licence.',
     severity: "degraded",
     docPath: "/strands-typescript/quickstart?agent=bring-your-own",
   },
@@ -169,6 +170,66 @@ const GAP_LIST: DocGap[] = [
       "The page's whole `Chat` component is three lines, and one of them is `useAgenticChatSuggestions();`. That hook is not exported by any CopilotKit package and is not defined anywhere in the doc tree — it lives in the demo app's own `./suggestions` module, which the source viewer does not publish.",
     severity: "note",
     docPath: "/strands-typescript/prebuilt-components/chat",
+  },
+
+  {
+    id: "runtime-route-missing-verbs",
+    title:
+      "The Quickstart's runtime route exports two verbs; Rich Threads needs four",
+    detail:
+      "The published `app/api/copilotkit/[[...slug]]/route.ts` ends with `export const GET = handler;` and `export const POST = handler;` and nothing else. Next.js answers any verb a route does not export with a 405, and the threads client uses four — GET and POST to list and connect, PATCH to rename and archive, DELETE to delete (verified against `@copilotkit/core` 1.69.0, whose request layer issues exactly those and never PUT). So a runtime built to the Quickstart serves chat perfectly and 405s every thread mutation: `DELETE /api/copilotkit/threads/<id> 405`, then `unhandledRejection: Error: Request failed: 405`. Nothing on the Quickstart, the Threads Drawer page or Headless Threads mentions the extra exports, and because chat is unaffected the runtime looks healthy. This repo exports PATCH and DELETE on all three runtimes. The Voice page's published route is closer — POST, GET, PUT, DELETE — but still omits PATCH, so rename and archive would 405 there too.",
+    severity: "blocking",
+    docPath: "/strands-typescript/quickstart?agent=bring-your-own",
+  },
+
+  // ------------------------------------------------------------ rich threads
+  {
+    id: "drawer-slots-untypeable",
+    title: "The Threads Drawer's slot example does not typecheck",
+    detail:
+      "The Customization section lists five slots (`header`, `empty`, `footer`, `memories`, `launcher-icon`) and shows `<CopilotThreadsDrawer><span slot=“header”>My conversations</span></CopilotThreadsDrawer>`. Against `@copilotkit/react-core@1.69.0` that is a type error: `CopilotThreadsDrawerProps` declares eleven members — agentId, onThreadSelect, onNewThread, onLicensed, licenseUrl, renderRow, label, recentLabel, limit, collapsible, onCollapseChange — and `children` is not one of them. The underlying `copilotkit-threads-drawer` web component does accept slotted light-DOM children, so the feature is real and the React wrapper's typing is what withholds it. The same table also omits `collapsible` and `onCollapseChange`, which exist on the type.",
+    severity: "degraded",
+    docPath: "/strands-typescript/prebuilt-components/copilot-threads-drawer",
+  },
+  {
+    id: "threads-two-licence-paths",
+    title: "Adjacent thread pages put the licence key in two different places",
+    detail:
+      'The Threads Drawer page puts it on the client — `<CopilotKitProvider runtimeUrl="/api/copilotkit" publicLicenseKey="ck_pub_...">`. Headless Threads and the Quickstart put it on the server — `intelligence: new CopilotKitIntelligence({ apiKey: process.env.INTELLIGENCE_API_KEY! })` — and Headless Threads adds "keep that key server-side". Both props exist on their respective types. Nothing on either page says whether they are alternatives, complements, or two tiers, or which one a new app should reach for. This harness uses the server path for all three runtimes.',
+    severity: "degraded",
+    docPath: "/strands-typescript/prebuilt-components/copilot-threads-drawer",
+  },
+  {
+    id: "threads-verify-app-session-undefined",
+    title: "The identifyUser snippet awaits a function defined on no page",
+    detail:
+      "Both Headless Threads and Thread & History Lifecycle print `identifyUser: async (request) => { const session = await verifyAppSession(request); … }`. `verifyAppSession` is imported nowhere and defined nowhere in the doc tree; the comment “Your server-side auth” is the whole specification. The snippet does not run as printed. This harness has no auth provider, so `frontend/src/lib/intelligence.ts` uses the Quickstart's simpler published `identifyUser` — the `x-user-id` / `x-user-name` header form — rather than inventing a session layer.",
+    severity: "degraded",
+    docPath: "/strands-typescript/headless-threads",
+  },
+  {
+    id: "threads-sidebar-two-snippets",
+    title: "Headless Threads shows one file twice with two incompatible hook calls",
+    detail:
+      "`ThreadSidebar.tsx` appears as two blocks. The first destructures `threads, isLoading, renameThread, archiveThread, deleteThread` from `useThreads({ agentId })`; the second re-destructures the same hook with `limit: 20` and takes `hasMoreThreads, isFetchingMoreThreads, fetchMoreThreads`. Read as one file that is two `useThreads` calls and two subscriptions. `deleteThread` is destructured in the first and used in neither. This repo merges them into a single call, which is the only way to have both sets of members.",
+    severity: "note",
+    docPath: "/strands-typescript/headless-threads",
+  },
+  {
+    id: "threads-lifecycle-myapi-undefined",
+    title: "The custom-thread-creation section is built on an undefined backend",
+    detail:
+      'Both snippets under "Creating a thread with your own API on the first message" call `myApi.createThread()`, which is imported nowhere and defined nowhere; the headless variant additionally replaces the send with the comment `// ...then trigger the run with your send logic`. Both are shape-only. The section does state one precise and genuinely useful fact — for a send fired in the same handler, set `agent.threadId` directly rather than `setActiveThreadId`, because the latter only reaches the agent on the next render.',
+    severity: "note",
+    docPath: "/strands-typescript/threads-lifecycle",
+  },
+  {
+    id: "threads-import-no-strands-source",
+    title: "The thread-import page supports no Strands source",
+    detail:
+      'Served under `/strands-typescript`, the Supported sources table has exactly two rows — Google ADK and LangGraph — whose import guides live at `/google-adk/threads-import` and `/langgraph-python/threads-import`. `npx copilotkit@latest import --source` accepts neither `strands` nor any equivalent. A reader arriving from the Strands sidebar can run the dry run and find nothing to import. The page says "more sources coming soon" and never says Strands is not one of them. There is also no application code on the page at all — it is a CLI workflow, so the route is reference-only.',
+    severity: "note",
+    docPath: "/strands-typescript/threads-import",
   },
 
   // ----------------------------------------------------------------- frontend
@@ -341,7 +402,7 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   // "/quickstart": [
   //   "quickstart-model-id",
   //   "quickstart-installs-v1-package",
-  //   "quickstart-python-on-ts-page",
+  //   "intelligence-key-assertion",
   //   "quickstart-next-links-404",
   //   "no-agent-server-composition",
   // ],

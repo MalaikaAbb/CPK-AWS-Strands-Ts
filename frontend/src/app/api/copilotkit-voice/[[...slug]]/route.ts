@@ -13,19 +13,28 @@
  *     that ships in no public package. Kept verbatim anyway; it is the doc's
  *     own reasoning, not this repo's.
  *
+ *  3. `new CopilotRuntime(...)` became `createRuntime(...)` from
+ *     `lib/intelligence.ts`, so this runtime carries CopilotKit Intelligence
+ *     like the other two. The Voice page has not been updated for the
+ *     Intelligence change the Quickstart now documents, so its published block
+ *     still shows the pre-Intelligence constructor — adding it here is a
+ *     deliberate departure, made because Threads and the Inspector should not
+ *     work on two runtimes out of three.
+ *
  * Everything else — the `GuardedOpenAITranscriptionService` subclass, the
  * cached handler, the four HTTP verbs — is the page's code unchanged.
  */
 
 import type { NextRequest } from "next/server";
 import {
-  CopilotRuntime,
   TranscriptionService,
   createCopilotRuntimeHandler,
 } from "@copilotkit/runtime/v2";
 import type { TranscribeFileOptions } from "@copilotkit/runtime/v2";
 import { HttpAgent } from "@ag-ui/client";
 import { TranscriptionServiceOpenAI } from "@copilotkit/voice";
+
+import { createRuntime } from "@/lib/intelligence";
 import OpenAI from "openai";
 
 const AGENT_URL = process.env.AGENT_URL || "http://localhost:8000";
@@ -60,7 +69,7 @@ let cachedHandler: ((req: Request) => Promise<Response>) | null = null;
 function getHandler(): (req: Request) => Promise<Response> {
   if (cachedHandler) return cachedHandler;
 
-  const runtime = new CopilotRuntime({
+  const runtime = createRuntime({
     // The published code uses `@ts-ignore`, which this repo's lint config
     // rejects in favour of `@ts-expect-error`. Kept as published and the rule
     // disabled for this line, so the artefact stays diffable against the doc.
@@ -86,3 +95,6 @@ export const POST = (req: NextRequest) => getHandler()(req);
 export const GET = (req: NextRequest) => getHandler()(req);
 export const PUT = (req: NextRequest) => getHandler()(req);
 export const DELETE = (req: NextRequest) => getHandler()(req);
+// Added: the published four omit PATCH, which the threads client uses for
+// rename and archive. Without it those two 405 on this runtime.
+export const PATCH = (req: NextRequest) => getHandler()(req);

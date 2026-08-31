@@ -71,10 +71,10 @@ export const NAV: NavGroup[] = [
         title: "Quickstart",
         docPath: "/strands-typescript/quickstart?agent=bring-your-own",
         summary:
-          "The bring-your-own-agent path: a Strands Agent wrapped in StrandsAgent, served by createStrandsApp over Express, reached over HTTP by the Copilot Runtime.",
+          "The bring-your-own-agent path: a Strands Agent wrapped in StrandsAgent, served by createStrandsApp over Express, reached over HTTP by a v2 catch-all runtime carrying CopilotKit Intelligence.",
         status: "working",
         statusNote:
-          "The one page whose backend is published end to end. Its model id is not — see the doc gaps below.",
+          "Re-synced 2026-08-26: the runtime is now a [[...slug]] catch-all built with createCopilotRuntimeHandler, and carries Intelligence. The one page whose backend is published end to end; its model id still is not.",
       },
     ],
   },
@@ -124,6 +124,58 @@ export const NAV: NavGroup[] = [
         summary:
           "Driving modal state from your own UI with useCopilotChatConfiguration, and capturing thumbs up/down.",
         status: "working",
+      },
+    ],
+  },
+  {
+    title: "Rich Threads",
+    routes: [
+      {
+        path: "/prebuilt-components/copilot-threads-drawer",
+        hasDemo: true,
+        agentId: "threads-demo",
+        title: "Threads Drawer",
+        docPath: "/strands-typescript/prebuilt-components/copilot-threads-drawer",
+        summary:
+          "The drop-in conversation sidebar: list, switch, archive and delete threads with no active-thread state of your own.",
+        status: "working",
+        statusNote:
+          "Wired exactly as published. Threads live in CopilotKit Intelligence, so without INTELLIGENCE_API_KEY the drawer renders its locked view instead of a list — the doc's own documented behaviour, not a failure here.",
+      },
+      {
+        path: "/headless-threads",
+        hasDemo: true,
+        agentId: "threads-demo",
+        title: "Headless Threads",
+        docPath: "/strands-typescript/headless-threads",
+        summary:
+          "useThreads as a data layer: list, rename, archive, delete and paginate behind your own UI.",
+        status: "working",
+        statusNote:
+          "Every hook member the page uses exists and is wired, including the pagination block. Same licence gate as the drawer — no key, no list.",
+      },
+      {
+        path: "/threads-lifecycle",
+        hasDemo: true,
+        agentId: "threads-demo",
+        title: "Thread & History Lifecycle",
+        docPath: "/strands-typescript/threads-lifecycle",
+        summary:
+          "Where a threadId comes from, how history replays, and how to switch or start a conversation.",
+        status: "working",
+        statusNote:
+          "Carried over from the llamaindex harness: a thread picker plus all three setter branches. setActiveThreadId and startNewThread work with or without a licence; replay and the picker are what need the store. Two of the page's snippets call helpers it never defines.",
+      },
+      {
+        path: "/threads-import",
+        agentId: "threads-demo",
+        title: "Synchronize Thread History",
+        docPath: "/strands-typescript/threads-import",
+        summary:
+          "The CLI import flow for bringing existing conversations into Intelligence as Rich Threads.",
+        status: "reference",
+        statusNote:
+          "No application code on the page — it is a CLI workflow. And its two supported sources are Google ADK and LangGraph; neither is Strands.",
       },
     ],
   },

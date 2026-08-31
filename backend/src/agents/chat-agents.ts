@@ -200,6 +200,20 @@ export const CHAT_AGENT_SPECS: ChatAgentSpec[] = [
     systemPrompt: USE_FRONTEND_TOOLS,
   },
 
+  // Rich Threads. One agent for all four thread routes, because `useThreads`
+  // lists per agent — giving the thread pages their own keeps their history
+  // out of every other route's list.
+  {
+    name: "threads-demo",
+    description:
+      "Backs the Rich Threads routes. Threads themselves live in CopilotKit " +
+      "Intelligence, not here.",
+    systemPrompt:
+      "You are a helpful AI assistant. Keep replies short — these " +
+      "conversations exist to be saved, reopened and switched between, so " +
+      "the point is the thread, not the answer.",
+  },
+
   // Shared state and context.
   {
     name: "readonly-state-agent-context",
