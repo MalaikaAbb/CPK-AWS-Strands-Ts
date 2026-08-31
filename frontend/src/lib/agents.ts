@@ -36,6 +36,7 @@ export const AGENT_IDS = [
   "subagents",
   "languageAgent",
   "shared-state-read-write",
+  "a2ui-fixed-schema",
   "declarative-gen-ui",
 ] as const;
 
@@ -65,6 +66,9 @@ export function agentUrl(id: string): string {
  * not a contract.
  */
 export const VOICE_AGENT_ID = "voice-demo";
+
+/** The agent that owns its own `display_flight` tool — runtime must not inject one. */
+export const A2UI_FIXED_AGENT_ID = "a2ui-fixed-schema";
 
 /** The agent the A2UI dynamic-schema route scopes its own runtime to. */
 export const A2UI_DYNAMIC_AGENT_ID = "declarative-gen-ui";

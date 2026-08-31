@@ -4,7 +4,12 @@ import {
 } from "@copilotkit/runtime/v2";
 import { HttpAgent } from "@ag-ui/client";
 
-import { AGENT_IDS, A2UI_DYNAMIC_AGENT_ID, agentUrl } from "@/lib/agents";
+import {
+  AGENT_IDS,
+  A2UI_DYNAMIC_AGENT_ID,
+  A2UI_FIXED_AGENT_ID,
+  agentUrl,
+} from "@/lib/agents";
 
 // The Quickstart's runtime, widened from one agent to the whole registry.
 //
@@ -33,14 +38,17 @@ const agents = Object.fromEntries(
   ]),
 );
 
-// No `a2ui` block here.
+// A2UI, scoped to the fixed-schema agent with tool injection off — exactly as
+// the Copilot Runtime page and the fixed-schema page both describe it.
 //
-// The Copilot Runtime page describes `a2ui: { injectA2UITool: false, agents: [...] }`
-// as the fixed-schema setup, and the fixed-schema page repeats it — but this
-// harness serves no fixed-schema agent, because the component tree that agent
-// renders is published nowhere. Registering the middleware for an agent that
-// cannot exist would only make the runtime look configured. See the doc gaps on
-// /generative-ui/a2ui/fixed-schema.
+// `injectA2UITool: false` is the load-bearing half: that agent owns its own
+// `display_flight` tool and returns the operations container itself, so it must
+// not also be handed a `generate_a2ui` tool. The middleware still detects the
+// envelope in the tool result and paints the surface.
+//
+// Scoped with `agents: [...]` rather than applied globally, so the other agents
+// on this runtime are untouched. The dynamic-schema agent is excluded from this
+// runtime entirely — it has its own endpoint, where injection is on.
 /**
  * `new CopilotRuntime` directly, not `createRuntime` — SSE mode on purpose.
  *
@@ -56,6 +64,7 @@ const agents = Object.fromEntries(
  */
 const runtime = new CopilotRuntime({
   agents,
+  a2ui: { injectA2UITool: false, agents: [A2UI_FIXED_AGENT_ID] },
 });
 
 const handler = createCopilotRuntimeHandler({

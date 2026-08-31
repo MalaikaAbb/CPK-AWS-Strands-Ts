@@ -8,6 +8,45 @@ Holds the 3 most recent dated entries. When a change lands on a fourth
 date, the oldest entry is dropped. Entries are counted, not aged, so a gap of
 weeks between changes does not expire anything.
 
+## 2026-08-31
+
+### 07:46 UTC — 2 pages, highest severity low
+
+**Low — A2UI · Fixed Schema**
+
+`/strands-typescript/generative-ui/a2ui/fixed-schema` · route `/generative-ui/a2ui/fixed-schema` · under “Fixed Schema A2UI”
+
+12 prose lines changed.
+
+````diff
++ <Callout type="info" title="The flight card is an illustrative domain">
++ Everything below uses flight booking so the wiring has something concrete to
++ render — `display_flight`, `flight-fixed-catalog`, and the airport/airline
++ components are this page's example, not part of the API.
++ 
++ What transfers is the **shape**: a fixed catalog, a tool that returns data
++ against it, and `a2ui.render(...)` with `createSurface` + `updateComponents` +
++ `updateDataModel`. Keep your own application's domain and substitute your own
+````
+
+**Low — Quickstart**
+
+`/strands-typescript/quickstart` · route `/quickstart` · under “Quickstart”
+
+7 prose lines changed.
+
+````diff
+- <OpsPlatformCTA
+- variant="card"
+- title="Ship AWS Strands to production"
+- body="Add persistent threads and the inspector with CopilotKit Intelligence."
+- ctaLabel="Create a free account"
++ <IntelligenceOnboardingPrompt
++ feature="learning"
+````
+
+---
+
 ## 2026-08-28
 
 ### 11:06 UTC — 5 pages, highest severity low
@@ -52,6 +91,8 @@ Now tracked for the first time.
 `/strands-typescript/threads-lifecycle` · route `/threads-lifecycle`
 
 Now tracked for the first time.
+
+---
 
 ---
 
@@ -290,18 +331,3 @@ Now tracked for the first time.
 ---
 
 ---
-
-## 2026-08-17
-
-### 12:33 UTC — 1 page, highest severity low
-
-**Low — Voice** · _local snapshot edit, not an upstream change_
-
-`/strands-typescript/voice` · route `/voice` · under “Driving the demo without a mic”
-
-2 prose lines changed.
-
-````diff
-+ For Playwright runs, screenshots, or any flow where prompting for mic permissions is awkward, ship a button that emits a canned sample phrase through an `onTranscribed` callback, bypassing the transcription endpoint entirely:
-+ 
-````

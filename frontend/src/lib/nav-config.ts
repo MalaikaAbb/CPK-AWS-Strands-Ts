@@ -316,15 +316,15 @@ export const NAV: NavGroup[] = [
       },
       {
         path: "/generative-ui/a2ui/fixed-schema",
-        hasDemo: false,
+        hasDemo: true,
         agentId: "a2ui-fixed-schema",
         title: "A2UI · Fixed Schema",
         docPath: "/strands-typescript/generative-ui/a2ui/fixed-schema",
         summary:
           "A flight card whose component tree is authored as JSON up front; the tool supplies only the data.",
-        status: "broken",
+        status: "partial",
         statusNote:
-          "The tool that returns the operations container IS published — but it reads its component tree from a JSON file that is not. No tree, no card, no demo.",
+          "Runs end to end. The `display_flight` tool is the published `agent.ts` verbatim; the component tree it reads is published on no Strands page and was carried over from the Google ADK harness, which ships the identical schema for the identical demo.",
       },
     ],
   },
