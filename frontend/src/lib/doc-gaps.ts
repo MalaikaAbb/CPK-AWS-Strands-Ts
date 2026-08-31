@@ -133,10 +133,18 @@ const GAP_LIST: DocGap[] = [
   },
   {
     id: "a2ui-fixed-schema-missing",
-    title: "Every backend step of the fixed-schema page is a skipped snippet",
+    title: "The one backend step the Strands path needs is still a skipped snippet",
     detail:
-      "The page has five `<!-- snippet skipped -->` markers and no backend code at all. Three of them are the same missing region (`backend-render-operations`), once per framework branch — including the `llm-driven` branch under **Generate the schema dynamically**, which is the branch that applies to Strands. The other two are `backend-schema-json-load`. So the step that would show a Strands agent producing the surface is empty on the one path a Strands reader is routed to.",
+      "Re-fetched 2026-08-31: the page has been restructured since the first sync. The framework-branched schema-loading and schema-inline steps are gone, replaced by a single **Generate the schema dynamically** step — the Mastra/Strands path — and the five `snippet skipped` markers are down to one. That one is the step that matters: `<!-- snippet skipped: region 'backend-render-operations' missing in strands-typescript::a2ui-fixed-schema -->`, sitting exactly where the tool that emits the surface should be. The prose around it now says more than it used to — that neither SDK ships an `a2ui.render(...)` equivalent, that the tool assembles the `a2ui_operations` envelope itself, and that the operations are nested (`{ createSurface: {…} }`) so a flat `{ type: \"create_surface\" }` is ignored and the surface never paints. All useful, and all describing code the page does not print.",
     severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/a2ui/fixed-schema",
+  },
+  {
+    id: "a2ui-fixed-prose-vs-code",
+    title: "The page says Strands generates the schema; the published code loads it from a file",
+    detail:
+      'The **Generate the schema dynamically** step states that for Mastra and Strands "the agent tool runs a *secondary* LLM call with a forced tool choice that produces the operations container per-request… the schema is built on the fly". The published `buildA2uiFixedSchemaAgent` in `agent.ts` does no such thing: it reads a static `flight_schema.json` at module load with `readFileSync` and passes it to `updateComponents` unchanged. There is no secondary LLM call anywhere in it. Two descriptions of the same demo, on the same doc tree, that cannot both be right. This repo implements the published code, because that is the artefact — see `backend/src/agents/a2ui-fixed-agent.ts`.',
+    severity: "degraded",
     docPath: "/strands-typescript/generative-ui/a2ui/fixed-schema",
   },
   {

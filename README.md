@@ -2,7 +2,7 @@
 
 A navigable, working test harness for the CopilotKit ↔ AWS Strands (TypeScript) integration — one route per doc page, each either implementing what the page teaches or stating precisely why it cannot.
 
-**Doc sync:** see `/doc-sync` in the running app (the manifest's `syncedAt` is the single source of truth) · **Routes:** 33 · **Agents:** 26 · **Doc gaps recorded:** 42 (11 blocking)
+**Doc sync:** see `/doc-sync` in the running app (the manifest's `syncedAt` is the single source of truth) · **Routes:** 33 · **Agents:** 26 · **Doc gaps recorded:** 43 (11 blocking)
 **Packages:** `@copilotkit/react-core` 1.69.0 · `@copilotkit/runtime` 1.69.0 · `@copilotkit/a2ui-renderer` 1.69.0 · `@copilotkit/voice` 1.69.0 · `@ag-ui/client` 0.0.57 (pinned) · `@ag-ui/aws-strands` 0.2.3 · `@strands-agents/sdk` 1.12.0 · Next 16.3.0
 
 ---
@@ -270,7 +270,7 @@ These appear in the doc sidebar and are outside this repo's scope: CLI, Build wi
 
 ## 9. Known issues / doc-vs-implementation discrepancies
 
-Forty-two findings are recorded in `frontend/src/lib/doc-gaps.ts`, and the full ledger renders on `/status`; the backend half is at `GET /gaps`. (The per-route red panels are currently switched off — every entry in `ROUTE_GAPS` is commented out — so findings show on `/status` and in each route's own prose rather than as a banner.) The ones that change what you can build:
+Forty-three findings are recorded in `frontend/src/lib/doc-gaps.ts`, and the full ledger renders on `/status`; the backend half is at `GET /gaps`. (The per-route red panels are currently switched off — every entry in `ROUTE_GAPS` is commented out — so findings show on `/status` and in each route's own prose rather than as a banner.) The ones that change what you can build:
 
 **The backend is published and unrunnable** — [agent.ts, on 18 pages](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat). Complete file, four unpublished local imports, one unpublished JSON file, no `server.ts`. Full analysis in [`backend/docs_verbatim/README.md`](backend/docs_verbatim/README.md).
 
@@ -283,6 +283,8 @@ Forty-two findings are recorded in `frontend/src/lib/doc-gaps.ts`, and the full 
 **Seven pages replace their backend section with `setup skipped`** — frontend-tools, tool-based, human-in-the-loop, agent-readonly, agent-config, programmatic-control, subagents.
 
 **The Quickstart's runtime route exports two verbs; Rich Threads needs four.** The published block ends with `export const GET = handler;` and `export const POST = handler;`. Next.js answers any unexported verb with a 405, and the threads client issues four — GET and POST to list and connect, **PATCH** to rename and archive, **DELETE** to delete (verified against `@copilotkit/core` 1.69.0; it never issues PUT). So a runtime built to the Quickstart serves chat perfectly and 405s every thread mutation — `DELETE /api/copilotkit/threads/<id> 405` followed by `unhandledRejection: Error: Request failed: 405`. Because chat is unaffected the runtime looks healthy. Neither the Quickstart, the Threads Drawer page nor Headless Threads mentions the extra exports. This repo exports PATCH and DELETE on all three runtimes; the Voice page's published route is closer (POST/GET/PUT/DELETE) but still omits PATCH.
+
+**The fixed-schema page says Strands generates the schema; the published code loads it from a file.** Re-fetched 2026-08-31 — the page has been restructured since this repo's first sync, and its five `snippet skipped` markers are now one. The surviving one is the step that matters, `region 'backend-render-operations'`, sitting where the tool that emits the surface should be. Its prose says that for Mastra and Strands "the agent tool runs a *secondary* LLM call… the schema is built on the fly" — but the published `buildA2uiFixedSchemaAgent` does no such thing: it `readFileSync`s a static `flight_schema.json` at module load and passes it to `updateComponents` unchanged, with no secondary LLM call anywhere. Two descriptions of the same demo that cannot both be right. This repo implements the published code.
 
 **The Threads Drawer's slot example does not typecheck.** The Customization section lists five slots and shows `<CopilotThreadsDrawer><span slot="header">…</span></CopilotThreadsDrawer>`. `CopilotThreadsDrawerProps` declares eleven members and `children` is not one of them, so that is a type error against `@copilotkit/react-core@1.69.0`. The underlying web component does accept slotted children — it is the React wrapper's typing that withholds them. The same prop table also omits `collapsible` and `onCollapseChange`, which exist on the type.
 

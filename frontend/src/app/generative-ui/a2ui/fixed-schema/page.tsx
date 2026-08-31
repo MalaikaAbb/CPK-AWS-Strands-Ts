@@ -9,17 +9,20 @@ const TREE = `Card
      ├─ Row          (AirlineBadge · PriceTag)
      └─ Button       (Book)`;
 
-const SKIPPED = `<WhenFrameworkHas flag="a2ui_pattern" equals="llm-driven">
-<Step>
-### Generate the schema dynamically
+const SKIPPED = `### Generate the schema dynamically
 
 Mastra and Strands take a different route: the agent tool runs a
 *secondary* LLM call with a forced tool choice that produces the
 operations container per-request. …
 
-<!-- snippet skipped: region 'backend-render-operations' missing in strands-typescript::a2ui-fixed-schema -->
-</Step>
-</WhenFrameworkHas>`;
+Neither SDK ships an \`a2ui.render(...)\` equivalent here, so the tool
+assembles the \`a2ui_operations\` envelope itself — the operation builder
+below is part of what you copy. Note the operations are *nested*
+(\`{ createSurface: {...} }\`): a consumer dispatches on the operation
+key, so a flat \`{ type: "create_surface" }\` shape is ignored and the
+surface never paints.
+
+<!-- snippet skipped: region 'backend-render-operations' missing in strands-typescript::a2ui-fixed-schema -->`;
 
 export default function Page() {
   return (
@@ -84,21 +87,29 @@ export default function Page() {
         </p>
       </Callout>
 
-      <Callout tone="warn" title="Every backend step on the page is a skipped snippet">
+      <Callout tone="warn" title="The one backend step the Strands path needs is still missing">
         <p className="mb-3">
-          There are five <code>snippet skipped</code> markers and no backend
-          code. Three of them are the same missing region repeated once per
-          framework branch — and the branch that applies to Strands is the one
-          you were sent to:
+          Re-fetched 2026-08-31: the page has been restructured since this
+          repo&apos;s first sync. The framework-branched schema-loading and
+          schema-inline steps are gone, replaced by a single{" "}
+          <strong>Generate the schema dynamically</strong> step — the
+          Mastra/Strands path — and the five <code>snippet skipped</code>{" "}
+          markers are down to one. That one is the step that matters:
         </p>
         <CodeBlock code={SKIPPED} language="text" />
         <p className="mt-3">
-          The section names Strands explicitly, describes what the tool should
-          do (&quot;a secondary LLM call with a forced tool choice that produces
-          the operations container per-request&quot;), and then prints the
-          placeholder instead of the code. The other two markers are{" "}
-          <code>backend-schema-json-load</code>, in the branches that do not
-          apply.
+          The surrounding prose now says more than it used to, and all of it is
+          worth having: that neither SDK ships an{" "}
+          <code>a2ui.render(...)</code> equivalent, that the tool assembles the{" "}
+          <code>a2ui_operations</code> envelope itself, and that the operations
+          are <em>nested</em> — a flat{" "}
+          <code>{"{ type: \"create_surface\" }"}</code> is ignored and the
+          surface silently never paints. This route uses the toolkit&apos;s{" "}
+          <code>createSurface</code> / <code>updateComponents</code> /{" "}
+          <code>updateDataModel</code> helpers, which emit the nested form —
+          verified as{" "}
+          <code>{"{\"version\":\"v0.9\",\"createSurface\":{…}}"}</code>.
+          Every word of that describes code the page still does not print.
         </p>
       </Callout>
 
