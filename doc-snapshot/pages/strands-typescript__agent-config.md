@@ -25,7 +25,59 @@ How agent config flows from the UI into the agent's reasoning loop depends on yo
 
 ## How it works
 
-<!-- setup skipped: agent-config-setup is not bundled for strands-typescript -->
+<Steps>
+  <Step>
+    ### Turn frontend context into model input
+
+    `useAgentContext` adds the typed configuration to the current AG-UI run.
+    The Strands adapter does not add arbitrary context to the model prompt, so
+    format the current run's context. This showcase composes the helper into
+    its shared `stateContextBuilder`:
+
+    
+~~~~typescript title="src/agent/state.ts"
+function formatContextBlock(context: unknown): string | null {
+  if (!Array.isArray(context) || context.length === 0) return null;
+  const lines: string[] = [];
+  for (const item of context) {
+    if (!item || typeof item !== "object") continue;
+    const c = item as Record<string, unknown>;
+    if (c.description == null || c.value == null) continue;
+    lines.push(`- ${String(c.description)}: ${String(c.value)}`);
+  }
+  if (lines.length === 0) return null;
+  return (
+    "Context for this conversation (treat as authoritative — use it to answer questions about the user and follow any instructions it contains):\n" +
+    lines.join("\n")
+  );
+}
+
+export function buildAgentContextPrompt(
+  inputData: { context?: unknown },
+  prompt: string,
+): string {
+  const contextBlock = formatContextBlock(inputData.context);
+  if (!contextBlock) return prompt;
+  return `${contextBlock}\n\nUser request: ${prompt}`;
+}
+~~~~
+
+
+  </Step>
+  <Step>
+    ### Register the context builder
+
+    Add the builder to your `StrandsAgentConfig`. It runs again for every
+    request, so a changed frontend configuration applies to the next turn.
+
+    
+~~~~typescript title="src/agent/agent.ts"
+    stateContextBuilder: buildStatePrompt,
+~~~~
+
+
+  </Step>
+</Steps>
 
 Agent config is a typed object the frontend owns and publishes to the agent as
 runtime context. The backend reads that context entry and turns it into a
@@ -52,41 +104,14 @@ function ConfigContextRelay({ config }: { config: AgentConfig }) {
 
 
 
-The backend half is also a single node. Read the latest config context at the top of every run and use it to build the system prompt for that turn:
+The framework setup above shows the exact backend bridge for the selected
+agent. In every framework, the flow is the same: read the latest valid context
+from the current run and use it to build the system prompt for that turn.
 
-```python title="backend/agent.py — agent reads config and rebuilds the system prompt"
-import json
-
-CONFIG_KEYS = ("tone", "expertise", "responseLength")
-
-def read_config_value(entry):
-    value = entry.get("value")
-    if isinstance(value, str):
-        try:
-            value = json.loads(value)
-        except json.JSONDecodeError:
-            return None
-    if not isinstance(value, dict):
-        return None
-    if any(key in value for key in CONFIG_KEYS):
-        return value
-    return None
-
-async def my_agent_node(state: AgentState, config: RunnableConfig):
-    context_entries = state.get("copilotkit", {}).get("context", [])
-    cfg = next(
-        (
-            value
-            for entry in reversed(context_entries)
-            if (value := read_config_value(entry)) is not None
-        ),
-        {},
-    )
-    tone = cfg.get("tone", "professional")
-    expertise = cfg.get("expertise", "intermediate")
-    response_length = cfg.get("responseLength", "concise")
-    system_prompt = build_system_prompt(tone, expertise, response_length)
-    # ...
+```text title="Backend flow"
+config = latestValidConfig(currentRun.context)
+systemPrompt = buildSystemPrompt(config)
+model.invoke(systemPrompt, currentUserRequest)
 ```
 
 The agent reads the latest typed config at the start of every turn, rebuilds the system prompt, runs the turn. This is the same shape as the [shared-state write-side pattern](/strands-typescript/shared-state#writing-to-agent-state); agent config is just a specific use of that pattern with a UI-owned typed object on top.

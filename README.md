@@ -252,11 +252,11 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `shared-state/in-app-agent-read` | `/shared-state/in-app-agent-read` | ✅ Working | Page's `agentId` contradicts its own backend. |
 | `shared-state/in-app-agent-write` | `/shared-state/in-app-agent-write` | ✅ Working | `initialState` in the snippet does not exist on the hook. |
 | `multi-agent/subagents` | `/multi-agent/subagents` | ❌ Broken | Three placeholders; only the log component survives. |
-| `agent-config` | `/agent-config` | ⚠️ Partial | UI half works. Backend sample is LangGraph Python. |
+| `agent-config` | `/agent-config` | ✅ Working | Both halves run: the UI publishes the typed config with `useAgentContext`, and a `stateContextBuilder` folds it into the prompt. That builder was supplied separately — the page's backend section is a placeholder and the code it does print is LangGraph Python. |
 | `copilot-runtime` | `/copilot-runtime` | ✅ Working | Page never mentions Strands. |
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
 
-**Totals:** 25 ✅ Working · 4 ⚠️ Partial · 1 ❌ Broken · 3 📄 Reference.
+**Totals:** 26 ✅ Working · 3 ⚠️ Partial · 1 ❌ Broken · 3 📄 Reference.
 
 Live version at `/status`, with the full gap ledger.
 
@@ -285,6 +285,8 @@ Forty-three findings are recorded in `frontend/src/lib/doc-gaps.ts`, and the ful
 **The Quickstart's runtime route exports two verbs; Rich Threads needs four.** The published block ends with `export const GET = handler;` and `export const POST = handler;`. Next.js answers any unexported verb with a 405, and the threads client issues four — GET and POST to list and connect, **PATCH** to rename and archive, **DELETE** to delete (verified against `@copilotkit/core` 1.69.0; it never issues PUT). So a runtime built to the Quickstart serves chat perfectly and 405s every thread mutation — `DELETE /api/copilotkit/threads/<id> 405` followed by `unhandledRejection: Error: Request failed: 405`. Because chat is unaffected the runtime looks healthy. Neither the Quickstart, the Threads Drawer page nor Headless Threads mentions the extra exports. This repo exports PATCH and DELETE on all three runtimes; the Voice page's published route is closer (POST/GET/PUT/DELETE) but still omits PATCH.
 
 **The fixed-schema page says Strands generates the schema; the published code loads it from a file.** Re-fetched 2026-08-31 — the page has been restructured since this repo's first sync, and its five `snippet skipped` markers are now one. The surviving one is the step that matters, `region 'backend-render-operations'`, sitting where the tool that emits the surface should be. Its prose says that for Mastra and Strands "the agent tool runs a *secondary* LLM call… the schema is built on the fly" — but the published `buildA2uiFixedSchemaAgent` does no such thing: it `readFileSync`s a static `flight_schema.json` at module load and passes it to `updateComponents` unchanged, with no secondary LLM call anywhere. Two descriptions of the same demo that cannot both be right. This repo implements the published code.
+
+**Nothing documents how `useAgentContext` reaches a Strands agent.** Agent Config and Agent Read-Only Context both publish a frontend that calls `useAgentContext`, and both replace their backend section with the `setup skipped` placeholder — Agent Config's alternative is LangGraph Python under a generic `backend/agent.py` label. The adapter has no automatic path from `RunAgentInput.context[]` into the model: whatever the `stateContextBuilder` does not write into the prompt, the agent never sees. The builder wiring that channel was supplied separately and lives in `backend/src/agents/agent-context.ts`.
 
 **The Threads Drawer's slot example does not typecheck.** The Customization section lists five slots and shows `<CopilotThreadsDrawer><span slot="header">…</span></CopilotThreadsDrawer>`. `CopilotThreadsDrawerProps` declares eleven members and `children` is not one of them, so that is a type error against `@copilotkit/react-core@1.69.0`. The underlying web component does accept slotted children — it is the React wrapper's typing that withholds them. The same prop table also omits `collapsible` and `onCollapseChange`, which exist on the type.
 

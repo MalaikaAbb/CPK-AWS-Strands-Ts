@@ -37,21 +37,18 @@ type AgentState = {
 };
 
 function YourMainContent() {
-  const { agent } = useAgent({ agentId: "languageAgent" });
-
-  // Stands in for the page's `initialState` option, which the hook does not
-  // have. Runs once, and only while the agent still has no state of its own.
+ const { agent, isReady } = useAgent({
+    agentId: "languageAgent",
+  });
+  const state = (agent.state ?? {}) as Partial<AgentState>;
   useEffect(() => {
-    if (agent.state === undefined) {
-      agent.setState({ language: "spanish" } satisfies AgentState);
-    }
-  }, [agent]);
-
+if (!isReady || state.language !== undefined) return;
+    agent.setState({ ...(agent.state ?? {}), language: "spanish" });
+  }, [agent, isReady, state.language]);
   const toggleLanguage = () => {
-    agent.setState({
-      language: (agent.state as AgentState | undefined)?.language === "english" ? "spanish" : "english",
-    });
+    agent.setState({ ...(agent.state ?? {}), language: state.language === "english" ? "spanish" : "english" }); 
   };
+
 
   return (
     <div className="h-full overflow-y-auto p-8">

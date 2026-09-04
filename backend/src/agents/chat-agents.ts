@@ -25,10 +25,11 @@
  */
 
 import { Agent, type ToolList } from "@strands-agents/sdk";
-import { StrandsAgent } from "@ag-ui/aws-strands";
+import { StrandsAgent, type StrandsAgentConfig } from "@ag-ui/aws-strands";
 
 import { createModel } from "./model";
 import { TOOL_RENDERING_TOOLS } from "./tools";
+import { buildAgentContextPrompt } from "./agent-context";
 
 export interface ChatAgentSpec {
   name: string;
@@ -44,6 +45,15 @@ export interface ChatAgentSpec {
    * `tools.ts` for the exception and where its code came from.
    */
   tools?: ToolList;
+  /**
+   * Folds `RunAgentInput.context[]` into the prompt, for the agents whose
+   * routes publish values with `useAgentContext`.
+   *
+   * Left undefined elsewhere: the adapter has no automatic context → model
+   * path, so an agent without this simply never sees those entries. See
+   * `agent-context.ts`.
+   */
+  stateContextBuilder?: StrandsAgentConfig["stateContextBuilder"];
 }
 
 export async function buildChatAgent(spec: ChatAgentSpec): Promise<StrandsAgent> {
@@ -55,10 +65,15 @@ export async function buildChatAgent(spec: ChatAgentSpec): Promise<StrandsAgent>
 
   await agent.initialize();
 
+  const config: StrandsAgentConfig | undefined = spec.stateContextBuilder
+    ? { stateContextBuilder: spec.stateContextBuilder }
+    : undefined;
+
   return new StrandsAgent({
     agent,
     name: spec.name,
     description: spec.description,
+    ...(config ? { config } : {}),
   });
 }
 
@@ -225,11 +240,16 @@ export const CHAT_AGENT_SPECS: ChatAgentSpec[] = [
   },
   {
     name: "agent-config",
-    description: "Backs Agent Config.",
+    description:
+      "Backs Agent Config. Reads the UI's typed config off " +
+      "RunAgentInput.context via stateContextBuilder.",
     systemPrompt:
-      "You are a helpful AI assistant. The application publishes response " +
-      "preferences (tone, expertise, response length) as context. Obey them " +
-      "on every reply.",
+      "You are a helpful AI assistant. Each turn you are given the user's " +
+      "response preferences — tone, expertise level and response length — as " +
+      "a context block above their request. Obey all three on every reply, " +
+      "and never mention the block itself.",
+    // The backend half both context pages describe and neither publishes.
+    stateContextBuilder: buildAgentContextPrompt,
   },
   {
     name: "subagents",

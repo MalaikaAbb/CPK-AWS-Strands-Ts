@@ -10,13 +10,15 @@ type AgentState = {
 };
 
 function YourMainContent() {
-  const { agent } = useAgent({ agentId: "languageAgent" });
+const { agent, isReady } = useAgent({
+    agentId: "languageAgent",
+  });
+  const state = (agent.state ?? {}) as Partial<AgentState>;
+  useEffect(() => {
+if (!isReady || state.language !== undefined) return;
+    agent.setState({ ...(agent.state ?? {}), language: "spanish" });
+  }, [agent, isReady, state.language]);
 
-      useEffect(() => {
-      if (agent.state.language === undefined) {
-        agent.setState({ language: "spanish" } satisfies AgentState);
-      }
-    }, [agent]);
 
   return (
     <div className="h-full overflow-y-auto p-8">

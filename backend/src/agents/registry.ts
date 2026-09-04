@@ -32,6 +32,11 @@ const NO_TOOLS =
 const SETUP_SKIPPED =
   "The page's backend section is the literal `<!-- setup skipped: … is not bundled for strands-typescript -->` placeholder.";
 
+const AGENT_CONFIG_GAPS = [
+  "The page's backend section is the `setup skipped` placeholder; the alternative it does print is LangGraph Python under a generic `backend/agent.py` label.",
+  "`stateContextBuilder` here folds `RunAgentInput.context[]` into the prompt — the channel both context pages describe and neither publishes. Supplied separately; see `agent-context.ts`.",
+];
+
 const TOOL_RENDERING_GAPS = [
   "`get_weather` runs here, but its definition was supplied separately — the doc page prints `<!-- snippet skipped: region 'weather-tool-backend' -->` where it should be.",
   "`getWeatherImpl` is not published either; only its return shape is recoverable, from the `WeatherResult` interface in the published frontend `page.tsx`.",
@@ -43,7 +48,12 @@ function chatEntries(): RegistryEntry[] {
     id: spec.name,
     mountPath: `/${spec.name}`,
     build: () => buildChatAgent(spec),
-    gaps: spec.name === "tool-rendering" ? TOOL_RENDERING_GAPS : [NO_TOOLS],
+    gaps:
+      spec.name === "tool-rendering"
+        ? TOOL_RENDERING_GAPS
+        : spec.name === "agent-config"
+          ? AGENT_CONFIG_GAPS
+          : [NO_TOOLS],
   }));
 }
 

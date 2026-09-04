@@ -448,9 +448,9 @@ export const NAV: NavGroup[] = [
         docPath: "/strands-typescript/agent-config",
         summary:
           "A typed config object the UI owns, published with useAgentContext and rebuilt into the system prompt each turn.",
-        status: "partial",
+        status: "working",
         statusNote:
-          "The UI half is the page's, verbatim, and the agent obeys it. The backend half the page shows is LangGraph Python under a generic `backend/agent.py` label.",
+          "Both halves now run: the UI publishes the typed config with useAgentContext, and a stateContextBuilder folds it into the prompt. That builder was supplied separately — the page's own backend section is a placeholder, and the code it does print is LangGraph Python.",
       },
     ],
   },
