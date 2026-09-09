@@ -8,6 +8,46 @@ Holds the 3 most recent dated entries. When a change lands on a fourth
 date, the oldest entry is dropped. Entries are counted, not aged, so a gap of
 weeks between changes does not expire anything.
 
+## 2026-09-09
+
+### 09:58 UTC — 2 pages, highest severity high
+
+**High — Multimodal Attachments**
+
+`/strands-typescript/multimodal-attachments` · route `/multimodal-attachments` · under “Configuration”
+
+9 code lines, 1 heading, 11 prose lines changed. The number of fenced code blocks changed.
+
+````diff
++ | `maxConcurrentUploads` | `number` | `1` | How many files upload at the same time. See [Upload concurrency](#upload-concurrency). |
++ 
++ ## Upload concurrency
++ 
++ When a user attaches several files at once, they upload one at a time by default. Every picked file shows in the attachment queue immediately, whether or not its upload has started.
++ 
++ Set `maxConcurrentUploads` to upload several together — worth raising when your upload endpoint handles parallel requests:
++ 
+````
+
+**High — Open, close, and feedback**
+
+`/strands-typescript/prebuilt-components/chat-controls` · route `/prebuilt-components/chat-controls` · under “Control the open state from your own UI”
+
+20 code lines, 1 heading, 36 prose lines changed. The number of fenced code blocks changed.
+
+````diff
++ ## Control the open state from your own UI
++ 
++ Pass `open` and `onOpenChange` to `<CopilotSidebar>` or `<CopilotPopup>` to own
++ the open state yourself. This is the controlled pattern: the surface renders
++ whatever `open` says, and every request to open or close (the toggle button,
++ click-outside on the popup) arrives on `onOpenChange` instead of moving the
++ surface directly.
++ 
+````
+
+---
+
 ## 2026-09-04
 
 ### 12:47 UTC — 9 pages, highest severity high
@@ -155,6 +195,8 @@ weeks between changes does not expire anything.
 
 ---
 
+---
+
 ## 2026-09-01
 
 ### 03:33 UTC — 4 pages, highest severity none
@@ -182,47 +224,6 @@ Now tracked for the first time.
 `/strands-typescript/threads-lifecycle` · route `/threads-lifecycle`
 
 Now tracked for the first time.
-
----
-
----
-
-## 2026-08-31
-
-### 07:46 UTC — 2 pages, highest severity low
-
-**Low — A2UI · Fixed Schema**
-
-`/strands-typescript/generative-ui/a2ui/fixed-schema` · route `/generative-ui/a2ui/fixed-schema` · under “Fixed Schema A2UI”
-
-12 prose lines changed.
-
-````diff
-+ <Callout type="info" title="The flight card is an illustrative domain">
-+ Everything below uses flight booking so the wiring has something concrete to
-+ render — `display_flight`, `flight-fixed-catalog`, and the airport/airline
-+ components are this page's example, not part of the API.
-+ 
-+ What transfers is the **shape**: a fixed catalog, a tool that returns data
-+ against it, and `a2ui.render(...)` with `createSurface` + `updateComponents` +
-+ `updateDataModel`. Keep your own application's domain and substitute your own
-````
-
-**Low — Quickstart**
-
-`/strands-typescript/quickstart` · route `/quickstart` · under “Quickstart”
-
-7 prose lines changed.
-
-````diff
-- <OpsPlatformCTA
-- variant="card"
-- title="Ship AWS Strands to production"
-- body="Add persistent threads and the inspector with CopilotKit Intelligence."
-- ctaLabel="Create a free account"
-+ <IntelligenceOnboardingPrompt
-+ feature="learning"
-````
 
 ---
 

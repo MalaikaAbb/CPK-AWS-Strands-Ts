@@ -2,6 +2,7 @@
 
 import {
   CopilotChatConfigurationProvider,
+  CopilotPopup,
   CopilotSidebar,
   useCopilotChatConfiguration,
 } from "@copilotkit/react-core/v2";
@@ -46,15 +47,19 @@ import { DemoFrame } from "@/components/demo-frame";
 
 function OpenChatButton() {
   const config = useCopilotChatConfiguration();
+  const [chatOpen, setChatOpen] = useState(false);
 
   // setModalOpen is only present when a provider in the tree owns modal state
   // (the prebuilt CopilotPopup / CopilotSidebar create it for you).
   if (!config?.setModalOpen) return null;
 
   return (
-    <button onClick={() => config.setModalOpen(true)}>
-      Ask the assistant
-    </button>
+  <>
+      <nav>
+        <button onClick={() => setChatOpen(!chatOpen)}>Ask the assistant (Popup)</button>
+      </nav>
+      <CopilotPopup agentId="chat-controls" open={chatOpen} onOpenChange={setChatOpen} />
+    </>
   );
 }
 
@@ -64,7 +69,7 @@ function ToggleChatButton() {
 
   return (
     <button onClick={() => config.setModalOpen(!config.isModalOpen)}>
-      {config.isModalOpen ? "Close chat" : "Open chat"}
+      {config.isModalOpen ? "Close Sidebar" : "Open Sidebar"}
     </button>
   );
 }
@@ -90,6 +95,8 @@ export default function Page() {
             toggle&apos;s label tracks its state — that is{" "}
             <code>isModalOpen</code> and <code>setModalOpen</code> read straight
             off the chat configuration context.
+            <br/>
+            <b>RATINGS/FEEDBACK CONFIGURATION IS IN SIDEBAR</b>
           </p>
 
           <div className="mt-6 flex flex-wrap gap-3 [&_button]:rounded-md [&_button]:border [&_button]:border-slate-300 [&_button]:px-3 [&_button]:py-1.5 [&_button]:text-sm dark:[&_button]:border-slate-700">
@@ -119,6 +126,7 @@ export default function Page() {
           {/* No `defaultOpen` — see the note above. */}
           <CopilotSidebar
             agentId="chat-controls"
+            position="left"
             messageView={{
               assistantMessage: {
                 onThumbsUp: (message: { id: string }) => {
