@@ -251,15 +251,6 @@ export const CHAT_AGENT_SPECS: ChatAgentSpec[] = [
     // The backend half both context pages describe and neither publishes.
     stateContextBuilder: buildAgentContextPrompt,
   },
-  {
-    name: "subagents",
-    description:
-      "Backs Sub-Agents. Has no delegation tools — the page never publishes " +
-      "them.",
-    systemPrompt:
-      "You are a supervisor assistant coordinating research, writing, and " +
-      "critique work.",
-  },
 ];
 
 // The agents that are NOT the Quickstart shape live elsewhere, because their

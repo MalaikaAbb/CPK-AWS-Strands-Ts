@@ -34,7 +34,63 @@ around a real backend tool, see [Tool rendering](/strands-typescript/generative-
 
 ## How it works in code
 
-<!-- setup skipped: frontend-tools-setup is not bundled for strands-typescript -->
+<Steps>
+  <Step>
+    ### Nothing to wire on the agent
+
+    On every run the AG-UI Strands adapter registers a proxy tool in the
+    agent's tool registry for each tool the request carries, so the agent
+    declares none of its own. A component registered with `useComponent`
+    reaches the model by name, and the browser executes the call.
+
+    ```ts title="src/agent/agent.ts"
+    import { Agent } from "@strands-agents/sdk";
+    import { StrandsAgent } from "@ag-ui/aws-strands";
+
+    const strandsAgent = new Agent({
+      model: await createModel(),
+      systemPrompt: SYSTEM_PROMPT,
+      tools: [],
+    });
+
+    export const aguiAgent = new StrandsAgent({
+      agent: strandsAgent,
+      name: "chart_agent",
+      description: "Renders charts from data.",
+    });
+    ```
+
+    A backend tool that already owns the name wins: the adapter never replaces
+    a native tool with a proxy. Keep the `useComponent` name distinct from
+    every tool in `tools`.
+
+  </Step>
+  <Step>
+    ### Tell the model when to call it
+
+    This is the part that is easy to miss. The tool arrives on every run, but a
+    model with no instruction about it will answer in prose and never call it.
+    Name the tool in `systemPrompt` and say what it is for.
+
+    ```ts title="src/agent/prompts.ts"
+    export const SYSTEM_PROMPT = `You are a data visualization assistant.
+
+    When the user asks for a chart, call the frontend \`render_bar_chart\` tool
+    with a concise title and a \`data\` array of \`{label, value}\` items.
+
+    Keep chat responses brief and let the chart do the talking.`;
+    ```
+
+  </Step>
+</Steps>
+
+Import the React hook and Zod in the component that registers the tool. This also
+applies to the built-in agent, which needs no backend tool-registration step.
+
+```tsx
+import { useComponent } from "@copilotkit/react-core/v2";
+import { z } from "zod";
+```
 
 `useComponent` takes a name, a Zod schema for its props, and the component
 to render. The runtime registers it as a frontend tool so the agent can

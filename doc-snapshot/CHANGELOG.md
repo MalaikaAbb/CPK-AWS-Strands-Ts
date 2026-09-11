@@ -8,6 +8,63 @@ Holds the 3 most recent dated entries. When a change lands on a fourth
 date, the oldest entry is dropped. Entries are counted, not aged, so a gap of
 weeks between changes does not expire anything.
 
+## 2026-09-10
+
+### 06:46 UTC — 3 pages, highest severity high
+
+**High — Frontend Tools**
+
+`/strands-typescript/frontend-tools` · route `/frontend-tools` · under “How it works in code”
+
+24 code lines, 2 headings, 24 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- <!-- setup skipped: frontend-tools-setup is not bundled for strands-typescript -->
++ <Steps>
++ <Step>
++ ### Nothing to wire on the agent
++ 
++ On every run the AG-UI Strands adapter registers a proxy tool in the
++ agent's tool registry for each tool the request carries, so the agent
++ declares none of its own. A component registered with `useComponent`
+````
+
+**High — Components as Tools**
+
+`/strands-typescript/generative-ui/tool-based` · route `/generative-ui/tool-based` · under “How it works in code”
+
+27 code lines, 2 headings, 28 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- <!-- setup skipped: frontend-tools-setup is not bundled for strands-typescript -->
++ <Steps>
++ <Step>
++ ### Nothing to wire on the agent
++ 
++ On every run the AG-UI Strands adapter registers a proxy tool in the
++ agent's tool registry for each tool the request carries, so the agent
++ declares none of its own. A component registered with `useComponent`
+````
+
+**High — Sub-Agents**
+
+`/strands-typescript/multi-agent/subagents` · route `/multi-agent/subagents` · under “Sub-Agents” · in a `typescript` block
+
+57 code lines changed. The number of fenced code blocks changed.
+
+````diff
++ ```typescript
++ // src/agent/state.ts
++ /** Marker returned by a sub-agent tool body when its LLM call failed. */
++ export const SUBAGENT_FAILURE_MARKER = "__SUBAGENT_FAILED__:";
++ 
++ interface Delegation {
++ id: string;
++ sub_agent: string;
+````
+
+---
+
 ## 2026-09-09
 
 ### 09:58 UTC — 2 pages, highest severity high
@@ -45,6 +102,8 @@ weeks between changes does not expire anything.
 + surface directly.
 + 
 ````
+
+---
 
 ---
 
@@ -192,38 +251,6 @@ weeks between changes does not expire anything.
 - [Advanced — Action Handlers](./advanced#action-handlers) for the
 + [Advanced — Action Handlers](/integrations/langgraph/generative-ui/a2ui/advanced#action-handlers) for the
 ````
-
----
-
----
-
-## 2026-09-01
-
-### 03:33 UTC — 4 pages, highest severity none
-
-**Info — Headless Threads**
-
-`/strands-typescript/headless-threads` · route `/headless-threads`
-
-Now tracked for the first time.
-
-**Info — Threads Drawer**
-
-`/strands-typescript/prebuilt-components/copilot-threads-drawer` · route `/prebuilt-components/copilot-threads-drawer`
-
-Now tracked for the first time.
-
-**Info — Synchronize Thread History**
-
-`/strands-typescript/threads-import` · route `/threads-import`
-
-Now tracked for the first time.
-
-**Info — Thread & History Lifecycle**
-
-`/strands-typescript/threads-lifecycle` · route `/threads-lifecycle`
-
-Now tracked for the first time.
 
 ---
 
