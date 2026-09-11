@@ -392,7 +392,7 @@ export const NAV: NavGroup[] = [
         docPath: "/strands-typescript/shared-state/agent-readonly",
         summary:
           "useAgentContext as a one-way UI-to-agent channel — props for the agent, with no setter.",
-        status: "working",
+        status: "broken",
         statusNote:
           "Context entries reach the model. The page credits a `CopilotKitMiddleware` that this adapter does not have — see the doc gaps.",
       },
@@ -431,7 +431,7 @@ export const NAV: NavGroup[] = [
         docPath: "/strands-typescript/multi-agent/subagents",
         summary:
           "A supervisor delegating to research, writing and critique sub-agents, with a live delegation log.",
-        status: "broken",
+        status: "working",
         statusNote:
           "Three placeholders in one page: the setup, the sub-agent definitions, and the delegation tools. Only the log component survives, and it references four types it never imports.",
       },

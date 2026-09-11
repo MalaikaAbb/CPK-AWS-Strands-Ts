@@ -16,6 +16,7 @@ import type { StrandsAgent } from "@ag-ui/aws-strands";
 import { CHAT_AGENT_SPECS, buildChatAgent } from "./chat-agents";
 import { buildLanguageAgent, buildStateMirrorAgent } from "./state-agents";
 import { buildA2uiDynamicAgent } from "./a2ui-dynamic-agent";
+import { buildSubagentsAgent } from "./subagents-agent";
 import { buildA2uiFixedSchemaAgent } from "./a2ui-fixed-agent";
 
 export interface RegistryEntry {
@@ -75,6 +76,15 @@ export const REGISTRY: RegistryEntry[] = [
     gaps: [
       "Render-state-in-your-app publishes no backend at all; this agent's `stateContextBuilder` generalises the Shared State pages' published one.",
       "Nothing on the Strands TypeScript side can write state back — that needs a tool with `ToolBehavior.stateFromArgs`, which no page publishes.",
+    ],
+  },
+  {
+    id: "subagents",
+    mountPath: "/subagents",
+    build: buildSubagentsAgent,
+    gaps: [
+      "The page's backend section is three placeholders — `setup skipped: subagents-setup`, `snippet skipped: 'subagent-setup'` and `snippet skipped: 'supervisor-delegation-tools'` — so neither the sub-agents nor the delegation tools are published.",
+      "`delegation-log.tsx` renders a `delegations` state slot nothing can populate: writing state back needs a tool with `ToolBehavior.stateFromArgs`, which the page's sample calls `makeSubagentStateFromResult` and never publishes.",
     ],
   },
   {
