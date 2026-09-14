@@ -356,6 +356,18 @@ export const NAV: NavGroup[] = [
           "Pattern 1 works. Pattern 2 (`useInterrupt`) is LangGraph-only and does not apply to Strands — half the page is inert here.",
       },
       {
+        path: "/human-in-the-loop/governed-actions",
+        hasDemo: true,
+        agentId: "governed-actions",
+        title: "Governed Action Approval UI",
+        docPath: "/strands-typescript/human-in-the-loop/governed-actions",
+        summary:
+          "Gating a side-effecting tool call behind an approve/reject card before it runs.",
+        status: "partial",
+        statusNote:
+          "The useHumanInTheLoop half works: the tool registers, the run suspends on the card, and respond() resumes it. The governance behind it does not exist — no page publishes a policy engine, a tool that emits a GovernedAction, or executeSideEffect, so verdict is whatever the model invents. The page's other pattern (useInterrupt) is not implemented: nothing on the Strands side raises an AG-UI interrupt.",
+      },
+      {
         path: "/programmatic-control",
         hasDemo: true,
         agentId: "programmatic-control",

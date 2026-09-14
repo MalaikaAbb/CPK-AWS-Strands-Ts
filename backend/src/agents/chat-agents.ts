@@ -210,6 +210,11 @@ export const CHAT_AGENT_SPECS: ChatAgentSpec[] = [
     systemPrompt: USE_FRONTEND_TOOLS,
   },
   {
+    name: "governed-actions",
+    description: "Backs the Governed Action Approval UI page.",
+    systemPrompt: USE_FRONTEND_TOOLS,
+  },
+  {
     name: "programmatic-control",
     description: "Backs Programmatic Control.",
     systemPrompt: USE_FRONTEND_TOOLS,

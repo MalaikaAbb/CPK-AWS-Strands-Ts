@@ -44,6 +44,12 @@ const TOOL_RENDERING_GAPS = [
   "`search_flights` has no published tool and no impl, so the page's second named renderer stays idle.",
 ];
 
+const GOVERNED_ACTIONS_GAPS = [
+  "The page publishes no backend half at all — not even the `setup skipped` placeholder the other HITL pages carry. There is no published tool that emits a `GovernedAction`, and no policy engine behind `verdict`.",
+  "`executeSideEffect(action.tool, action.arguments)` is called by the page's own `handleApproval` sample and defined nowhere in the doc tree, so the approved branch has no published implementation.",
+  "The page's other pattern, `useInterrupt`, needs a runtime that raises AG-UI interrupts. Nothing on the Strands TypeScript side does, and this page publishes no backend that would.",
+];
+
 function chatEntries(): RegistryEntry[] {
   return CHAT_AGENT_SPECS.map((spec) => ({
     id: spec.name,
@@ -54,7 +60,9 @@ function chatEntries(): RegistryEntry[] {
         ? TOOL_RENDERING_GAPS
         : spec.name === "agent-config"
           ? AGENT_CONFIG_GAPS
-          : [NO_TOOLS],
+          : spec.name === "governed-actions"
+            ? GOVERNED_ACTIONS_GAPS
+            : [NO_TOOLS],
   }));
 }
 
