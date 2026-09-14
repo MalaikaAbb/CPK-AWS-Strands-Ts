@@ -29,6 +29,7 @@ export const AGENT_IDS = [
   "gen-ui-interactive",
   "frontend-tools",
   "hitl-in-chat",
+  "governed-actions",
   "programmatic-control",
   "threads-demo",
   "readonly-state-agent-context",
