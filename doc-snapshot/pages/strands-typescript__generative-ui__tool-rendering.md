@@ -100,6 +100,22 @@ The most expressive path is one renderer per tool name. The primary
 receives the tool's parsed arguments, a live `status`, and (once the agent
 returns) the `result`:
 
+### Tool inputs and results are separate
+
+In `useRenderTool`, `parameters` contains the **inputs** the agent sent to the
+tool. It does not change into the tool's return value when `status` becomes
+`"complete"`. The completed output arrives separately as `result`, a string.
+For a tool that returns JSON, parse that string before reading its fields.
+
+For example, `get_weather` might receive `{ "location": "Paris" }` and return
+`{ "temperature": 22 }`. Read `parameters.location` for the requested city and
+the parsed `result.temperature` for the temperature. Adding `temperature` to
+the renderer's `parameters` schema does not copy it from the result.
+
+If a card says **complete** but still shows placeholder details, check whether
+those details come from `parameters` instead of the parsed `result`. Completion
+reports that the tool returned; it does not fill the card's props for you.
+
 The frontend pattern is the same for every backend. This shared, docs-only
 example includes every component, type, and helper that its renderers use:
 
@@ -336,7 +352,17 @@ matching backend definition for `get_weather`: expose a tool named
 `get_weather`, return structured data, and let the frontend renderer with
 the same name paint the card.
 
-<!-- snippet skipped: region 'weather-tool-backend' missing in strands-typescript::tool-rendering -->
+```typescript
+// src/agent/tools.ts
+export const getWeather = tool({
+  name: "get_weather",
+  description: "Get current weather for a location.",
+  inputSchema: z.object({
+    location: z.string().describe("The location to get weather for."),
+  }),
+  callback: ({ location }) => JSON.stringify(getWeatherImpl(location)),
+});
+```
 
 <!-- setup skipped: tool-rendering-setup is not bundled for strands-typescript -->
 

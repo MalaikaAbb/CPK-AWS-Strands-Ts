@@ -8,248 +8,169 @@ Holds the 3 most recent dated entries. When a change lands on a fourth
 date, the oldest entry is dropped. Entries are counted, not aged, so a gap of
 weeks between changes does not expire anything.
 
-## 2026-09-10
+## 2026-09-16
 
-### 06:46 UTC — 3 pages, highest severity high
+### 09:36 UTC — 2 pages, highest severity high
 
-**High — Frontend Tools**
+**High — Copilot Runtime**
 
-`/strands-typescript/frontend-tools` · route `/frontend-tools` · under “How it works in code”
-
-24 code lines, 2 headings, 24 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-- <!-- setup skipped: frontend-tools-setup is not bundled for strands-typescript -->
-+ <Steps>
-+ <Step>
-+ ### Nothing to wire on the agent
-+ 
-+ On every run the AG-UI Strands adapter registers a proxy tool in the
-+ agent's tool registry for each tool the request carries, so the agent
-+ declares none of its own. A component registered with `useComponent`
-````
-
-**High — Components as Tools**
-
-`/strands-typescript/generative-ui/tool-based` · route `/generative-ui/tool-based` · under “How it works in code”
-
-27 code lines, 2 headings, 28 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-- <!-- setup skipped: frontend-tools-setup is not bundled for strands-typescript -->
-+ <Steps>
-+ <Step>
-+ ### Nothing to wire on the agent
-+ 
-+ On every run the AG-UI Strands adapter registers a proxy tool in the
-+ agent's tool registry for each tool the request carries, so the agent
-+ declares none of its own. A component registered with `useComponent`
-````
-
-**High — Sub-Agents**
-
-`/strands-typescript/multi-agent/subagents` · route `/multi-agent/subagents` · under “Sub-Agents” · in a `typescript` block
-
-57 code lines changed. The number of fenced code blocks changed.
-
-````diff
-+ ```typescript
-+ // src/agent/state.ts
-+ /** Marker returned by a sub-agent tool body when its LLM call failed. */
-+ export const SUBAGENT_FAILURE_MARKER = "__SUBAGENT_FAILED__:";
-+ 
-+ interface Delegation {
-+ id: string;
-+ sub_agent: string;
-````
-
----
-
-## 2026-09-09
-
-### 09:58 UTC — 2 pages, highest severity high
-
-**High — Multimodal Attachments**
-
-`/strands-typescript/multimodal-attachments` · route `/multimodal-attachments` · under “Configuration”
-
-9 code lines, 1 heading, 11 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-+ | `maxConcurrentUploads` | `number` | `1` | How many files upload at the same time. See [Upload concurrency](#upload-concurrency). |
-+ 
-+ ## Upload concurrency
-+ 
-+ When a user attaches several files at once, they upload one at a time by default. Every picked file shows in the attachment queue immediately, whether or not its upload has started.
-+ 
-+ Set `maxConcurrentUploads` to upload several together — worth raising when your upload endpoint handles parallel requests:
-+ 
-````
-
-**High — Open, close, and feedback**
-
-`/strands-typescript/prebuilt-components/chat-controls` · route `/prebuilt-components/chat-controls` · under “Control the open state from your own UI”
-
-20 code lines, 1 heading, 36 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-+ ## Control the open state from your own UI
-+ 
-+ Pass `open` and `onOpenChange` to `<CopilotSidebar>` or `<CopilotPopup>` to own
-+ the open state yourself. This is the controlled pattern: the surface renders
-+ whatever `open` says, and every request to open or close (the toggle button,
-+ click-outside on the popup) arrives on `onOpenChange` instead of moving the
-+ surface directly.
-+ 
-````
-
----
-
----
-
-## 2026-09-04
-
-### 12:47 UTC — 9 pages, highest severity high
-
-**High — Agent Config**
-
-`/strands-typescript/agent-config` · route `/agent-config` · under “How it works”
-
-65 code lines, 2 headings, 28 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-- <!-- setup skipped: agent-config-setup is not bundled for strands-typescript -->
-+ <Steps>
-+ <Step>
-+ ### Turn frontend context into model input
-+ `useAgentContext` adds the typed configuration to the current AG-UI run.
-+ The Strands adapter does not add arbitrary context to the model prompt, so
-+ format the current run's context. This showcase composes the helper into
-+ its shared `stateContextBuilder`:
-````
-
-**High — Headless Threads**
-
-`/strands-typescript/headless-threads` · route `/headless-threads` · under “Configure your Runtime with CopilotKit Intelligence”
-
-2 code lines, 22 prose lines changed.
-
-````diff
-- Your `CopilotRuntime` must be connected to CopilotKit Intelligence before the thread UI can list and resume conversations. That connection is the `intelligence` option below — a `CopilotKitIntelligence` instance. If your app came from a CLI starter, this Runtime configuration is generated for you. Otherwise, follow [Connect your runtime to Intelligence](/strands-typescript/premium/connect-your-runtime) for the full constructor, then return here to add the headless UI. Thread names are automatically generated by the LLM after the first message — you can disable this with `generateThreadNames: false`.
-+ Your `CopilotRuntime` must be connected to CopilotKit Intelligence before the thread UI can list and resume conversations. That connection is the `intelligence` option below — a `CopilotKitIntelligence` instance. If your app came from a CLI starter, this Runtime configuration is generated for you. Otherwise, follow [Connect your runtime to Intelligence](/strands-typescript/intelligence/connect-your-runtime) for the full constructor, then return here to add the headless UI. Thread names are automatically generated by the LLM after the first message — you can disable this with `generateThreadNames: false`.
-- apiKey: process.env.INTELLIGENCE_API_KEY!,
-+ apiKey: process.env.CPK_INTELLIGENCE_API_KEY!,
-- CLI-created starters write the cloud-hosted platform URLs and project-scoped `INTELLIGENCE_API_KEY` to `.env`; keep that key server-side. Existing Intelligence-enabled apps should keep their current server-side Runtime configuration. Production self-hosting uses the same React APIs and is deployed with CopilotKit Engineering through [Self-host CopilotKit Intelligence](/strands-typescript/premium/self-hosting).
-+ CLI `init` and its `create` alias write the cloud-hosted platform URLs,
-+ `SL_ENABLED`, project-scoped `CPK_INTELLIGENCE_API_KEY`, and optional
-+ `CPK_TELEMETRY_ID` to `.env`.
-````
-
-**High — Programmatic Control**
-
-`/strands-typescript/programmatic-control` · route `/programmatic-control` · under “Sending a message from code” · in a `tsx` block
+`/strands-typescript/copilot-runtime` · route `/copilot-runtime` · under “Setting Up the Runtime” · in a `ts` block
 
 2 code lines changed.
 
 ````diff
-+ "use client";
-+ 
++ export const PATCH = handler;
++ export const DELETE = handler;
 ````
 
 **High — Quickstart**
 
-`/strands-typescript/quickstart` · route `/quickstart` · under “Setup Copilot Runtime” · in a `tsx` block
+`/strands-typescript/quickstart` · route `/quickstart` · under “Configure CopilotKit Provider” · in a `tsx` block
 
-4 code lines, 4 prose lines changed.
+21 code lines, 4 prose lines changed. The number of fenced code blocks changed.
 
 ````diff
-- apiKey: process.env.INTELLIGENCE_API_KEY!,
-+ apiKey: process.env.CPK_INTELLIGENCE_API_KEY!,
-- The runtime reads the license key from step 1. Add it to the app that serves
-+ The runtime reads the project API key from step 1. Add it to the app that serves
-- INTELLIGENCE_API_KEY=your_license_key
-+ CPK_INTELLIGENCE_API_KEY=cpk-...
-- [Connect your runtime to Intelligence](/strands-typescript/premium/connect-your-runtime) for the
-+ [Connect your runtime to Intelligence](/strands-typescript/intelligence/connect-your-runtime) for the
++ ```tsx title="app/providers.tsx"
++ "use client";
++ 
++ import { CopilotKit } from "@copilotkit/react-core/v2";
++ 
++ export function Providers({ children }: { children: React.ReactNode }) {
++ return (
++ <CopilotKit runtimeUrl="/api/copilotkit" agent="strands_agent" useSingleEndpoint={false}>
 ````
 
-**High — Reading agent state**
+---
 
-`/strands-typescript/shared-state/in-app-agent-read` · route `/shared-state/in-app-agent-read` · under “Use the `useAgent` Hook”
+## 2026-09-15
 
-30 code lines, 2 headings, 9 prose lines changed.
+### 11:32 UTC — 4 pages, highest severity high
+
+**High — Tool Call Rendering**
+
+`/strands-typescript/generative-ui/tool-rendering` · route `/generative-ui/tool-rendering` · under “The backend tool definition”
+
+11 code lines, 1 prose line changed. The number of fenced code blocks changed.
 
 ````diff
-- With your agent connected and running, call the `useAgent` hook, pass the agent's name, and
-- optionally provide an initial state.
-+ With your agent connected and running, call the `useAgent` hook, wait for the real agent, and
-+ initialize any missing UI-owned state with `agent.setState`.
-+ import { useEffect } from "react";
-+ import { useAgent } from "@copilotkit/react-core/v2";
-- // [!code highlight:5]
-- const { agent } = useAgent({
+- <!-- snippet skipped: region 'weather-tool-backend' missing in strands-typescript::tool-rendering -->
++ ```typescript
++ // src/agent/tools.ts
++ export const getWeather = tool({
++ name: "get_weather",
++ description: "Get current weather for a location.",
++ inputSchema: z.object({
++ location: z.string().describe("The location to get weather for."),
 ````
 
-**High — Writing agent state**
+**High — Human in the Loop**
 
-`/strands-typescript/shared-state/in-app-agent-write` · route `/shared-state/in-app-agent-write` · under “Use the `useAgent` Hook” · in a `tsx` block
+`/strands-typescript/human-in-the-loop` · route `/human-in-the-loop` · under “Two patterns for HITL in CopilotKit”
 
-14 code lines changed.
+39 code lines, 1 heading, 17 prose lines changed. The number of fenced code blocks changed.
 
 ````diff
-+ import { useEffect } from "react";
-+ import { useAgent } from "@copilotkit/react-core/v2";
-- const { agent } = useAgent({
-+ const { agent, isReady } = useAgent({
-- // optionally provide a type-safe initial state
-- initialState: { language: "spanish" }
-+ const state = (agent.state ?? {}) as Partial<AgentState>;
-+ useEffect(() => {
+- <!-- setup skipped: human-in-the-loop-setup is not bundled for strands-typescript -->
++ <Steps>
++ <Step>
++ ### Pause a tool with Strands' native interrupt
++ 
++ AWS Strands ships a first-class
++ [interrupt primitive](https://strandsagents.com/docs/user-guide/concepts/interrupts/).
++ A tool's callback receives a context whose `interrupt({ name, reason })`
 ````
 
-**High — Synchronize Thread History**
+**High — Threads Drawer**
 
-`/strands-typescript/threads-import` · route `/threads-import` · under “Prepare the CopilotKit Intelligence destination” · in a `bash` block
+`/strands-typescript/prebuilt-components/copilot-threads-drawer` · route `/prebuilt-components/copilot-threads-drawer` · under “Set up the Threads Drawer” · in a `tsx` block
 
-2 code lines, 6 prose lines changed.
+2 code lines, 22 prose lines changed.
 
 ````diff
-- export INTELLIGENCE_API_KEY="cpk_..."
-+ export CPK_INTELLIGENCE_API_KEY="cpk-..."
-- For the underlying persistence and replay model, see [Threads & Persistence Architecture](/strands-typescript/premium/threads-explained).
-+ For the underlying persistence and replay model, see [Threads & Persistence Architecture](/strands-typescript/intelligence/threads-explained).
-- - **Cloud-hosted CopilotKit Intelligence:** export the destination values generated in the CLI-created app's `.env`, or pass them with `--api-url` and `--api-key`. `project select` can rewrite the app's generated values, but the importer still reads only flags or the current process environment. See [Cloud-hosted CopilotKit Intelligence](/strands-typescript/premium/managed-intelligence-platform).
-- - **Self-hosted CopilotKit Intelligence:** pass the deployment's app-api URL with `--api-url` and a project-scoped `cpk` runtime key with `--api-key`. See [Self-host CopilotKit Intelligence](/strands-typescript/premium/self-hosting).
-+ - **Cloud-hosted CopilotKit Intelligence:** export the destination values generated in the CLI-created app's `.env`, or pass them with `--api-url` and `--api-key`. `project select` can rewrite the app's generated values, but the importer still reads only flags or the current process environment. See [Cloud-hosted CopilotKit Intelligence](/strands-typescript/intelligence/managed-intelligence-platform).
-+ - **Self-hosted CopilotKit Intelligence:** pass the deployment's app-api URL with `--api-url` and a project-scoped `cpk` runtime key with `--api-key`. See [Self-host CopilotKit Intelligence](/strands-typescript/intelligence/self-hosting).
+- <CopilotKitProvider runtimeUrl="/api/copilotkit" publicLicenseKey="ck_pub_...">
++ <CopilotKitProvider runtimeUrl="/api/copilotkit">
+- Threads require CopilotKit Intelligence. Without a license key, the drawer shows
+- a locked view in place of the list.
++ Threads require CopilotKit Intelligence. The drawer resolves its entitlement
++ through the Runtime, so the credential is server-side configuration rather than a
++ prop on the provider. Which credential you set depends on how you deploy.
++ 
 ````
 
-**High — Thread & History Lifecycle**
+**High — Programmatic Control**
 
-`/strands-typescript/threads-lifecycle` · route `/threads-lifecycle` · under “The lifecycle at a glance”
+`/strands-typescript/programmatic-control` · route `/programmatic-control` · under “Resolving a LangGraph interrupt from a button”
 
-2 code lines, 8 prose lines changed.
+36 code lines, 2 headings, 15 prose lines changed. The number of fenced code blocks changed.
 
 ````diff
-- 2. **Run.** Messages and tool calls stream under that `threadId`. If a server-side store is configured (CopilotKit Intelligence, or a persisting `AgentRunner`), they are persisted as they happen so the thread can be replayed later. A runtime with no persistence layer keeps nothing server-side. See [Threads & Persistence Architecture](/strands-typescript/premium/threads-explained) for the full server-side model.
-+ 2. **Run.** Messages and tool calls stream under that `threadId`. If a server-side store is configured (CopilotKit Intelligence, or a persisting `AgentRunner`), they are persisted as they happen so the thread can be replayed later. A runtime with no persistence layer keeps nothing server-side. See [Threads & Persistence Architecture](/strands-typescript/intelligence/threads-explained) for the full server-side model.
-- Replay requires a **server-side store to replay from**: CopilotKit Intelligence, or a persisting `AgentRunner` (e.g. the SQLite runner). A self-hosted runtime with no persistence layer has nothing to replay, so `connectAgent()` returns an empty stream and the conversation starts blank. If history isn't restoring, check that a store is configured, not the client code. The [Persistence Architecture](/strands-typescript/premium/threads-explained) page covers how replay works server-side.
-+ Replay requires a **server-side store to replay from**: CopilotKit Intelligence, or a persisting `AgentRunner` (e.g. the SQLite runner). A self-hosted runtime with no persistence layer has nothing to replay, so `connectAgent()` returns an empty stream and the conversation starts blank. If history isn't restoring, check that a store is configured, not the client code. The [Persistence Architecture](/strands-typescript/intelligence/threads-explained) page covers how replay works server-side.
-- apiKey: process.env.INTELLIGENCE_API_KEY!,
-+ apiKey: process.env.CPK_INTELLIGENCE_API_KEY!,
-- [Connect your runtime to Intelligence](/strands-typescript/premium/connect-your-runtime) covers the
-+ [Connect your runtime to Intelligence](/strands-typescript/intelligence/connect-your-runtime) covers the
++ ## Resolving a LangGraph interrupt from a button
++ The `interrupt-headless` cell demonstrates the full pattern without
++ `useInterrupt` or a chat surface. A plain hook subscribes to
++ `on_interrupt` custom events, buffers the payload until the run
++ finalizes (so the UI doesn't flash mid-stream), and exposes a
++ `resolve(response)` callback that calls `copilotkit.runAgent({ agent,
++ forwardedProps: { command: { resume, interruptEvent } } })` to unblock
++ the graph:
 ````
 
-**Low — A2UI · Fixed Schema**
+---
 
-`/strands-typescript/generative-ui/a2ui/fixed-schema` · route `/generative-ui/a2ui/fixed-schema` · under “Action handlers (reference)”
+---
 
-2 prose lines changed.
+## 2026-09-14
+
+### 07:41 UTC — 3 pages, highest severity high
+
+**High — Headless Threads**
+
+`/strands-typescript/headless-threads` · route `/headless-threads` · under “Driving one agent per thread”
+
+7 code lines, 1 heading, 19 prose lines changed. The number of fenced code blocks changed.
 
 ````diff
-- [Advanced — Action Handlers](./advanced#action-handlers) for the
-+ [Advanced — Action Handlers](/integrations/langgraph/generative-ui/a2ui/advanced#action-handlers) for the
++ ## Driving one agent per thread
++ 
++ `useThreads` lists and switches threads. To read or run an agent **scoped to a
++ specific thread** — one open tab per thread, for instance — pass all three of
++ `agentId`, `runtimeAgentId` and `threadId` to `useAgent`:
++ 
++ ```tsx
++ const { agent } = useAgent({
+````
+
+**Medium — Tool Call Rendering**
+
+`/strands-typescript/generative-ui/tool-rendering` · route `/generative-ui/tool-rendering` · under “Tool inputs and results are separate”
+
+1 heading, 15 prose lines changed.
+
+````diff
++ ### Tool inputs and results are separate
++ 
++ In `useRenderTool`, `parameters` contains the **inputs** the agent sent to the
++ tool. It does not change into the tool's return value when `status` becomes
++ `"complete"`. The completed output arrives separately as `result`, a string.
++ For a tool that returns JSON, parse that string before reading its fields.
++ 
++ For example, `get_weather` might receive `{ "location": "Paris" }` and return
+````
+
+**Low — Voice**
+
+`/strands-typescript/voice` · route `/voice` · under “Next.js API route”
+
+24 prose lines changed.
+
+````diff
++ <Callout type="warn" title="Without a service, `/transcribe` answers 503">
++ A runtime with no `transcriptionService` still serves the route, and answers every request
++ `503` with `{ "error": "service_not_configured" }`. The mic button never appears, so the
++ symptom is a chat with no voice input rather than a visible server error — check `/info` for
++ `audioFileTranscriptionEnabled` when voice silently doesn't show up.
++ </Callout>
++ <Callout type="warn" title="Calling `/transcribe` yourself">
++ The chat handles this for you; these are the rules if you post to the route directly. As
 ````
 
 ---
