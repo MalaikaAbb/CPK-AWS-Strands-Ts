@@ -13,8 +13,8 @@
  *     server, taking out the tab, the server, and potentially the machine.
  *
  * Together those mean: exactly one inspector per page, and it must be the one
- * attached to the provider the page's chat actually runs on. Two demo routes
- * mount their own `<CopilotKit>`, so on those the root provider stands down and
+ * attached to the provider the page's chat actually runs on. Several demo
+ * routes mount their own `<CopilotKit>`, so on those the root provider stands down and
  * the nested one takes over.
  */
 
@@ -29,6 +29,7 @@ export const INSPECTOR_ENABLED =
  * be the second one on the page.
  */
 export const NESTED_PROVIDER_ROUTES = [
+  "/quickstart/demo-chat",
   "/voice/demo-chat",
   "/generative-ui/a2ui/fixed-schema/demo-chat",
   "/generative-ui/a2ui/dynamic-schema/demo-chat",

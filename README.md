@@ -142,7 +142,7 @@ Every route carries a **Try it** box with the same pass/fail split shown here, p
 | Route | What it demonstrates | Try | Pass / Fail |
 |---|---|---|---|
 | `/` | Landing page: orientation, status counts, the gap ledger. | — | — |
-| `/quickstart` | The bring-your-own-agent path end to end — the one page whose backend is published and runnable. | "Can you tell me a joke?" | **Pass:** tokens stream a word at a time, markdown renders. **Fail:** error banner — check the server is up and `OPENAI_API_KEY` is set. |
+| `/quickstart` | The bring-your-own-agent path end to end — the one page whose backend is published and runnable. The demo runs on the page's own `app/providers.tsx`, so the sidebar reaches the agent through the provider's `agent` prop alone. | "Can you tell me a joke?" | **Pass:** tokens stream a word at a time, markdown renders. **Fail:** error banner — check the server is up and `OPENAI_API_KEY` is set. An "agent not found" error means the provider's `agent` binding did not reach the sidebar. |
 
 ### Prebuilt Components
 
@@ -225,7 +225,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 |---|---|---|---|
 | `/strands-typescript` | `/` | 📄 Reference | Landing page, agent roster, gap ledger. |
 | — | `/doc-sync` | 📄 Reference | Doc drift against the captured snapshot; the manifest's `syncedAt` is the repo's one sync date. |
-| `quickstart?agent=bring-your-own` | `/quickstart` | ✅ Working | The only fully published, runnable backend. Model id is wrong — see §9. |
+| `quickstart?agent=bring-your-own` | `/quickstart` | ✅ Working | The only fully published, runnable backend. Re-synced 2026-09-16: provider split into a client `providers.tsx`, reproduced verbatim. Model id is wrong — see §9. |
 | `prebuilt-components/chat` | `/prebuilt-components/chat` | ✅ Working | Off the doc sidebar. Its snippet calls an undefined `useAgenticChatSuggestions`. |
 | `prebuilt-components/sidebar` | `/prebuilt-components/sidebar` | ✅ Working | Off-nav. `MainContent`/`Suggestions` unpublished. |
 | `prebuilt-components/popup` | `/prebuilt-components/popup` | ✅ Working | Off-nav. |

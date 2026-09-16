@@ -74,7 +74,7 @@ export const NAV: NavGroup[] = [
           "The bring-your-own-agent path: a Strands Agent wrapped in StrandsAgent, served by createStrandsApp over Express, reached over HTTP by a v2 catch-all runtime carrying CopilotKit Intelligence.",
         status: "working",
         statusNote:
-          "Re-synced 2026-08-26: the runtime is now a [[...slug]] catch-all built with createCopilotRuntimeHandler, and carries Intelligence. The one page whose backend is published end to end; its model id still is not.",
+          "Re-synced 2026-09-16: the provider now lives in its own client app/providers.tsx, rendered by the server layout, and page.tsx is a client component. The demo mounts that provider verbatim, so the sidebar is bound by agent=\"strands_agent\" rather than agentId. The one page whose backend is published end to end; its model id still is not.",
       },
     ],
   },
