@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@ag-ui/a2ui-toolkit": "^0.0.4",
-    "@ag-ui/aws-strands": "^0.2.3",
+    "@ag-ui/aws-strands": "^0.3.0",
     "@modelcontextprotocol/sdk": "^1.22.0",
     "@strands-agents/sdk": "^1.17.0",
     "cors": "^2.8.5",

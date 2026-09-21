@@ -142,7 +142,7 @@ Every route carries a **Try it** box with the same pass/fail split shown here, p
 | Route | What it demonstrates | Try | Pass / Fail |
 |---|---|---|---|
 | `/` | Landing page: orientation, status counts, the gap ledger. | — | — |
-| `/quickstart` | The bring-your-own-agent path end to end — the one page whose backend is published and runnable. | "Can you tell me a joke?" | **Pass:** tokens stream a word at a time, markdown renders. **Fail:** error banner — check the server is up and `OPENAI_API_KEY` is set. |
+| `/quickstart` | The bring-your-own-agent path end to end — the one page whose backend is published and runnable. The demo runs on the page's own `app/providers.tsx`, so the sidebar reaches the agent through the provider's `agent` prop alone. | "Can you tell me a joke?" | **Pass:** tokens stream a word at a time, markdown renders. **Fail:** error banner — check the server is up and `OPENAI_API_KEY` is set. An "agent not found" error means the provider's `agent` binding did not reach the sidebar. |
 
 ### Prebuilt Components
 
@@ -196,6 +196,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 |---|---|---|---|
 | `/frontend-tools` | A tool whose handler runs in the browser and mutates the page. | "Make the background a warm sunset gradient" | **Pass:** the background transitions within a second. **Fail:** the agent describes a gradient and nothing moves. |
 | `/human-in-the-loop` | `useHumanInTheLoop` suspending the run behind a time picker. | "Book an intro call with the sales team." | **Pass:** a picker appears, the reply stops, choosing a slot resumes with that specific time. **Fail:** the agent invents a time with no card. |
+| `/human-in-the-loop/governed-actions` | The same hook used as a policy gate: the agent proposes a side effect, the card prints its arguments, the run waits. | "Email carol@northwind.test to confirm her refund of $420 on order NW-8812." | **Pass:** an approval card appears with the proposed arguments, the reply stops, approving resumes the run. **Fail:** the agent claims it sent the email with no card, or the buttons do nothing. A card reading "Allowed by policy" is the model inventing a verdict — expected, see §9. |
 | `/programmatic-control` | `addMessage` + `runAgent` + `stopAgent` with no chat component anywhere. | Click a canned prompt, then Stop mid-stream | **Pass:** messages stream into hand-rolled bubbles; Stop halts mid-sentence. **Fail:** Send does nothing and the console is quiet. |
 
 ### Shared State
@@ -224,7 +225,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 |---|---|---|---|
 | `/strands-typescript` | `/` | 📄 Reference | Landing page, agent roster, gap ledger. |
 | — | `/doc-sync` | 📄 Reference | Doc drift against the captured snapshot; the manifest's `syncedAt` is the repo's one sync date. |
-| `quickstart?agent=bring-your-own` | `/quickstart` | ✅ Working | The only fully published, runnable backend. Model id is wrong — see §9. |
+| `quickstart?agent=bring-your-own` | `/quickstart` | ✅ Working | The only fully published, runnable backend. Re-synced 2026-09-16: provider split into a client `providers.tsx`, reproduced verbatim. Model id is wrong — see §9. |
 | `prebuilt-components/chat` | `/prebuilt-components/chat` | ✅ Working | Off the doc sidebar. Its snippet calls an undefined `useAgenticChatSuggestions`. |
 | `prebuilt-components/sidebar` | `/prebuilt-components/sidebar` | ✅ Working | Off-nav. `MainContent`/`Suggestions` unpublished. |
 | `prebuilt-components/popup` | `/prebuilt-components/popup` | ✅ Working | Off-nav. |
@@ -246,6 +247,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `generative-ui/a2ui/fixed-schema` | `/generative-ui/a2ui/fixed-schema` | ⚠️ Partial | Runs end to end. `display_flight` is the published `agent.ts` verbatim; the component tree it reads is published on no Strands page and was carried over from the Google ADK harness. |
 | `frontend-tools` | `/frontend-tools` | ✅ Working | Works via proxy-tool sync; setup section is a placeholder. |
 | `human-in-the-loop` | `/human-in-the-loop` | ✅ Working | Pattern 1 only. `useInterrupt` is LangGraph-only. |
+| `human-in-the-loop/governed-actions` | `/human-in-the-loop/governed-actions` | ⚠️ Partial | `useHumanInTheLoop` half only, verbatim. The approval mechanism works; nothing publishes the policy engine, the tool that emits a `GovernedAction`, or `executeSideEffect`, so `verdict` is model-invented. `useInterrupt` half not implemented — no Strands backend raises an interrupt. |
 | `programmatic-control` | `/programmatic-control` | ✅ Working | Google ADK's version, as requested. Three helpers undefined — reconstructed. |
 | `shared-state/rendering-in-app` | `/shared-state/rendering-in-app` | ✅ Working | Byte-identical to ADK's page. Nothing agent-side can write state. |
 | `shared-state/agent-readonly` | `/shared-state/agent-readonly` | ✅ Working | Page credits middleware the adapter does not have. |
@@ -270,7 +272,7 @@ These appear in the doc sidebar and are outside this repo's scope: CLI, Build wi
 
 ## 9. Known issues / doc-vs-implementation discrepancies
 
-Forty-three findings are recorded in `frontend/src/lib/doc-gaps.ts`, and the full ledger renders on `/status`; the backend half is at `GET /gaps`. (The per-route red panels are currently switched off — every entry in `ROUTE_GAPS` is commented out — so findings show on `/status` and in each route's own prose rather than as a banner.) The ones that change what you can build:
+Forty-six findings are recorded in `frontend/src/lib/doc-gaps.ts`, twelve of them blocking, and the full ledger renders on `/status`; the backend half is at `GET /gaps`. (The per-route red panels are switched off almost everywhere — all but one entry in `ROUTE_GAPS` is commented out — so findings generally show on `/status` and in each route's own prose rather than as a banner. `/human-in-the-loop/governed-actions` is the exception and renders its three.) The ones that change what you can build:
 
 **The backend is published and unrunnable** — [agent.ts, on 18 pages](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat). Complete file, four unpublished local imports, one unpublished JSON file, no `server.ts`. Full analysis in [`backend/docs_verbatim/README.md`](backend/docs_verbatim/README.md).
 
@@ -279,6 +281,14 @@ Forty-three findings are recorded in `frontend/src/lib/doc-gaps.ts`, and the ful
 **The Interactive route's example was supplied outside the docs too.** `generative-ui/your-components/interactive` publishes nothing — 156 bytes, one unrendered `<Interactive components={props.components} framework="aws-strands" />` tag, and note the Python framework slug on a page served under `/strands-typescript`. The `useHumanInTheLoop` approve/deny gate the route now runs was handed over separately and is reproduced verbatim. The route works; the page is still empty. Those are two different facts and the finding records both.
 
 **One backend tool was supplied outside the docs.** The Tool Call Rendering route runs a `get_weather` that came from outside the documentation, reproduced verbatim in `backend/src/agents/tools.ts`. Its `getWeatherImpl` had to be written: that function lives in the unpublished `tools` module, and only its return shape is recoverable — from the `WeatherResult` interface the published frontend `page.tsx` declares. `search_flights` has no equivalent, so the page's second named renderer is still idle. The `snippet skipped: region 'weather-tool-backend'` finding stands: what the docs publish has not changed.
+
+**The Governed Actions page publishes a UI with nothing behind it.** [governed-actions](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/governed-actions), fetched 2026-09-14. Every other HITL page at least emits the `setup skipped` placeholder where its backend belongs; this one emits nothing at all. No published tool produces a `GovernedAction`, nothing computes its `verdict`, and `executeSideEffect(action.tool, action.arguments)` — called by the page's own `handleApproval` sample — is defined on no page in the tree. So the route can demonstrate that the approval gate suspends and resumes a run, and cannot demonstrate governance: the `verdict` the card reports is whatever the model put in the tool call. An `allow` verdict auto-approves via the card's `useEffect` without the user seeing a decision point, which is exactly the case you would want a real policy engine behind.
+
+**The page's second pattern renders a component only its first pattern defines.** Same page. `GovernedActionCard` is declared at the foot of the `useInterrupt` block; the `useHumanInTheLoop` block below renders it without redefining or importing it. Following the second block alone leaves you with an undefined component. This repo lifts the card into its own file, verbatim, which is what makes the second block runnable. Its `useEffect` deps array — `[action.id, action.verdict]`, omitting `onApprove` and `onBlock` — is the doc's and trips `react-hooks/exhaustive-deps`; kept as published.
+
+**`ToolCallStatus` looks unexported from `/v2` and is not.** Recorded because it costs time to chase. The enum appears nowhere in the export list `@copilotkit/react-core/v2` spells out, so grepping `dist/v2/index.mjs` for it returns nothing — but line 7 of that file is `export * from "@copilotkit/core"` and the enum arrives on that star, in the types and at runtime both (`inProgress` / `executing` / `complete`). The doc's import is correct as published. This is the reason `generative-ui/your-components/interactive` can compare the bare string `"executing"` and behave identically.
+
+**The approval card is styled with tokens the Quickstart never installs.** Same page. `GovernedActionCard` uses `text-muted-foreground` and `bg-muted`, shadcn/ui theme tokens. Nothing in the Strands TypeScript tree installs shadcn or defines those variables, so in a Quickstart-shaped app — including this one, on Tailwind v4 — both resolve to nothing and those lines render unstyled.
 
 **Seven pages replace their backend section with `setup skipped`** — frontend-tools, tool-based, human-in-the-loop, agent-readonly, agent-config, programmatic-control, subagents.
 
@@ -431,7 +441,7 @@ Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only
 
 **Build Generative UI — Declarative** · [A2UI Dynamic Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/dynamic-schema) · [A2UI Fixed Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/fixed-schema)
 
-**Add Agent Powers** · [Frontend Tools](https://docs.copilotkit.ai/strands-typescript/frontend-tools) · [Human-in-the-Loop](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop) · [Sub-Agents](https://docs.copilotkit.ai/strands-typescript/multi-agent/subagents) · [Agent Config](https://docs.copilotkit.ai/strands-typescript/agent-config) · [Programmatic Control](https://docs.copilotkit.ai/strands-typescript/programmatic-control)
+**Add Agent Powers** · [Frontend Tools](https://docs.copilotkit.ai/strands-typescript/frontend-tools) · [Human-in-the-Loop](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop) · [Governed Actions](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/governed-actions) · [Sub-Agents](https://docs.copilotkit.ai/strands-typescript/multi-agent/subagents) · [Agent Config](https://docs.copilotkit.ai/strands-typescript/agent-config) · [Programmatic Control](https://docs.copilotkit.ai/strands-typescript/programmatic-control)
 
 **Runtime** · [Copilot Runtime](https://docs.copilotkit.ai/strands-typescript/copilot-runtime) · [AG-UI](https://docs.copilotkit.ai/strands-typescript/ag-ui)
 

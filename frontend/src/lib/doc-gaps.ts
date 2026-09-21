@@ -394,6 +394,33 @@ const GAP_LIST: DocGap[] = [
     severity: "note",
     docPath: "/strands-typescript/copilot-runtime",
   },
+
+  // ------------------------------------------------- governed action approval
+  {
+    id: "governed-no-backend-published",
+    title: "The page publishes no backend, no policy engine and no side effect",
+    detail:
+      "Every other HITL page at least emits the `setup skipped` placeholder where its backend should be; this one emits nothing. There is no published tool that produces a `GovernedAction`, nothing that computes `verdict`, and `executeSideEffect(action.tool, action.arguments)` — called by the page's own `handleApproval` sample — is defined nowhere in the doc tree. The envelope shape and the guardrail list are the whole of what is published.",
+    severity: "blocking",
+    docPath: "/strands-typescript/human-in-the-loop/governed-actions",
+  },
+  {
+    id: "governed-card-defined-in-other-pattern",
+    title:
+      "The second pattern renders a component only the first pattern defines",
+    detail:
+      "`GovernedActionCard` is declared at the bottom of the `useInterrupt` block. The `useHumanInTheLoop` block below renders it without redefining it or importing it, so following that block alone leaves you with an undefined component. On this route the card is lifted into its own file, verbatim, to make the `useHumanInTheLoop` half runnable at all.",
+    severity: "degraded",
+    docPath: "/strands-typescript/human-in-the-loop/governed-actions",
+  },
+  {
+    id: "governed-shadcn-classes",
+    title: "The card is styled with theme tokens the Quickstart never sets up",
+    detail:
+      "`GovernedActionCard` uses `text-muted-foreground` and `bg-muted`, which are shadcn/ui tokens. Nothing in the Strands TypeScript tree installs shadcn or defines those CSS variables, so in a Quickstart-shaped app — including this one, on Tailwind v4 — both classes resolve to nothing and those lines render unstyled.",
+    severity: "note",
+    docPath: "/strands-typescript/human-in-the-loop/governed-actions",
+  },
 ];
 
 export const DOC_GAPS: Record<string, DocGap> = Object.fromEntries(
@@ -407,6 +434,12 @@ export type GapId = string;
  * that route goes first, because that is what the panel leads with.
  */
 export const ROUTE_GAPS: Record<string, GapId[]> = {
+  "/human-in-the-loop/governed-actions": [
+    "governed-no-backend-published",
+    "governed-card-defined-in-other-pattern",
+    "governed-shadcn-classes",
+  ],
+
   // "/quickstart": [
   //   "quickstart-model-id",
   //   "quickstart-installs-v1-package",

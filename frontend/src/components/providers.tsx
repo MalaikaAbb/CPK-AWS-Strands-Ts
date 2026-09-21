@@ -10,17 +10,19 @@ import { rootInspectorSetting } from "@/lib/inspector";
  * One provider for the whole app, so a conversation survives navigation
  * between test routes.
  *
- * Two routes mount a second, nested `<CopilotKit>` of their own rather than
- * using this one — Voice (different runtime, because transcription only exists
- * on the v2 runtime) and A2UI dynamic-schema (it needs its own catalog and the
- * runtime that injects the A2UI tool). Those are the cases where the doc page
- * is specifically about the provider, so an isolated instance is the honest
- * thing to show.
+ * Some demo routes mount a second, nested `<CopilotKit>` of their own rather
+ * than using this one — e.g. Voice (different runtime, because transcription
+ * only exists on the v2 runtime), A2UI dynamic-schema (its own catalog and the
+ * runtime that injects the A2UI tool), and the Quickstart (its page publishes
+ * the provider file itself). Those are the cases where the doc page is
+ * specifically about the provider, so an isolated instance is the honest thing
+ * to show. `lib/inspector.ts` holds the full list.
  *
- * Note what this provider does NOT set: `agent`. The Quickstart passes
- * `agent="strands_agent"` here, which makes it the default for every surface
- * below. With 24 registered agents that default would only hide mistakes, so
- * every route names its agent with `agentId` instead.
+ * Note what this provider does NOT set: `agent`. The Quickstart's provider
+ * passes `agent="strands_agent"`, which makes it the default for every surface
+ * below. With this many registered agents an app-wide default would only hide
+ * mistakes, so every route names its agent with `agentId` instead — except the
+ * Quickstart demo, which mounts the doc's own provider to show that binding.
  *
  * Threads and the Inspector are served by CopilotKit Intelligence, which is
  * configured on the runtime rather than here — see `lib/intelligence.ts`. With

@@ -37,6 +37,8 @@ function Chat() {
     render: BarChart,
   });
 
+  //HELLO THIS IS A TEST
+
   useConfigureSuggestions({
     suggestions: [
       {

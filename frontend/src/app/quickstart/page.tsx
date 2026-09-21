@@ -1,5 +1,5 @@
 import { RouteHeader } from "@/components/route-header";
-import { SourceCode, SourceCodeGroup } from "@/components/source-code";
+import { SourceCodeGroup } from "@/components/source-code";
 import { Callout, CodeBlock, Panel, TryIt } from "@/components/ui";
 
 const PUBLISHED_RUNTIME = `const runtime = new CopilotRuntime({
@@ -60,14 +60,48 @@ export default function Page() {
         <div className="mt-4">
           <TryIt
             prompts={["Can you tell me a joke?", "What do you think about React?"]}
-            expect="Tokens stream in a word at a time and the reply renders as markdown."
+            expect="The sidebar opens from its launcher with no agentId on it; tokens stream in a word at a time and the reply renders as markdown. That the agent answers at all proves the provider's agent prop did the binding."
             fail="An error banner. Check that the Node server is up on :8000 and that OPENAI_API_KEY is set — and see the model-id gap above if the error mentions an unknown model."
           />
         </div>
       </Panel>
 
-      <Panel title="The demo">
-        <SourceCode file="frontend/src/app/quickstart/demo-chat/page.tsx" />
+      <Panel
+        title="The demo"
+        description="The page's three frontend files. providers.tsx and page.tsx are verbatim; layout.tsx is the doc's layout reduced to what a nested layout may render."
+      >
+        <SourceCodeGroup
+          files={[
+            { file: "frontend/src/app/quickstart/providers.tsx" },
+            { file: "frontend/src/app/quickstart/demo-chat/layout.tsx" },
+            { file: "frontend/src/app/quickstart/demo-chat/page.tsx" },
+          ]}
+        />
+        <div className="mt-4">
+          <Callout tone="info" title="Why the provider moved into its own file">
+            <p>
+              Re-synced 2026-09-16. The page used to import{" "}
+              <code>CopilotKit</code> straight into <code>app/layout.tsx</code>.
+              It now puts the provider in a <code>&quot;use client&quot;</code>{" "}
+              <code>app/providers.tsx</code> and has the layout — a server
+              component — render that instead, and <code>app/page.tsx</code>{" "}
+              gained its own <code>&quot;use client&quot;</code>. The provider
+              props did not change.
+            </p>
+            <p className="mt-2">
+              This demo now runs on that provider rather than the app-wide one,
+              so the sidebar has no <code>agentId</code>: it reaches{" "}
+              <code>strands_agent</code> only through the provider&apos;s{" "}
+              <code>agent</code> prop, which is what the page teaches. The
+              provider is nested inside the harness&apos;s root one, the same
+              arrangement the Voice route uses.
+            </p>
+            <p className="mt-2">
+              The published page is unstyled, and so is this one — a bare{" "}
+              <code>&lt;h1&gt;</code> and the sidebar.
+            </p>
+          </Callout>
+        </div>
       </Panel>
 
       <Panel
