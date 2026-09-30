@@ -8,169 +8,269 @@ Holds the 3 most recent dated entries. When a change lands on a fourth
 date, the oldest entry is dropped. Entries are counted, not aged, so a gap of
 weeks between changes does not expire anything.
 
-## 2026-09-16
+## 2026-09-30
 
-### 09:36 UTC — 2 pages, highest severity high
-
-**High — Copilot Runtime**
-
-`/strands-typescript/copilot-runtime` · route `/copilot-runtime` · under “Setting Up the Runtime” · in a `ts` block
-
-2 code lines changed.
-
-````diff
-+ export const PATCH = handler;
-+ export const DELETE = handler;
-````
+### 09:07 UTC — 6 pages, highest severity high
 
 **High — Quickstart**
 
-`/strands-typescript/quickstart` · route `/quickstart` · under “Configure CopilotKit Provider” · in a `tsx` block
+`/strands-typescript/quickstart` · route `/quickstart` · under “Prerequisites”
 
-21 code lines, 4 prose lines changed. The number of fenced code blocks changed.
+44 code lines, 41 prose lines changed. The number of fenced code blocks changed.
 
 ````diff
-+ ```tsx title="app/providers.tsx"
-+ "use client";
+- - An OpenAI API key
++ - An OpenAI or Anthropic API key
+- <Callout type="info" title="What about other models?">
+- The starter template is configured to use OpenAI's GPT-4o by default, but you can modify it to use any language model supported by Strands.
++ <ApiKeyHint provider="openai" />
 + 
-+ import { CopilotKit } from "@copilotkit/react-core/v2";
-+ 
-+ export function Providers({ children }: { children: React.ReactNode }) {
-+ return (
-+ <CopilotKit runtimeUrl="/api/copilotkit" agent="strands_agent" useSingleEndpoint={false}>
++ <Callout type="info" title="Using Anthropic instead">
++ Add `ANTHROPIC_API_KEY` to `agent/.env`, then swap the model:
 ````
 
----
+**Medium — Synchronize Thread History**
 
-## 2026-09-15
+`/strands-typescript/threads-import` · route `/threads-import` · under “Import & Synchronize Thread History”
 
-### 11:32 UTC — 4 pages, highest severity high
-
-**High — Tool Call Rendering**
-
-`/strands-typescript/generative-ui/tool-rendering` · route `/generative-ui/tool-rendering` · under “The backend tool definition”
-
-11 code lines, 1 prose line changed. The number of fenced code blocks changed.
+5 headings, 23 prose lines changed.
 
 ````diff
-- <!-- snippet skipped: region 'weather-tool-backend' missing in strands-typescript::tool-rendering -->
-+ ```typescript
-+ // src/agent/tools.ts
-+ export const getWeather = tool({
-+ name: "get_weather",
-+ description: "Get current weather for a location.",
-+ inputSchema: z.object({
-+ location: z.string().describe("The location to get weather for."),
+- # Import & Synchronize Thread History
++ # Add AG-UI Streams to Existing Threads
+- > Import historical conversations into CopilotKit Intelligence, then keep future CopilotKit runs synchronized with Rich Threads.
++ > Add Intelligence’s AG-UI streams to your existing agent conversations, with optional historical import for supported stores.
+- ## What is this?
++ <span id="what-is-this" />
+- Import brings existing conversations into CopilotKit Intelligence as Rich Threads while you keep the native storage or analytics you already use. Import supported history once, then continue running those conversations through CopilotKit so users can resume them through the same thread UI as new conversations.
++ ## Add Intelligence to your existing app
 ````
 
-**High — Human in the Loop**
+**Medium — Thread & History Lifecycle**
 
-`/strands-typescript/human-in-the-loop` · route `/human-in-the-loop` · under “Two patterns for HITL in CopilotKit”
+`/strands-typescript/threads-lifecycle` · route `/threads-lifecycle` · under “The lifecycle at a glance”
 
-39 code lines, 1 heading, 17 prose lines changed. The number of fenced code blocks changed.
+2 headings, 10 prose lines changed.
 
 ````diff
-- <!-- setup skipped: human-in-the-loop-setup is not bundled for strands-typescript -->
-+ <Steps>
-+ <Step>
-+ ### Pause a tool with Strands' native interrupt
+- 2. **Run.** Messages and tool calls stream under that `threadId`. If a server-side store is configured (CopilotKit Intelligence, or a persisting `AgentRunner`), they are persisted as they happen so the thread can be replayed later. A runtime with no persistence layer keeps nothing server-side. See [Threads & Persistence Architecture](/strands-typescript/intelligence/threads-explained) for the full server-side model.
++ 2. **Run.** Messages and tool calls stream under that `threadId`. If a server-side store is configured (CopilotKit Intelligence, or a persisting `AgentRunner`), they are persisted as they happen so the thread can be replayed later. A runtime with no persistence layer keeps nothing server-side. See [AG-UI Streams & Framework Threads](/strands-typescript/intelligence/threads-explained) for the full server-side model.
+- ## Scope Rich Threads to the signed-in user
++ <span id="scope-rich-threads-to-the-signed-in-user" />
++ ## Scope AG-UI Streams to the signed-in user
 + 
-+ AWS Strands ships a first-class
-+ [interrupt primitive](https://strandsagents.com/docs/user-guide/concepts/interrupts/).
-+ A tool's callback receives a context whose `interrupt({ name, reason })`
+- verified application user to Rich Threads.
++ verified application user to threads.
 ````
 
-**High — Threads Drawer**
+**Low — Headless Threads**
 
-`/strands-typescript/prebuilt-components/copilot-threads-drawer` · route `/prebuilt-components/copilot-threads-drawer` · under “Set up the Threads Drawer” · in a `tsx` block
+`/strands-typescript/headless-threads` · route `/headless-threads` · under “Headless Threads”
 
-2 code lines, 22 prose lines changed.
+22 prose lines changed.
 
 ````diff
-- <CopilotKitProvider runtimeUrl="/api/copilotkit" publicLicenseKey="ck_pub_...">
-+ <CopilotKitProvider runtimeUrl="/api/copilotkit">
-- Threads require CopilotKit Intelligence. Without a license key, the drawer shows
-- a locked view in place of the list.
-+ Threads require CopilotKit Intelligence. The drawer resolves its entitlement
-+ through the Runtime, so the credential is server-side configuration rather than a
-+ prop on the provider. Which credential you set depends on how you deploy.
++ Intelligence’s AG-UI streams power the history and delivery behind this custom UI. Use `useThreads` to list and manage conversations, and pass their `threadId` to your chat.
 + 
+- CopilotKit Rich Threads enable persistent, resumable multi-turn conversations. The `useThreads` hook lists, creates, renames, archives, and deletes CopilotKit Intelligence threads with realtime synchronization via WebSocket. Threads work with any agent framework — CopilotKit Intelligence stores conversation history server-side, so users can close their browser and pick up where they left off. It does not list or mutate native LangGraph, ADK, or other framework stores unless your backend explicitly bridges those systems. Thread metadata updates (renames, archives, new threads) appear on connected clients without polling.
++ The `useThreads` hook lists, creates, renames, archives, and deletes CopilotKit Intelligence threads with realtime synchronization via WebSocket. Threads work with any agent framework — CopilotKit Intelligence stores conversation history server-side, so users can close their browser and pick up where they left off. It does not list or mutate native LangGraph, ADK, or other framework stores unless your backend explicitly bridges those systems. Thread metadata updates (renames, archives, new threads) appear on connected clients without polling.
+- [scope Rich Threads to the signed-in user](/strands-typescript/threads-lifecycle#scope-rich-threads-to-the-signed-in-user)
++ [scope AG-UI Streams to the signed-in user](/strands-typescript/threads-lifecycle#scope-rich-threads-to-the-signed-in-user)
+- <Callout type="info" title="Migrating existing history?">
+- Threads capture new CopilotKit conversations once your app is connected to
 ````
 
-**High — Programmatic Control**
+**Low — Threads Drawer**
 
-`/strands-typescript/programmatic-control` · route `/programmatic-control` · under “Resolving a LangGraph interrupt from a button”
+`/strands-typescript/prebuilt-components/copilot-threads-drawer` · route `/prebuilt-components/copilot-threads-drawer` · under “When should I use this?”
 
-36 code lines, 2 headings, 15 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-+ ## Resolving a LangGraph interrupt from a button
-+ The `interrupt-headless` cell demonstrates the full pattern without
-+ `useInterrupt` or a chat surface. A plain hook subscribes to
-+ `on_interrupt` custom events, buffers the payload until the run
-+ finalizes (so the UI doesn't flash mid-stream), and exposes a
-+ `resolve(response)` callback that calls `copilotkit.runAgent({ agent,
-+ forwardedProps: { command: { resume, interruptEvent } } })` to unblock
-+ the graph:
-````
-
----
-
----
-
-## 2026-09-14
-
-### 07:41 UTC — 3 pages, highest severity high
-
-**High — Headless Threads**
-
-`/strands-typescript/headless-threads` · route `/headless-threads` · under “Driving one agent per thread”
-
-7 code lines, 1 heading, 19 prose lines changed. The number of fenced code blocks changed.
+4 prose lines changed.
 
 ````diff
-+ ## Driving one agent per thread
-+ 
-+ `useThreads` lists and switches threads. To read or run an agent **scoped to a
-+ specific thread** — one open tab per thread, for instance — pass all three of
-+ `agentId`, `runtimeAgentId` and `threadId` to `useAgent`:
-+ 
-+ ```tsx
-+ const { agent } = useAgent({
-````
-
-**Medium — Tool Call Rendering**
-
-`/strands-typescript/generative-ui/tool-rendering` · route `/generative-ui/tool-rendering` · under “Tool inputs and results are separate”
-
-1 heading, 15 prose lines changed.
-
-````diff
-+ ### Tool inputs and results are separate
-+ 
-+ In `useRenderTool`, `parameters` contains the **inputs** the agent sent to the
-+ tool. It does not change into the tool's return value when `status` becomes
-+ `"complete"`. The completed output arrives separately as `result`, a string.
-+ For a tool that returns JSON, parse that string before reading its fields.
-+ 
-+ For example, `get_weather` might receive `{ "location": "Paris" }` and return
+- [scope Rich Threads to the signed-in user](/strands-typescript/threads-lifecycle#scope-rich-threads-to-the-signed-in-user).
++ [scope AG-UI Streams to the signed-in user](/strands-typescript/threads-lifecycle#scope-rich-threads-to-the-signed-in-user).
+- - [Rich Threads overview](/strands-typescript/threads): compare thread UI and deployment paths
++ - [AG-UI Streams overview](/strands-typescript/threads): compare thread UI and deployment paths
 ````
 
 **Low — Voice**
 
-`/strands-typescript/voice` · route `/voice` · under “Next.js API route”
+`/strands-typescript/voice` · route `/voice` · under “Custom transcription backends”
 
-24 prose lines changed.
+2 prose lines changed.
 
 ````diff
-+ <Callout type="warn" title="Without a service, `/transcribe` answers 503">
-+ A runtime with no `transcriptionService` still serves the route, and answers every request
-+ `503` with `{ "error": "service_not_configured" }`. The mic button never appears, so the
-+ symptom is a chat with no voice input rather than a visible server error — check `/info` for
-+ `audioFileTranscriptionEnabled` when voice silently doesn't show up.
-+ </Callout>
-+ <Callout type="warn" title="Calling `/transcribe` yourself">
-+ The chat handles this for you; these are the rules if you post to the route directly. As
+- A useful pattern is wrapping your service in a guard that returns a clean 4xx when credentials aren't configured, instead of an opaque 5xx from the underlying SDK:
++ A useful pattern is constructing the service only when its dedicated credential is configured. Without it, omit `transcriptionService`; the runtime reports the capability as disabled, hides the mic, and returns the documented 503 if `/transcribe` is called directly:
+````
+
+---
+
+## 2026-09-24
+
+### 11:34 UTC — 3 pages, highest severity high
+
+**High — A2UI · Fixed Schema**
+
+`/strands-typescript/generative-ui/a2ui/fixed-schema` · route `/generative-ui/a2ui/fixed-schema` · under “Fixed Schema A2UI”
+
+25 code lines, 3 headings, 41 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- - **Schema-loading** (langgraph-python, langgraph-typescript,
+- langgraph-fastapi, llamaindex, crewai-crews, pydantic-ai,
+- ms-agent-python, google-adk), the schema is saved as a `.json`
+- file next to the agent and loaded once at startup.
++ - **Schema-loading** (including Strands TypeScript), the schema is saved
++ as a `.json` file next to the agent and loaded once at startup.
+- - **LLM-driven** (mastra, strands), the agent runs a secondary LLM
+- call to produce the operations container per-request. The catalog
+````
+
+**Low — Frontend Tools**
+
+`/strands-typescript/frontend-tools` · route `/frontend-tools` · under “Nothing to wire on the agent”
+
+8 prose lines changed.
+
+````diff
+- declares none of its own. A tool registered with `useFrontendTool`
+- reaches the model by name, and the browser executes the call.
++ declares none of its own. Frontend-registered tools reach the model by
++ name, and the browser handles their calls.
+- a native tool with a proxy. Keep the `useFrontendTool` name distinct from
+- every tool in `tools`.
++ a native tool with a proxy. Keep frontend tool names distinct from every
++ tool in `tools`.
+````
+
+**Low — Components as Tools**
+
+`/strands-typescript/generative-ui/tool-based` · route `/generative-ui/tool-based` · under “Nothing to wire on the agent”
+
+8 prose lines changed.
+
+````diff
+- declares none of its own. A tool registered with `useFrontendTool`
+- reaches the model by name, and the browser executes the call.
++ declares none of its own. Frontend-registered tools reach the model by
++ name, and the browser handles their calls.
+- a native tool with a proxy. Keep the `useFrontendTool` name distinct from
+- every tool in `tools`.
++ a native tool with a proxy. Keep frontend tool names distinct from every
++ tool in `tools`.
+````
+
+---
+
+---
+
+## 2026-09-23
+
+### 12:15 UTC — 8 pages, highest severity medium
+
+**Medium — Headless UI**
+
+`/strands-typescript/custom-look-and-feel/headless-ui` · route `/custom-look-and-feel/headless-ui` · under “Fully Headless UI”
+
+2 headings changed.
+
+````diff
+- # Fully Headless UI
++ # Headless UI
+````
+
+**Low — Frontend Tools**
+
+`/strands-typescript/frontend-tools` · route `/frontend-tools` · under “Nothing to wire on the agent”
+
+4 prose lines changed.
+
+````diff
+- declares none of its own. A component registered with `useComponent`
++ declares none of its own. A tool registered with `useFrontendTool`
+- a native tool with a proxy. Keep the `useComponent` name distinct from
++ a native tool with a proxy. Keep the `useFrontendTool` name distinct from
+````
+
+**Low — Components as Tools**
+
+`/strands-typescript/generative-ui/tool-based` · route `/generative-ui/tool-based` · under “Nothing to wire on the agent”
+
+4 prose lines changed.
+
+````diff
+- declares none of its own. A component registered with `useComponent`
++ declares none of its own. A tool registered with `useFrontendTool`
+- a native tool with a proxy. Keep the `useComponent` name distinct from
++ a native tool with a proxy. Keep the `useFrontendTool` name distinct from
+````
+
+**Low — Headless Threads**
+
+`/strands-typescript/headless-threads` · route `/headless-threads` · under “Configure your Runtime with CopilotKit Intelligence”
+
+6 prose lines changed.
+
+````diff
+- Your `CopilotRuntime` must be connected to CopilotKit Intelligence before the thread UI can list and resume conversations. That connection is the `intelligence` option below — a `CopilotKitIntelligence` instance. If your app came from a CLI starter, this Runtime configuration is generated for you. Otherwise, follow [Connect your runtime to Intelligence](/strands-typescript/intelligence/connect-your-runtime) for the full constructor, then return here to add the headless UI. Thread names are automatically generated by the LLM after the first message — you can disable this with `generateThreadNames: false`.
++ Your `CopilotRuntime` must be connected to CopilotKit Intelligence before the thread UI can list and resume conversations. That connection is the `intelligence` option below — a `CopilotKitIntelligence` instance. If your app came from a CLI starter, this Runtime configuration is generated for you. Otherwise, follow [Connect your runtime to Intelligence](/strands-typescript/intelligence/quickstart) for the full constructor, then return here to add the headless UI. Thread names are automatically generated by the LLM after the first message — you can disable this with `generateThreadNames: false`.
+- Managed project setup does not issue `COPILOTKIT_LICENSE_TOKEN`. That
++ Cloud-hosted setup does not issue `COPILOTKIT_LICENSE_TOKEN`. That
+- the managed project API key.
++ the cloud-hosted project API key.
+````
+
+**Low — Threads Drawer**
+
+`/strands-typescript/prebuilt-components/copilot-threads-drawer` · route `/prebuilt-components/copilot-threads-drawer` · under “When should I use this?”
+
+14 prose lines changed.
+
+````diff
+- server-side). <SignupLink surface="docs_drawer">Start managed onboarding</SignupLink> to create or select a project.
++ server-side). <SignupLink surface="docs_drawer">Start cloud-hosted setup</SignupLink> to create or select a project.
+- body="Connect a managed project to get persistent threads and realtime sync."
++ body="Connect a cloud-hosted project to get persistent threads and realtime sync."
+- **Managed Intelligence.** The project-scoped `CPK_INTELLIGENCE_API_KEY` is the
++ **Cloud-hosted Intelligence.** The project-scoped `CPK_INTELLIGENCE_API_KEY` is the
+- organization's subscription. Managed project setup does not issue
++ organization's subscription. Cloud-hosted setup does not issue
+````
+
+**Low — Quickstart**
+
+`/strands-typescript/quickstart` · route `/quickstart` · under “Set up CopilotKit Intelligence”
+
+4 prose lines changed.
+
+````diff
+- <SignupLink surface="docs_aws_strands_quickstart_step1">Sign in to managed Intelligence</SignupLink>. Managed setup uses a server-side project API key and does not issue `COPILOTKIT_LICENSE_TOKEN`. You will connect the app after you create it below.
++ <SignupLink surface="docs_aws_strands_quickstart_step1">Sign in to cloud-hosted Intelligence</SignupLink>. Cloud-hosted setup uses a server-side project API key and does not issue `COPILOTKIT_LICENSE_TOKEN`. You will connect the app after you create it below.
+- [Connect your runtime to Intelligence](/strands-typescript/intelligence/connect-your-runtime) for the
++ [Connect your runtime to Intelligence](/strands-typescript/intelligence/quickstart) for the
+````
+
+**Low — Synchronize Thread History**
+
+`/strands-typescript/threads-import` · route `/threads-import` · under “What is this?”
+
+2 prose lines changed.
+
+````diff
+- Built-in import currently supports Google ADK and LangGraph, with more sources coming soon. You can keep LangSmith, LangGraph, or ADK storage and analytics in place. For future CopilotKit-mediated runs, CopilotKit Intelligence persists the Rich Thread event history. When your agent remains connected to a durable LangGraph checkpointer or durable ADK session service with appropriate retention, those future runs continue through the native persistence path as well.
++ Built-in import currently supports Google ADK and LangGraph, with more sources coming soon. You can keep LangSmith, LangGraph, or ADK storage and analytics in place. For future CopilotKit-mediated runs, CopilotKit Intelligence persists the thread event history. When your agent remains connected to a durable LangGraph checkpointer or durable ADK session service with appropriate retention, those future runs continue through the native persistence path as well.
+````
+
+**Low — Thread & History Lifecycle**
+
+`/strands-typescript/threads-lifecycle` · route `/threads-lifecycle` · under “Scope Rich Threads to the signed-in user”
+
+2 prose lines changed.
+
+````diff
+- [Connect your runtime to Intelligence](/strands-typescript/intelligence/connect-your-runtime) covers the
++ [Connect your runtime to Intelligence](/strands-typescript/intelligence/quickstart) covers the
 ````
 
 ---

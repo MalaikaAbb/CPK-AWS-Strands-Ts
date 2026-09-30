@@ -36,6 +36,8 @@ export const NESTED_PROVIDER_ROUTES = [
   "/prebuilt-components/copilot-threads-drawer/demo-chat",
   "/headless-threads/demo-chat",
   "/threads-lifecycle/demo-chat",
+  "/generative-ui/json-render/demo-chat",
+  "/generative-ui/hashbrown/demo-chat",
 ] as const;
 
 /**

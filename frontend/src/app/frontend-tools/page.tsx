@@ -1,6 +1,18 @@
 import { RouteHeader } from "@/components/route-header";
 import { SourceCodeGroup } from "@/components/source-code";
-import { Callout, Panel, TryIt } from "@/components/ui";
+import { Callout, CodeBlock, Panel, TryIt } from "@/components/ui";
+
+// "Registering a list of tools", verbatim. Shown rather than run: the hook it
+// calls is not exported by @copilotkit/react-core 1.73.0, and `reports` and
+// `navigate` are never defined on the page.
+const REGISTER_LIST = `useFrontendTools(
+  reports.map((report) => ({
+    name: \`open_\${report.id}\`,
+    description: \`Open the \${report.title} report\`,
+    handler: async () => navigate(\`/reports/\${report.id}\`),
+  })),
+  [navigate],
+);`;
 
 export default function Page() {
   return (
@@ -41,7 +53,31 @@ export default function Page() {
         />
       </Panel>
 
-      
+      <Panel
+        title="Registering a list of tools"
+        description="useFrontendTools: the snippet as published. Not wired into the demo."
+      >
+        <p className="mb-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
+          <code>useFrontendTool</code> handles one tool per call, so it cannot
+          register a list whose length changes. The page presents{" "}
+          <code>useFrontendTools</code> for that case. It takes an array plus a
+          dependency list and works out which tools were added or removed
+          between renders.
+        </p>
+        <CodeBlock code={REGISTER_LIST} language="tsx" />
+        <div className="mt-4">
+          <Callout tone="warn" title="Broken: the hook is not in the published package">
+            <p>
+              <code>@copilotkit/react-core@1.73.0</code> is both the installed
+              version and npm <code>latest</code>, and it does not export{" "}
+              <code>useFrontendTools</code>, from <code>/v2</code> or anywhere
+              else. The snippet also relies on <code>reports</code> and{" "}
+              <code>navigate</code>, and the page defines neither. This
+              sub-section stays Broken until the hook ships.
+            </p>
+          </Callout>
+        </div>
+      </Panel>
     </>
   );
 }

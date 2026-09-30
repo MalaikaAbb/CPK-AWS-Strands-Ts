@@ -1,20 +1,20 @@
 {
   "schema": 1,
   "docsRoot": "https://docs.copilotkit.ai/strands-typescript",
-  "syncedAt": "2026-09-16T09:36:54.541Z",
+  "syncedAt": "2026-09-30T09:07:33.627Z",
   "pages": {
     "/strands-typescript": {
       "file": "strands-typescript.md",
-      "sha256": "89134e43aa0b6f0d585d85c1390908318dc6942983b34c3ad0e51439df8bc012",
-      "bytes": 3139,
-      "lines": 53,
+      "sha256": "8072b9e7669c39cde5d405892330961b726d9721b9cfa6b458ecc24f1b52b775",
+      "bytes": 695,
+      "lines": 18,
       "routes": [
         "/",
         "/doc-sync"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/ag-ui": {
       "file": "strands-typescript__ag-ui.md",
@@ -26,7 +26,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/agent-config": {
       "file": "strands-typescript__agent-config.md",
@@ -38,19 +38,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/copilot-runtime": {
       "file": "strands-typescript__copilot-runtime.md",
-      "sha256": "9252966f52ecd9fd71a7bff25fe3ffea2e562f91d05035555cfcf0813c57fc03",
-      "bytes": 8216,
-      "lines": 211,
+      "sha256": "22c0590c9e7cc32b45a7cd814e6ce88e8c8093d042bbcb7376f77d937d4bc140",
+      "bytes": 10332,
+      "lines": 263,
       "routes": [
         "/copilot-runtime"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/custom-look-and-feel/css": {
       "file": "strands-typescript__custom-look-and-feel__css.md",
@@ -62,43 +62,55 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/custom-look-and-feel/headless-ui": {
       "file": "strands-typescript__custom-look-and-feel__headless-ui.md",
-      "sha256": "d2d5a1752e9abc6a891653fc48f5e929721823258274f5d7e25ddb524f3bdff0",
-      "bytes": 13661,
+      "sha256": "bb4affae520f908d58a03b17b84c208b6fca4fc363312fb062667d976288985c",
+      "bytes": 13655,
       "lines": 363,
       "routes": [
         "/custom-look-and-feel/headless-ui"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
+    },
+    "/strands-typescript/custom-look-and-feel/markdown": {
+      "file": "strands-typescript__custom-look-and-feel__markdown.md",
+      "sha256": "01846ab1ed86d16c0c7ff9f1749a9a5dc4f6ba5a6f17e0e23b64214fd39bdf74",
+      "bytes": 5852,
+      "lines": 159,
+      "routes": [
+        "/custom-look-and-feel/markdown"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/custom-look-and-feel/slots": {
       "file": "strands-typescript__custom-look-and-feel__slots.md",
-      "sha256": "eb4d3b13128ef9fcf2d58e0224e3a32bf7d14afc8250cf9ea9e9729846cd8e95",
-      "bytes": 6867,
-      "lines": 235,
+      "sha256": "f3fe0c714c5c2a550bce588c515969752737e5754295398cf240243699640376",
+      "bytes": 7073,
+      "lines": 239,
       "routes": [
         "/custom-look-and-feel/slots"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/frontend-tools": {
       "file": "strands-typescript__frontend-tools.md",
-      "sha256": "55aaec7e44dee97b07f55eae9d43417e4456b4cb99cc06e7f761df0cd01288c3",
-      "bytes": 4556,
-      "lines": 134,
+      "sha256": "0c39f3f5d13071258550c8b19a3961adf2e9c92849f9f1675bcb7665533500e9",
+      "bytes": 5502,
+      "lines": 159,
       "routes": [
         "/frontend-tools"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/generative-ui/a2ui/dynamic-schema": {
       "file": "strands-typescript__generative-ui__a2ui__dynamic-schema.md",
@@ -110,31 +122,55 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/generative-ui/a2ui/fixed-schema": {
       "file": "strands-typescript__generative-ui__a2ui__fixed-schema.md",
-      "sha256": "b0119c5ac2945482554260b57b089bf66b21070117a5c20c9acaf2d6b808d62f",
-      "bytes": 16534,
-      "lines": 462,
+      "sha256": "7591f169be17208e5cffea786e0135ac015186af6f36592b7971e32bdf26c0c9",
+      "bytes": 17962,
+      "lines": 505,
       "routes": [
         "/generative-ui/a2ui/fixed-schema"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
+    },
+    "/strands-typescript/generative-ui/hashbrown": {
+      "file": "strands-typescript__generative-ui__hashbrown.md",
+      "sha256": "33cf048acd1ae7b5e7acef83cd71028f2f8af2c5135b975fb465e006f1aca786",
+      "bytes": 4245,
+      "lines": 104,
+      "routes": [
+        "/generative-ui/hashbrown"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
+    },
+    "/strands-typescript/generative-ui/json-render": {
+      "file": "strands-typescript__generative-ui__json-render.md",
+      "sha256": "110fe1aa3e7f8a64113b6283180718ba54eb6cbf7b2a43fe2b593fb344662584",
+      "bytes": 4953,
+      "lines": 134,
+      "routes": [
+        "/generative-ui/json-render"
+      ],
+      "status": "ok",
+      "age": 0,
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/generative-ui/tool-based": {
       "file": "strands-typescript__generative-ui__tool-based.md",
-      "sha256": "67e8b99523f26326bf98d6d7374bcffb7acbf23df77c299b89f5bb99926d63d8",
-      "bytes": 4258,
-      "lines": 122,
+      "sha256": "6fc8e903264ee97a532329b578757f8478fec0a92efed892246c3a14ca9c4814",
+      "bytes": 5442,
+      "lines": 151,
       "routes": [
         "/generative-ui/tool-based"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/generative-ui/tool-rendering": {
       "file": "strands-typescript__generative-ui__tool-rendering.md",
@@ -146,7 +182,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:34 GMT"
     },
     "/strands-typescript/generative-ui/your-components/display-only": {
       "file": "strands-typescript__generative-ui__your-components__display-only.md",
@@ -158,7 +194,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/generative-ui/your-components/interactive": {
       "file": "strands-typescript__generative-ui__your-components__interactive.md",
@@ -170,19 +206,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/headless-threads": {
       "file": "strands-typescript__headless-threads.md",
-      "sha256": "3ea97ab7e347798f6fba0bd77fdf500440df03be3f36ccf72e63f009003403d0",
-      "bytes": 11795,
-      "lines": 249,
+      "sha256": "429a882a45a1545cfd340d3fe8ec9e2aa617b488be7edb461dc920cc5d88f295",
+      "bytes": 11874,
+      "lines": 251,
       "routes": [
         "/headless-threads"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/human-in-the-loop": {
       "file": "strands-typescript__human-in-the-loop.md",
@@ -194,7 +230,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:55 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/human-in-the-loop/governed-actions": {
       "file": "strands-typescript__human-in-the-loop__governed-actions.md",
@@ -206,19 +242,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/multi-agent/subagents": {
       "file": "strands-typescript__multi-agent__subagents.md",
-      "sha256": "e233531a3e065668fddbf5c60a077e4dae1031331a31afad9f4d7739455b38df",
-      "bytes": 15412,
-      "lines": 420,
+      "sha256": "cfffa0d5c12ce1c63c583c7af393357130383018e4ead303d11d587a1bfeb8a7",
+      "bytes": 15862,
+      "lines": 429,
       "routes": [
         "/multi-agent/subagents"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/multimodal-attachments": {
       "file": "strands-typescript__multimodal-attachments.md",
@@ -230,19 +266,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/prebuilt-components/chat": {
       "file": "strands-typescript__prebuilt-components__chat.md",
-      "sha256": "1f9cde3aa93d0e975c1a97c25f254857779efbc9a96570ed8203900dfe1495f9",
-      "bytes": 2931,
-      "lines": 77,
+      "sha256": "15ac87544a26438732434bef908b83ac3b8155bed3010fe79691855ac7c96a11",
+      "bytes": 3322,
+      "lines": 88,
       "routes": [
         "/prebuilt-components/chat"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/prebuilt-components/chat-controls": {
       "file": "strands-typescript__prebuilt-components__chat-controls.md",
@@ -254,43 +290,43 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/prebuilt-components/copilot-threads-drawer": {
       "file": "strands-typescript__prebuilt-components__copilot-threads-drawer.md",
-      "sha256": "159e4a546f12c121399a87de50b182351e45ae6a214435bef9bfd06eca9b5c17",
-      "bytes": 7332,
-      "lines": 160,
+      "sha256": "28c710cbec39e2e629f189a63f6ba615cbb7d2ca0130047244dc19fa9adf885c",
+      "bytes": 9144,
+      "lines": 210,
       "routes": [
         "/prebuilt-components/copilot-threads-drawer"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/prebuilt-components/popup": {
       "file": "strands-typescript__prebuilt-components__popup.md",
-      "sha256": "d9c423271fbda8d696c38ba4f6cdaab1f44d144c9bb65544b37a8dd54e7827db",
-      "bytes": 2479,
-      "lines": 70,
+      "sha256": "9749451b9a08e8909921558f7b18d7fd7b19eba56e6dae61ace97cace0d88879",
+      "bytes": 2874,
+      "lines": 81,
       "routes": [
         "/prebuilt-components/popup"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/prebuilt-components/sidebar": {
       "file": "strands-typescript__prebuilt-components__sidebar.md",
-      "sha256": "723c6ba9118470d8f3bc4ee6e9c4c9cd0b4dbbe555d056d78630c7c40aac6d68",
-      "bytes": 2530,
-      "lines": 70,
+      "sha256": "ec0efe28a17e8afcb0c5ff4ba6b13cf21e291d194b8694eb7a515ca4269f4398",
+      "bytes": 3089,
+      "lines": 83,
       "routes": [
         "/prebuilt-components/sidebar"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/programmatic-control": {
       "file": "strands-typescript__programmatic-control.md",
@@ -302,19 +338,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/quickstart": {
       "file": "strands-typescript__quickstart.md",
-      "sha256": "626538fcbef609e74dff7abd47632b77f31b41d6ff58b797da6f3e1667fb7b7d",
-      "bytes": 19571,
-      "lines": 533,
+      "sha256": "ab27a483d7509a635470a0f8ed855d5e6ed297f02acec4c055f7376ef39af587",
+      "bytes": 23250,
+      "lines": 612,
       "routes": [
         "/quickstart"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/shared-state/agent-readonly": {
       "file": "strands-typescript__shared-state__agent-readonly.md",
@@ -326,7 +362,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/shared-state/in-app-agent-read": {
       "file": "strands-typescript__shared-state__in-app-agent-read.md",
@@ -338,7 +374,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/shared-state/in-app-agent-write": {
       "file": "strands-typescript__shared-state__in-app-agent-write.md",
@@ -350,7 +386,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/shared-state/rendering-in-app": {
       "file": "strands-typescript__shared-state__rendering-in-app.md",
@@ -362,48 +398,48 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/threads-import": {
       "file": "strands-typescript__threads-import.md",
-      "sha256": "97ebec2202aad6a42da0d1c53d2133b47383e184e2c4a4ef62eb243910af998c",
-      "bytes": 6907,
-      "lines": 136,
+      "sha256": "2902cf20a59b302c88fc523b6743f109720f21d46e40f44c91de5e37f5fd0e7c",
+      "bytes": 7676,
+      "lines": 144,
       "routes": [
         "/threads-import"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:56 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:35 GMT"
     },
     "/strands-typescript/threads-lifecycle": {
       "file": "strands-typescript__threads-lifecycle.md",
-      "sha256": "e2938c54109a46ca4ea99bede44a9d73f43d16ff5f3bec69c417a5196ea34907",
-      "bytes": 15833,
-      "lines": 257,
+      "sha256": "4f6c99e2672adcbcc25bfaccfbfe0c2e79729e2686ec9f3922185d0a81599bba",
+      "bytes": 15868,
+      "lines": 259,
       "routes": [
         "/threads-lifecycle"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:57 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:36 GMT"
     },
     "/strands-typescript/voice": {
       "file": "strands-typescript__voice.md",
-      "sha256": "f171a04cc6cfa200964c7817cdafbe8d9688673eb526e6e1fae1aad9fbe4782d",
-      "bytes": 9983,
+      "sha256": "32ef471918b8248557b9f56519eebb7c45e673ac139dee5127c7ed440af872b9",
+      "bytes": 10086,
       "lines": 232,
       "routes": [
         "/voice"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Wed, 16 Sep 2026 09:36:57 GMT"
+      "date": "Wed, 30 Sep 2026 09:07:36 GMT"
     }
   },
   "sitemap": {
-    "fetchedAt": "2026-09-16T09:36:54.541Z",
-    "urlsUnderRoot": 145,
+    "fetchedAt": "2026-09-30T09:07:33.627Z",
+    "urlsUnderRoot": 151,
     "knownUnmapped": [
       "https://docs.copilotkit.ai/strands-typescript/agent-spec",
       "https://docs.copilotkit.ai/strands-typescript/agent-spec/human-in-the-loop",
@@ -421,6 +457,7 @@
       "https://docs.copilotkit.ai/strands-typescript/backend/agent-runner",
       "https://docs.copilotkit.ai/strands-typescript/backend/copilot-runtime",
       "https://docs.copilotkit.ai/strands-typescript/backend/custom-agent",
+      "https://docs.copilotkit.ai/strands-typescript/backend/message-history",
       "https://docs.copilotkit.ai/strands-typescript/backend/runtime-endpoints",
       "https://docs.copilotkit.ai/strands-typescript/backend/self-managed-agents",
       "https://docs.copilotkit.ai/strands-typescript/build-with-agents",
@@ -438,8 +475,11 @@
       "https://docs.copilotkit.ai/strands-typescript/cookbook/arcade",
       "https://docs.copilotkit.ai/strands-typescript/cookbook/claude-managed-agents",
       "https://docs.copilotkit.ai/strands-typescript/cookbook/daytona",
+      "https://docs.copilotkit.ai/strands-typescript/cookbook/jev-generative-ui",
+      "https://docs.copilotkit.ai/strands-typescript/cookbook/manufact",
       "https://docs.copilotkit.ai/strands-typescript/cookbook/openbox-governed-copilotkit",
       "https://docs.copilotkit.ai/strands-typescript/cookbook/oracle-agent-spec-memory",
+      "https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/markdown",
       "https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/reasoning-messages",
       "https://docs.copilotkit.ai/strands-typescript/deepagents",
       "https://docs.copilotkit.ai/strands-typescript/deploy-agentcore",
@@ -466,6 +506,8 @@
       "https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/headless",
       "https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/useInterrupt",
       "https://docs.copilotkit.ai/strands-typescript/inspector",
+      "https://docs.copilotkit.ai/strands-typescript/intelligence/analytics",
+      "https://docs.copilotkit.ai/strands-typescript/intelligence/channels",
       "https://docs.copilotkit.ai/strands-typescript/intelligence/connect-your-runtime",
       "https://docs.copilotkit.ai/strands-typescript/intelligence/headless-ui",
       "https://docs.copilotkit.ai/strands-typescript/intelligence/intelligence-platform",
@@ -473,8 +515,11 @@
       "https://docs.copilotkit.ai/strands-typescript/intelligence/managed-intelligence-platform",
       "https://docs.copilotkit.ai/strands-typescript/intelligence/memories",
       "https://docs.copilotkit.ai/strands-typescript/intelligence/overview",
+      "https://docs.copilotkit.ai/strands-typescript/intelligence/plans",
       "https://docs.copilotkit.ai/strands-typescript/intelligence/quickstart",
       "https://docs.copilotkit.ai/strands-typescript/intelligence/self-hosting",
+      "https://docs.copilotkit.ai/strands-typescript/intelligence/self-hosting-ecs",
+      "https://docs.copilotkit.ai/strands-typescript/intelligence/self-hosting-observability",
       "https://docs.copilotkit.ai/strands-typescript/intelligence/threads-explained",
       "https://docs.copilotkit.ai/strands-typescript/learning",
       "https://docs.copilotkit.ai/strands-typescript/migrate/1.10.X",

@@ -11,8 +11,9 @@
   "dependencies": {
     "@ag-ui/a2ui-toolkit": "^0.0.4",
     "@ag-ui/aws-strands": "^0.3.0",
+    "@anthropic-ai/sdk": "^0.109.1",
     "@modelcontextprotocol/sdk": "^1.22.0",
-    "@strands-agents/sdk": "^1.17.0",
+    "@strands-agents/sdk": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "openai": "^6.45.0"

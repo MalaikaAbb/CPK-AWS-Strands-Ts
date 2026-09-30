@@ -421,6 +421,124 @@ const GAP_LIST: DocGap[] = [
     severity: "note",
     docPath: "/strands-typescript/human-in-the-loop/governed-actions",
   },
+
+  // ------------------------------------------------------ frontend tools list
+  {
+    id: "use-frontend-tools-not-exported",
+    title: "`useFrontendTools` is not exported by the published package",
+    detail:
+      "\"Registering a list of tools\" calls `useFrontendTools(tools, deps)` and links to its reference page. `@copilotkit/react-core@1.73.0`, both the installed version and npm `latest`, has no export by that name in any entry point. The snippet cannot be imported, let alone run.",
+    severity: "blocking",
+    docPath: "/strands-typescript/frontend-tools",
+  },
+  {
+    id: "use-frontend-tools-free-identifiers",
+    title: "The list snippet uses `reports` and `navigate` without defining either",
+    detail:
+      "The tools are built with `reports.map(...)`, and each handler calls `navigate(...)`. The page never says where `reports` comes from or which router `navigate` belongs to.",
+    severity: "degraded",
+    docPath: "/strands-typescript/frontend-tools",
+  },
+
+  // --------------------------------------------------------------- json-render
+  {
+    id: "json-render-modules-unpublished",
+    title: "Four of the renderer's imports point at files that are never published",
+    detail:
+      "`json-render-renderer.tsx` imports `catalog` from `./registry`. `registry.tsx` is published, but it imports `MetricCard` from `./metric-card`, `BarChart` from `./charts/bar-chart` and `PieChart` from `./charts/pie-chart`, and none of those three files appear anywhere on the page. The example output also uses a `Stack` element type that the catalog does not register, so validation would reject the root element of the page's own example.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/json-render",
+  },
+  {
+    id: "json-render-parser-undefined",
+    title: "The parser's three helpers are called and never defined",
+    detail:
+      "`parseSpec` calls `stripCodeFencesAndPrelude`, `tolerantJsonParse` and `validateAgainstCatalog`. None of them is defined on the page, and none is exported by `@json-render/react`. Yet the page describes this missing code as the part that tolerates partial tokens, code fences and prose preambles. `AssistantMessage` is used as a type and never imported.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/json-render",
+  },
+  {
+    id: "json-render-renderer-prop",
+    title: "`<Renderer catalog={…}>` does not match `@json-render/react`",
+    detail:
+      "In `@json-render/react@0.21.0` (npm `latest`), `Renderer` takes `{ spec, registry, loading, fallback }`. There is no `catalog` prop, so the call on the page is a type error even with every missing file supplied. It also reads visibility, action and state contexts that only `<JSONUIProvider>` supplies, and the page never renders one, so the first valid spec throws `useVisibility must be used within a VisibilityProvider` (predicted from the library source). The route keeps the call as published and shows the error; its \"fixed\" mode builds a `registry` and adds the provider.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/json-render",
+  },
+  {
+    id: "json-render-backend-unpublished",
+    title: "No agent, prompt or runtime route for `byoc_json_render`",
+    detail:
+      "The page's backend section is only an example of the JSON output. The provider targets `/api/copilotkit-byoc-json-render` and `agent=\"byoc_json_render\"`, but the page never shows that route. The published `agent.ts` does include `buildByocJsonRenderAgent`, but it imports `BYOC_JSON_RENDER_SYSTEM_PROMPT` from the unpublished `./prompts`, so the instructions that make the model emit a spec do not exist anywhere in the docs.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/json-render",
+  },
+  {
+    id: "json-render-slot-type",
+    title: "The `assistantMessage` slot's type rejects the page's plain component",
+    detail:
+      "`@copilotkit/react-core` 1.74 types `messageView.assistantMessage` as `typeof CopilotChatAssistantMessage`, static sub-components included. The page's `({ message }) => …` fails that type check (TS2322), which `next dev` hides and `next build` reports. The published line carries a `@ts-expect-error` here. The fixed mode uses the `assistantMessage.markdownRenderer` sub-slot instead, which accepts a plain `({ content })` component.",
+    severity: "degraded",
+    docPath: "/strands-typescript/generative-ui/json-render",
+  },
+  {
+    id: "json-render-suggestions-provider",
+    title: "`useConfigureSuggestions` is called outside the page's own `<CopilotKit>`",
+    detail:
+      "The page's component calls the hook and then renders `<CopilotKit runtimeUrl=… agent=…>`. The suggestions therefore register on whatever provider is above it (this app's root), and never appear in the page's chat. Nothing errors. The fixed mode calls the hook from a child of `<CopilotKit>`.",
+    severity: "note",
+    docPath: "/strands-typescript/generative-ui/json-render",
+  },
+
+  // ----------------------------------------------------------------- hashbrown
+  {
+    id: "hashbrown-modules-unpublished",
+    title: "The catalog components are imported from files that are never published",
+    detail:
+      "`hashbrown-renderer.tsx` imports `MetricCard` from `./metric-card` and `PieChart`, `BarChart` from `./charts`. Neither module appears on the page. The tree example also uses a `Stack` type that the catalog does not include. `AssistantMessage` is used as a type and never imported.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/hashbrown",
+  },
+  {
+    id: "hashbrown-hook-signatures",
+    title: "Both Hashbrown calls don't match `@hashbrownai/react`",
+    detail:
+      "In `@hashbrownai/react@0.6.1` (0.5.0 when first checked), `useJsonParser(json, schema)` requires a schema and returns `{ parserState, value, error }`, not a value. `useUiKit` takes `{ components, examples? }`, built from `exposeComponent(...)` entries, and returns a UI-kit object, not renderable nodes. The page calls `useJsonParser(content)` and `useUiKit({ catalog, value })` and renders the result directly. The route keeps these calls as published: the first assistant message throws `Cannot read properties of undefined (reading 'forEach')` inside `useUiKit` (predicted from the library source). Its \"fixed\" tab makes the calls correctly.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/hashbrown",
+  },
+  {
+    id: "hashbrown-backend-unpublished",
+    title: "No agent, prompt or runtime route for `byoc_hashbrown`",
+    detail:
+      "The page's backend section says only that the method \"depends on your framework\", then shows sample output. `/api/copilotkit-byoc-hashbrown` is never shown. The published `agent.ts` includes `buildByocHashbrownAgent`, but its `BYOC_HASHBROWN_SYSTEM_PROMPT` comes from the unpublished `./prompts`.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/hashbrown",
+  },
+  {
+    id: "hashbrown-output-shape",
+    title: "The page's example agent output is the wrong shape for Hashbrown",
+    detail:
+      "The page shows elements as `{ \"type\": \"MetricCard\", \"title\": …, \"value\": … }`. Hashbrown 0.6.1's UI kit parses `{ \"ui\": [ { \"MetricCard\": { \"props\": { … } } } ] }`, keying each element by component name with its props under `props`, and `Stack` children under `children`. Rendering the page's shape through a correctly built kit draws nothing; checked by server-rendering both shapes. Even with every hook call fixed, an agent that follows the page produces an empty chat. The published factory calls itself a \"UI-kit envelope generator\", which matches Hashbrown, not the page.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/hashbrown",
+  },
+  {
+    id: "hashbrown-stack-unregistered",
+    title: "The example's `Stack` is not in the catalog, and Hashbrown throws on unknown names",
+    detail:
+      "The page's tree example uses a `Stack` root, but the catalog lists only `MetricCard`, `PieChart` and `BarChart`. Hashbrown's renderer throws `Unknown element type. Stack` for any name it was not given, so `Stack` must be exposed (with `children: \"any\"`).",
+    severity: "degraded",
+    docPath: "/strands-typescript/generative-ui/hashbrown",
+  },
+  {
+    id: "hashbrown-slot-and-suggestions",
+    title: "Same slot-type and suggestions bugs as JSON Render",
+    detail:
+      "`messageView={{ assistantMessage: HashBrownAssistantMessage }}` fails CopilotKit 1.74's slot type (TS2322). `useConfigureSuggestions` is called outside the page's own `<CopilotKit>`, so the suggestions never reach its chat. The fixed tab still replaces the whole `assistantMessage`, as the page does, but casts it (`as unknown as typeof CopilotChatAssistantMessage`) and calls the hook inside the provider.",
+    severity: "degraded",
+    docPath: "/strands-typescript/generative-ui/hashbrown",
+  },
 ];
 
 export const DOC_GAPS: Record<string, DocGap> = Object.fromEntries(
@@ -438,6 +556,27 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
     "governed-no-backend-published",
     "governed-card-defined-in-other-pattern",
     "governed-shadcn-classes",
+  ],
+
+  "/generative-ui/json-render": [
+    "json-render-modules-unpublished",
+    "json-render-parser-undefined",
+    "json-render-backend-unpublished",
+    "json-render-renderer-prop",
+    "json-render-slot-type",
+    "json-render-suggestions-provider",
+  ],
+  "/generative-ui/hashbrown": [
+    "hashbrown-modules-unpublished",
+    "hashbrown-hook-signatures",
+    "hashbrown-backend-unpublished",
+    "hashbrown-output-shape",
+    "hashbrown-stack-unregistered",
+    "hashbrown-slot-and-suggestions",
+  ],
+  "/frontend-tools": [
+    "use-frontend-tools-not-exported",
+    "use-frontend-tools-free-identifiers",
   ],
 
   // "/quickstart": [

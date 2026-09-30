@@ -13,12 +13,16 @@
 
 export const AGENT_IDS = [
   "strands_agent",
+  // The Quickstart's "Using Anthropic instead" variant. The backend mounts it
+  // only when ANTHROPIC_API_KEY is set.
+  "strands_agent_anthropic",
   "agentic_chat",
   "prebuilt-sidebar",
   "prebuilt-popup",
   "chat-controls",
   "chat-customization-css",
   "chat-slots",
+  "chat-markdown",
   "headless-simple",
   "headless-complete",
   "multimodal",
@@ -39,6 +43,8 @@ export const AGENT_IDS = [
   "shared-state-read-write",
   "a2ui-fixed-schema",
   "declarative-gen-ui",
+  "byoc_json_render",
+  "byoc_hashbrown",
 ] as const;
 
 export type AgentId = (typeof AGENT_IDS)[number];
