@@ -18,6 +18,11 @@ import { buildLanguageAgent, buildStateMirrorAgent } from "./state-agents";
 import { buildA2uiDynamicAgent } from "./a2ui-dynamic-agent";
 import { buildSubagentsAgent } from "./subagents-agent";
 import { buildA2uiFixedSchemaAgent } from "./a2ui-fixed-agent";
+import { buildByocHashbrownAgent } from "./byoc-hashbrown-agent";
+import {
+  ANTHROPIC_QUICKSTART_AGENT_ID,
+  buildAnthropicQuickstartAgent,
+} from "./anthropic-quickstart-agent";
 
 export interface RegistryEntry {
   id: string;
@@ -50,6 +55,8 @@ const GOVERNED_ACTIONS_GAPS = [
   "The page's other pattern, `useInterrupt`, needs a runtime that raises AG-UI interrupts. Nothing on the Strands TypeScript side does, and this page publishes no backend that would.",
 ];
 
+const HAS_ANTHROPIC_KEY = Boolean(process.env.ANTHROPIC_API_KEY);
+
 function chatEntries(): RegistryEntry[] {
   return CHAT_AGENT_SPECS.map((spec) => ({
     id: spec.name,
@@ -68,6 +75,20 @@ function chatEntries(): RegistryEntry[] {
 
 export const REGISTRY: RegistryEntry[] = [
   ...chatEntries(),
+
+  // The Quickstart's "Using Anthropic instead" variant of `strands_agent`.
+  // Mounted only with a key: `AnthropicModel` throws at construction without
+  // one, which would stop the whole server for anyone running OpenAI only.
+  ...(HAS_ANTHROPIC_KEY
+    ? [
+        {
+          id: ANTHROPIC_QUICKSTART_AGENT_ID,
+          mountPath: `/${ANTHROPIC_QUICKSTART_AGENT_ID}`,
+          build: buildAnthropicQuickstartAgent,
+          gaps: [NO_TOOLS],
+        },
+      ]
+    : []),
 
   {
     id: "languageAgent",
@@ -111,6 +132,15 @@ export const REGISTRY: RegistryEntry[] = [
       "Runs `buildA2uiDynamicAgent` from the published `agent.ts` — the only factory in that file whose dependencies are all inline. `createModel` is substituted with the Quickstart's published model construction.",
     ],
   },
+  {
+    id: "byoc_hashbrown",
+    mountPath: "/byoc_hashbrown",
+    build: buildByocHashbrownAgent,
+    gaps: [
+      "Runs `buildByocHashbrownAgent` from the published `agent.ts`. Its `BYOC_HASHBROWN_SYSTEM_PROMPT` comes from the unpublished `./prompts`, so the prompt here is harness-authored.",
+      "The prompt asks for Hashbrown's `{ \"ui\": [ { \"Name\": { \"props\": … } } ] }` envelope, not the `{ \"type\": … }` shape the page's example output shows, which a UI kit cannot render.",
+    ],
+  },
 ];
 
 /**
@@ -121,13 +151,22 @@ export const REGISTRY: RegistryEntry[] = [
  */
 export const UNSERVED: { id: string; reason: string }[] = [
   {
-    id: "voice_agent / byoc_hashbrown / byoc_json_render",
+    id: "voice_agent / byoc_json_render",
     reason:
-      "Published in `agent.ts` but each depends on a prompt constant from the unpublished `./prompts` module. The Voice route uses the Quickstart-shaped `voice-demo` agent instead.",
+      "Published in `agent.ts` but each depends on a prompt constant from the unpublished `./prompts` module. The Voice route uses the Quickstart-shaped `voice-demo` agent instead. (`byoc_hashbrown` has the same gap and is served with a harness-authored prompt.)",
   },
   {
     id: "strands_agent (showcase build)",
     reason:
       "`buildShowcaseAgent` needs `SHOWCASE_TOOLS` from `./tools` and six symbols from `./state`, none published. The `strands_agent` served here is the Quickstart's, not the showcase's.",
   },
+  ...(HAS_ANTHROPIC_KEY
+    ? []
+    : [
+        {
+          id: ANTHROPIC_QUICKSTART_AGENT_ID,
+          reason:
+            "ANTHROPIC_API_KEY is not set in backend/.env. `AnthropicModel` throws at construction without it, so this agent is left unmounted rather than stopping the server.",
+        },
+      ]),
 ];

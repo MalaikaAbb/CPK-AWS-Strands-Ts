@@ -40,8 +40,8 @@ around a real backend tool, see [Tool rendering](/strands-typescript/generative-
 
     On every run the AG-UI Strands adapter registers a proxy tool in the
     agent's tool registry for each tool the request carries, so the agent
-    declares none of its own. A component registered with `useComponent`
-    reaches the model by name, and the browser executes the call.
+    declares none of its own. Frontend-registered tools reach the model by
+    name, and the browser handles their calls.
 
     ```ts title="src/agent/agent.ts"
     import { Agent } from "@strands-agents/sdk";
@@ -61,8 +61,8 @@ around a real backend tool, see [Tool rendering](/strands-typescript/generative-
     ```
 
     A backend tool that already owns the name wins: the adapter never replaces
-    a native tool with a proxy. Keep the `useComponent` name distinct from
-    every tool in `tools`.
+    a native tool with a proxy. Keep frontend tool names distinct from every
+    tool in `tools`.
 
   </Step>
   <Step>
@@ -94,8 +94,16 @@ import { z } from "zod";
 
 `useComponent` takes a name, a Zod schema for its props, and the component
 to render. The runtime registers it as a frontend tool so the agent can
-discover it, and Zod validates the LLM's arguments before they reach your
-component.
+discover it, and the schema becomes that tool's parameter definition — it is
+what tells the model which arguments to send.
+
+<Callout type="warn">
+  `parameters` is optional, but leaving it out advertises the tool with an
+  empty parameter schema (`{ "type": "object", "properties": {} }`). The model
+  then has nothing to fill in, so it calls the tool with no arguments and your
+  component renders with no props. Pass a schema for any component that needs
+  data.
+</Callout>
 
 ```typescript
 // src/app/demos/gen-ui-tool-based/page.tsx
@@ -117,5 +125,26 @@ anything about CopilotKit.
   name. Make it a verb like `render_bar_chart` or `show_weather` so the LLM
   reliably picks it when the user asks for that visualization.
 </Callout>
+
+## Rendering in a headless chat
+
+CopilotKit's built-in chat components paint registered components for you. A
+headless or custom chat renders the message list itself, so nothing paints a
+tool call unless you render it — the component is registered and the agent
+calls it, but the chat stays empty.
+
+Render the tool calls on each assistant message with
+`CopilotChatToolCallsView`:
+
+```tsx
+import { CopilotChatToolCallsView } from "@copilotkit/react-core/v2";
+
+<CopilotChatToolCallsView message={assistantMessage} messages={allMessages} />;
+```
+
+It looks up the sibling `tool`-role message for each tool call and hands both
+to the registered renderer. For finer placement, call `useRenderToolCall()` and
+paint each tool call yourself — see
+[Headless UI](/strands-typescript/custom-look-and-feel/headless-ui).
 
 <IntegrationGrid path="generative-ui/tool-based" />

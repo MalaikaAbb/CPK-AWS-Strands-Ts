@@ -40,8 +40,8 @@ Use frontend tools when your agent needs to:
 
     On every run the AG-UI Strands adapter registers a proxy tool in the
     agent's tool registry for each tool the request carries, so the agent
-    declares none of its own. A component registered with `useComponent`
-    reaches the model by name, and the browser executes the call.
+    declares none of its own. Frontend-registered tools reach the model by
+    name, and the browser handles their calls.
 
     ```ts title="src/agent/agent.ts"
     import { Agent } from "@strands-agents/sdk";
@@ -61,8 +61,8 @@ Use frontend tools when your agent needs to:
     ```
 
     A backend tool that already owns the name wins: the adapter never replaces
-    a native tool with a proxy. Keep the `useComponent` name distinct from
-    every tool in `tools`.
+    a native tool with a proxy. Keep frontend tool names distinct from every
+    tool in `tools`.
 
   </Step>
   <Step>
@@ -129,5 +129,30 @@ what happened.
       return { status: "success" };
     },
 ```
+
+## Registering a list of tools
+
+`useFrontendTool` registers one tool per call, so it cannot be called in a loop
+over a list whose length changes between renders. When the set of tools comes
+from state, from props, or from a backend response, use
+[`useFrontendTools`](/reference/hooks/useFrontendTools) instead. It takes an
+array and runs a single effect over it, so the array can be empty on one render
+and hold twenty entries on the next.
+
+```tsx
+useFrontendTools(
+  reports.map((report) => ({
+    name: `open_${report.id}`,
+    description: `Open the ${report.title} report`,
+    handler: async () => navigate(`/reports/${report.id}`),
+  })),
+  [navigate],
+);
+```
+
+Tools that leave the array are unregistered, tools that join it are registered,
+and a re-render that produces an equal list does not re-register anything. A
+description built from your data stays current on its own. The second argument
+is for values a handler closes over, such as `navigate` above.
 
 <IntegrationGrid path="frontend-tools" />

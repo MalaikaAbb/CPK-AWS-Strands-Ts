@@ -138,6 +138,11 @@ export const CHAT_AGENT_SPECS: ChatAgentSpec[] = [
     systemPrompt: HELPFUL,
   },
   {
+    name: "chat-markdown",
+    description: "Backs the Markdown Rendering page.",
+    systemPrompt: HELPFUL,
+  },
+  {
     name: "headless-simple",
     description: "Backs the minimal headless chat.",
     systemPrompt: HELPFUL,

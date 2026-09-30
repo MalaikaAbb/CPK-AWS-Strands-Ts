@@ -2,7 +2,7 @@
 
 A navigable, working test harness for the CopilotKit ↔ AWS Strands (TypeScript) integration — one route per doc page, each either implementing what the page teaches or stating precisely why it cannot.
 
-**Doc sync:** see `/doc-sync` in the running app (the manifest's `syncedAt` is the single source of truth) · **Routes:** 33 · **Agents:** 26 · **Doc gaps recorded:** 43 (11 blocking)
+**Doc sync:** see `/doc-sync` in the running app (the manifest's `syncedAt` is the single source of truth) · **Routes:** 36 · **Agents:** 27 · **Doc gaps recorded:** 55 (19 blocking)
 **Packages:** `@copilotkit/react-core` 1.69.0 · `@copilotkit/runtime` 1.69.0 · `@copilotkit/a2ui-renderer` 1.69.0 · `@copilotkit/voice` 1.69.0 · `@ag-ui/client` 0.0.57 (pinned) · `@ag-ui/aws-strands` 0.2.3 · `@strands-agents/sdk` 1.12.0 · Next 16.3.0
 
 ---
@@ -78,6 +78,7 @@ Then fill in `backend/.env`:
 | Variable | Required | What it does |
 |---|---|---|
 | `OPENAI_API_KEY` | yes | Model provider key. Without it the server starts and every run fails at the model call. |
+| `ANTHROPIC_API_KEY` | no | Enables `strands_agent_anthropic`, the Quickstart's "Using Anthropic instead" agent (the Anthropic side of the toggle on `/quickstart/demo-chat`). Without it that one agent is left unmounted and everything else runs as normal. |
 | `MODEL_ID` | no | The model every agent is built with. Defaults to `gpt-4o`. Set to `gpt-5.4` to reproduce the Quickstart's published value failing. |
 | `PORT` | no | Agent server port. Defaults to `8000`. |
 
@@ -108,7 +109,7 @@ Successful startup prints the roster:
 ```
 Agent server listening on http://localhost:8000
   model: gpt-4o
-  agents: 24
+  agents: 28
     /strands_agent/
     /agentic_chat/
     …
@@ -142,7 +143,7 @@ Every route carries a **Try it** box with the same pass/fail split shown here, p
 | Route | What it demonstrates | Try | Pass / Fail |
 |---|---|---|---|
 | `/` | Landing page: orientation, status counts, the gap ledger. | — | — |
-| `/quickstart` | The bring-your-own-agent path end to end — the one page whose backend is published and runnable. The demo runs on the page's own `app/providers.tsx`, so the sidebar reaches the agent through the provider's `agent` prop alone. | "Can you tell me a joke?" | **Pass:** tokens stream a word at a time, markdown renders. **Fail:** error banner — check the server is up and `OPENAI_API_KEY` is set. An "agent not found" error means the provider's `agent` binding did not reach the sidebar. |
+| `/quickstart` | The bring-your-own-agent path end to end — the one page whose backend is published and runnable. The demo runs on the page's own `app/providers.tsx`, so the sidebar reaches the agent through the provider's `agent` prop alone. | "Can you tell me a joke?" | **Pass:** tokens stream a word at a time, markdown renders. **Fail:** error banner — check the server is up and `OPENAI_API_KEY` is set. An "agent not found" error means the provider's `agent` binding did not reach the sidebar. **Anthropic:** flip the OpenAI / Anthropic toggle at the top of the demo (agent `strands_agent_anthropic`). The chat resets; same prompt, same pass criteria, answered by `claude-sonnet-4-6`. Requires `ANTHROPIC_API_KEY` in the agent server's env at startup; without it the agent is not mounted and the request fails. |
 
 ### Prebuilt Components
 
@@ -171,6 +172,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `/custom-look-and-feel/css` | Re-skinning via class hooks + v2 shadcn tokens, scoped to one wrapper. | Send anything | **Pass:** your message renders in JetBrains Mono on parchment with a copper rule and a `→` prefix. **Fail:** a default-looking chat. |
 | `/custom-look-and-feel/slots` | Replacing three sub-components: welcome screen, assistant message, disclaimer. | "Say hello" | **Pass:** gradient card before sending; violet-carded replies after; tagged disclaimer throughout. **Fail:** a default chat. |
 | `/custom-look-and-feel/headless-ui` | A chat from `useAgent` + `useCopilotKit` + `useRenderToolCall`, no CopilotKit chrome. | "Write me a two-line poem" | **Pass:** hand-rolled bubbles, streaming, self-scrolling. **Fail:** nothing on send — check the console. |
+| `/custom-look-and-feel/markdown` | The `markdownRenderer` slot in its three forms, one tab each: Streamdown `components` map, class string, replacement component. | "Reply with a level-2 markdown heading, then a paragraph containing a markdown link to https://copilotkit.ai" | **Pass:** *components map* — in DevTools the `<h2>` has `class="my-heading"` and the `<a>` has `class="my-link"` plus `target="_blank" rel="noopener noreferrer"`, with no `data-streamdown` or `node` attribute. Nothing changes visually, because the page defines no CSS for those classes. *class string* — the container has `text-sm leading-7`. *PlainText* — the raw `##` / `[…](…)` markup shows inside a `<pre>`. A `<reference-chip>` in a reply is removed and its text kept. **Fail:** the anchor still has `data-streamdown="link"`, or the PlainText tab shows formatted HTML. |
 
 ### Input Modalities
 
@@ -189,12 +191,14 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `/generative-ui/your-components/interactive` | An approve/deny gate that suspends the run until the user answers. | "Run `rm -rf /tmp/cache` for me" | **Pass:** the reply stops, a gate shows the command, and either button resumes the run with the agent narrating which you chose. **Fail:** the agent claims it ran the command with no gate. |
 | `/generative-ui/a2ui/dynamic-schema` | BYO-catalog A2UI: a secondary LLM composes the layout per request. | "Show me the sales dashboard" | **Pass:** KPI tiles, a pie and a bar chart, with a one-sentence reply. **Fail:** empty boxes — the planner emitted a name the catalog lacks. |
 | `/generative-ui/a2ui/fixed-schema` | The pre-authored-tree approach. No demo: the tool is published, the tree is not. | — | Reference only; see §9. |
+| `/generative-ui/json-render` | An agent-emitted `{ root, elements }` spec, checked against a Zod catalog and drawn by `@json-render/react`. The unpublished helpers, components, runtime route and agent prompt are written in; the doc's `<Renderer>` call is kept as published. The demo has **as published** and **fixed** modes. | "Show me a sales dashboard." | **As published — expected:** a red box inside the demo reading `The published code threw: Error: useVisibility must be used within a VisibilityProvider` (predicted from the library source; record it if you see something else). **Fixed — pass:** two suggestion pills, then metric cards and a bar or pie chart filling in as the JSON streams. **Fixed — fail:** raw JSON or nothing; check in the Inspector that the reply is a `{ root, elements }` object. See `JSON_RENDERER_FIX.md`. |
+| `/generative-ui/hashbrown` | The same dashboard streamed through `@hashbrownai/react`'s progressive parser. The unpublished components, runtime route and agent prompt are written in; the doc's hook calls are kept as published. The demo has **as published** and **fixed** tabs. | "Show me a sales dashboard." | **As published — expected:** a red box inside the demo reading `The published code threw: TypeError: Cannot read properties of undefined (reading 'forEach')`, on the first assistant message (predicted from the library source; record it if you see something else). **Fixed — pass:** two suggestion pills, then an empty stack that fills with metric cards and a chart as the JSON streams. **Fixed — fail:** nothing renders; check in the Inspector that the reply starts with `{"ui": [`. |
 
 ### App Control
 
 | Route | What it demonstrates | Try | Pass / Fail |
 |---|---|---|---|
-| `/frontend-tools` | A tool whose handler runs in the browser and mutates the page. | "Make the background a warm sunset gradient" | **Pass:** the background transitions within a second. **Fail:** the agent describes a gradient and nothing moves. |
+| `/frontend-tools` | A tool whose handler runs in the browser and mutates the page. The "Registering a list of tools" `useFrontendTools` snippet is shown verbatim and not run. | "Make the background a warm sunset gradient" | **Pass:** the background transitions within a second. **Fail:** the agent describes a gradient and nothing moves. The `useFrontendTools` panel is expected to show Broken: the hook is not exported by `@copilotkit/react-core` 1.73.0. |
 | `/human-in-the-loop` | `useHumanInTheLoop` suspending the run behind a time picker. | "Book an intro call with the sales team." | **Pass:** a picker appears, the reply stops, choosing a slot resumes with that specific time. **Fail:** the agent invents a time with no card. |
 | `/human-in-the-loop/governed-actions` | The same hook used as a policy gate: the agent proposes a side effect, the card prints its arguments, the run waits. | "Email carol@northwind.test to confirm her refund of $420 on order NW-8812." | **Pass:** an approval card appears with the proposed arguments, the reply stops, approving resumes the run. **Fail:** the agent claims it sent the email with no card, or the buttons do nothing. A card reading "Allowed by policy" is the model inventing a verdict — expected, see §9. |
 | `/programmatic-control` | `addMessage` + `runAgent` + `stopAgent` with no chat component anywhere. | Click a canned prompt, then Stop mid-stream | **Pass:** messages stream into hand-rolled bubbles; Stop halts mid-sentence. **Fail:** Send does nothing and the console is quiet. |
@@ -225,7 +229,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 |---|---|---|---|
 | `/strands-typescript` | `/` | 📄 Reference | Landing page, agent roster, gap ledger. |
 | — | `/doc-sync` | 📄 Reference | Doc drift against the captured snapshot; the manifest's `syncedAt` is the repo's one sync date. |
-| `quickstart?agent=bring-your-own` | `/quickstart` | ✅ Working | The only fully published, runnable backend. Re-synced 2026-09-16: provider split into a client `providers.tsx`, reproduced verbatim. Model id is wrong — see §9. |
+| `quickstart?agent=bring-your-own` | `/quickstart` | ✅ Working | The only fully published, runnable backend. Re-synced 2026-09-16: provider split into a client `providers.tsx`, reproduced verbatim. Model id is wrong — see §9. OpenAI / Anthropic toggle on the demo for the page's "Using Anthropic instead" callout (TypeScript snippet, verbatim). |
 | `prebuilt-components/chat` | `/prebuilt-components/chat` | ✅ Working | Off the doc sidebar. Its snippet calls an undefined `useAgenticChatSuggestions`. |
 | `prebuilt-components/sidebar` | `/prebuilt-components/sidebar` | ✅ Working | Off-nav. `MainContent`/`Suggestions` unpublished. |
 | `prebuilt-components/popup` | `/prebuilt-components/popup` | ✅ Working | Off-nav. |
@@ -237,6 +241,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `custom-look-and-feel/css` | `/custom-look-and-feel/css` | ✅ Working | Off-nav. Published theme is a fragment; v1 import mixed in. |
 | `custom-look-and-feel/slots` | `/custom-look-and-feel/slots` | ✅ Working | Off-nav. All three overrides take effect; the components behind them are `declare const` in the docs. |
 | `custom-look-and-feel/headless-ui` | `/custom-look-and-feel/headless-ui` | ✅ Working | Off-nav. Chat streams. Every snippet stripped of imports; `generateMessageId` exported by no package. |
+| `custom-look-and-feel/markdown` | `/custom-look-and-feel/markdown` | ✅ Working | All three snippets verbatim, and they type-check. `my-link` / `my-heading` have no CSS on the page, so example 1 is verifiable only in DevTools. |
 | `multimodal-attachments` | `/multimodal-attachments` | ✅ Working | Audio is advertised and silently discarded by the adapter. |
 | `voice` | `/voice` | ✅ Working | `VoiceChat` unpublished; needs `OPENAI_API_KEY` for the mic. |
 | `generative-ui/tool-based` | `/generative-ui/tool-based` | ✅ Working | Works via undocumented proxy-tool sync. Component + schema unpublished. |
@@ -245,7 +250,9 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `your-components/interactive` | `/generative-ui/your-components/interactive` | ✅ Working | Off-nav. Approve/deny gate via `useHumanInTheLoop`; example supplied separately. Page is still 156 bytes of placeholder. |
 | `generative-ui/a2ui/dynamic-schema` | `/generative-ui/a2ui/dynamic-schema` | ⚠️ Partial | Backend is the one runnable factory. `renderers.tsx` has no imports and stops mid-file. |
 | `generative-ui/a2ui/fixed-schema` | `/generative-ui/a2ui/fixed-schema` | ⚠️ Partial | Runs end to end. `display_flight` is the published `agent.ts` verbatim; the component tree it reads is published on no Strands page and was carried over from the Google ADK harness. |
-| `frontend-tools` | `/frontend-tools` | ✅ Working | Works via proxy-tool sync; setup section is a placeholder. |
+| `generative-ui/json-render` | `/generative-ui/json-render` | ❌ Broken | As published it throws: `<Renderer catalog>` should be `registry`, and no `<JSONUIProvider>`. Missing helpers, components, runtime route and prompt are written in. A working **fixed** mode sits alongside, not yet checked in a browser. |
+| `generative-ui/hashbrown` | `/generative-ui/hashbrown` | ❌ Broken | As published it throws: `useJsonParser` / `useUiKit` have the wrong signatures, and the page's example output is the wrong shape for Hashbrown. Missing components, runtime route and prompt are written in. A working **fixed** tab sits alongside, not yet checked in a browser. |
+| `frontend-tools` | `/frontend-tools` | ⚠️ Partial | `useFrontendTool` works via proxy-tool sync; setup section is a placeholder. "Registering a list of tools" is ❌ Broken: `useFrontendTools` is not exported by `@copilotkit/react-core` 1.73.0, and `reports` / `navigate` are undefined. |
 | `human-in-the-loop` | `/human-in-the-loop` | ✅ Working | Pattern 1 only. `useInterrupt` is LangGraph-only. |
 | `human-in-the-loop/governed-actions` | `/human-in-the-loop/governed-actions` | ⚠️ Partial | `useHumanInTheLoop` half only, verbatim. The approval mechanism works; nothing publishes the policy engine, the tool that emits a `GovernedAction`, or `executeSideEffect`, so `verdict` is model-invented. `useInterrupt` half not implemented — no Strands backend raises an interrupt. |
 | `programmatic-control` | `/programmatic-control` | ✅ Working | Google ADK's version, as requested. Three helpers undefined — reconstructed. |
@@ -258,7 +265,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `copilot-runtime` | `/copilot-runtime` | ✅ Working | Page never mentions Strands. |
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
 
-**Totals:** 26 ✅ Working · 3 ⚠️ Partial · 1 ❌ Broken · 3 📄 Reference.
+**Totals:** 26 ✅ Working · 4 ⚠️ Partial · 3 ❌ Broken · 3 📄 Reference.
 
 Live version at `/status`, with the full gap ledger.
 
@@ -272,7 +279,7 @@ These appear in the doc sidebar and are outside this repo's scope: CLI, Build wi
 
 ## 9. Known issues / doc-vs-implementation discrepancies
 
-Forty-six findings are recorded in `frontend/src/lib/doc-gaps.ts`, twelve of them blocking, and the full ledger renders on `/status`; the backend half is at `GET /gaps`. (The per-route red panels are switched off almost everywhere — all but one entry in `ROUTE_GAPS` is commented out — so findings generally show on `/status` and in each route's own prose rather than as a banner. `/human-in-the-loop/governed-actions` is the exception and renders its three.) The ones that change what you can build:
+Sixty findings are recorded in `frontend/src/lib/doc-gaps.ts`, twenty-one of them blocking, and the full ledger renders on `/status`; the backend half is at `GET /gaps`. (The per-route red panels are switched off almost everywhere — most entries in `ROUTE_GAPS` are commented out — so findings generally show on `/status` and in each route's own prose rather than as a banner. The exceptions that render their panels are `/human-in-the-loop/governed-actions`, `/generative-ui/json-render`, `/generative-ui/hashbrown` and `/frontend-tools`.) The ones that change what you can build:
 
 **The backend is published and unrunnable** — [agent.ts, on 18 pages](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat). Complete file, four unpublished local imports, one unpublished JSON file, no `server.ts`. Full analysis in [`backend/docs_verbatim/README.md`](backend/docs_verbatim/README.md).
 
@@ -289,6 +296,20 @@ Forty-six findings are recorded in `frontend/src/lib/doc-gaps.ts`, twelve of the
 **`ToolCallStatus` looks unexported from `/v2` and is not.** Recorded because it costs time to chase. The enum appears nowhere in the export list `@copilotkit/react-core/v2` spells out, so grepping `dist/v2/index.mjs` for it returns nothing — but line 7 of that file is `export * from "@copilotkit/core"` and the enum arrives on that star, in the types and at runtime both (`inProgress` / `executing` / `complete`). The doc's import is correct as published. This is the reason `generative-ui/your-components/interactive` can compare the bare string `"executing"` and behave identically.
 
 **The approval card is styled with tokens the Quickstart never installs.** Same page. `GovernedActionCard` uses `text-muted-foreground` and `bg-muted`, shadcn/ui theme tokens. Nothing in the Strands TypeScript tree installs shadcn or defines those variables, so in a Quickstart-shaped app — including this one, on Tailwind v4 — both resolve to nothing and those lines render unstyled.
+
+**`useFrontendTools` is documented and not shipped.** [frontend-tools#registering-a-list-of-tools](https://docs.copilotkit.ai/strands-typescript/frontend-tools#registering-a-list-of-tools), fetched 2026-09-21. The section presents `useFrontendTools(tools, deps)` as the way to register a variable-length list of tools. `@copilotkit/react-core@1.73.0` is both the installed version and npm `latest`, and it exports no symbol by that name from any entry point. The snippet also uses `reports` and `navigate` without defining them. The route shows the snippet verbatim and does not run it.
+
+**JSON Render publishes the outline of a renderer, not the renderer.** [json-render](https://docs.copilotkit.ai/strands-typescript/generative-ui/json-render), fetched 2026-09-21. `parseSpec` calls `stripCodeFencesAndPrelude`, `tolerantJsonParse` and `validateAgainstCatalog`, and none of them is defined anywhere. Yet those helpers are the "tolerant parser" the page's prose relies on. `registry.tsx` imports `MetricCard`, `BarChart` and `PieChart` from three files that are never shown. The example output's root element is a `Stack`, which the catalog does not register. `AssistantMessage` is never imported. With all of that supplied, `<Renderer spec catalog>` still would not type-check: `@json-render/react@0.21.0` takes `registry`, not `catalog`. The backend half is just sample output. `buildByocJsonRenderAgent` in the published `agent.ts` depends on the unpublished `BYOC_JSON_RENDER_SYSTEM_PROMPT`, and `/api/copilotkit-byoc-json-render` is never shown.
+
+The route now runs. The missing pieces are written in and labelled as not from the docs: the three helpers (`spec-helpers.ts`), the three components (`components/byoc-dashboard.tsx`, re-exported at the doc's import paths), the runtime route, and the prompt. The agent is the published `buildByocJsonRenderAgent`, with `createModel` substituted as for the A2UI agent. The doc's own files are kept as published. Two of their lines carry a `@ts-expect-error`: the `<Renderer catalog>` call, and the `messageView={{ assistantMessage: … }}` line, which CopilotKit 1.74 types as `typeof CopilotChatAssistantMessage`, so a plain component fails the type check. The published code therefore throws at runtime: without `<JSONUIProvider>`, most likely `useVisibility must be used within a VisibilityProvider`. The page also calls `useConfigureSuggestions` outside its own `<CopilotKit>`, so its suggestions never reach its chat. `json-render-fixed.tsx` (the demo's **fixed** mode) builds a `registry` from the page's catalog, adds `<JSONUIProvider>`, replaces the whole `assistantMessage` as the page does (reading `props.message.content`, falling back to the default message for non-JSON replies, and cast to satisfy CopilotKit's slot type — no markdown renderer involved), and calls the suggestions hook inside the provider. The full write-up is in `JSON_RENDERER_FIX.md`.
+
+**Hashbrown's hook calls don't match Hashbrown, and its example output doesn't either.** [hashbrown](https://docs.copilotkit.ai/strands-typescript/generative-ui/hashbrown), re-fetched 2026-09-29, unchanged. In `@hashbrownai/react@0.6.1` (0.5.0 when first checked), `useJsonParser(json, schema)` requires a schema and returns `{ parserState, value, error }`. `useUiKit` takes `{ components }` built with `exposeComponent`, and returns a kit object rather than nodes. The page calls `useJsonParser(content)` and `useUiKit({ catalog, value })`, then renders the result directly. The catalog components come from `./metric-card` and `./charts`, which are never published. The backend section says only that it "depends on your framework". `BYOC_HASHBROWN_SYSTEM_PROMPT` and `/api/copilotkit-byoc-hashbrown` are published nowhere.
+
+The page's example agent output, `{ "type": "MetricCard", "title": … }`, is also the wrong shape. Hashbrown's UI kit parses a `{ "ui": [ { "MetricCard": { "props": { … } } } ] }` envelope. Given the page's shape, a correctly built kit draws nothing (checked by server-rendering both shapes). So even with the hooks fixed, an agent that follows the page produces an empty chat. The example's `Stack` isn't in the catalog either, and Hashbrown throws `Unknown element type` for unexposed names.
+
+The route now runs. The missing components, runtime route and prompt are written in. The agent is the published `buildByocHashbrownAgent`, with a harness-authored prompt asking for the envelope. The doc's own files are kept as published: the three hook calls and the `messageView` line each have a `@ts-expect-error`, so the first assistant message throws at runtime. `hashbrown-fixed.tsx` (the demo's **fixed** tab) exposes the components, including `Stack` and a `MetricCard` adapter for the nullable `delta`, with `s.*` prop schemas. It calls `useJsonParser(content, kit.schema)` and `kit.render(value)`, strips prose and code fences first, plugs in through `assistantMessage.markdownRenderer`, and calls the suggestions hook inside the provider.
+
+**Markdown Rendering is complete.** [markdown](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/markdown), fetched 2026-09-21. All three snippets compile and run as published. Two small notes: the page defines no CSS for its example classes `my-link` and `my-heading`, so the first example has no visible effect. And destructuring `node` in order to drop it, as the page advises, triggers `@typescript-eslint/no-unused-vars` warnings. Both are kept as published.
 
 **Seven pages replace their backend section with `setup skipped`** — frontend-tools, tool-based, human-in-the-loop, agent-readonly, agent-config, programmatic-control, subagents.
 
@@ -403,7 +424,8 @@ aws-strands-ts/
 │           ├── model.ts                  the Quickstart's model construction
 │           ├── chat-agents.ts            21 Quickstart-shaped, tool-free agents
 │           ├── state-agents.ts           the Shared State pages' StrandsAgentConfig
-│           ├── a2ui-dynamic-agent.ts     the one runnable factory from agent.ts
+│           ├── a2ui-dynamic-agent.ts     agent.ts's one self-contained factory
+│           ├── byoc-hashbrown-agent.ts   agent.ts's Hashbrown factory + a harness-authored prompt
 │           └── registry.ts               id → mount path → builder → gaps
 └── frontend/                             Next 16 App Router (:3000)
     └── src/
@@ -423,7 +445,7 @@ aws-strands-ts/
             └── <route>/demo-chat/page.tsx             the live surface, chrome-free
 ```
 
-Each route is two files: a notes page that renders its own implementation from disk via `lib/source.ts`, and a `demo-chat` surface that renders full-bleed for screen recording. The code you read on a route is the code that runs, read at render time — never a re-typed copy.
+Each route is two files: a notes page that renders its own implementation from disk via `lib/source.ts`, and a `demo-chat` surface that renders full-bleed for screen recording. The code you read on a route is the code that runs, read at render time — never a re-typed copy. Reference-only routes (`/generative-ui/json-render`, `/generative-ui/hashbrown`) have no `demo-chat`: their published code imports modules that don't exist, so it is embedded as text rather than compiled.
 
 ---
 
@@ -435,11 +457,11 @@ Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only
 
 **Build Chat UIs — Rich Threads** · [Threads Drawer](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/copilot-threads-drawer) · [Headless Threads](https://docs.copilotkit.ai/strands-typescript/headless-threads) · [Thread & History Lifecycle](https://docs.copilotkit.ai/strands-typescript/threads-lifecycle) · [Synchronize Thread History](https://docs.copilotkit.ai/strands-typescript/threads-import)
 
-**Build Chat UIs — Custom Look and Feel** · [Multimodal Attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) · [Voice](https://docs.copilotkit.ai/strands-typescript/voice)
+**Build Chat UIs — Custom Look and Feel** · [Markdown Rendering](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/markdown) · [Multimodal Attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) · [Voice](https://docs.copilotkit.ai/strands-typescript/voice)
 
 **Build Generative UI — Controlled** · [Components as Tools](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-based) · [Tool Call Rendering](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-rendering)
 
-**Build Generative UI — Declarative** · [A2UI Dynamic Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/dynamic-schema) · [A2UI Fixed Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/fixed-schema)
+**Build Generative UI — Declarative** · [A2UI Dynamic Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/dynamic-schema) · [A2UI Fixed Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/fixed-schema) · [JSON Render](https://docs.copilotkit.ai/strands-typescript/generative-ui/json-render) · [Hashbrown](https://docs.copilotkit.ai/strands-typescript/generative-ui/hashbrown)
 
 **Add Agent Powers** · [Frontend Tools](https://docs.copilotkit.ai/strands-typescript/frontend-tools) · [Human-in-the-Loop](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop) · [Governed Actions](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/governed-actions) · [Sub-Agents](https://docs.copilotkit.ai/strands-typescript/multi-agent/subagents) · [Agent Config](https://docs.copilotkit.ai/strands-typescript/agent-config) · [Programmatic Control](https://docs.copilotkit.ai/strands-typescript/programmatic-control)
 

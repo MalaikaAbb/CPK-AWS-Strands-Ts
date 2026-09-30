@@ -219,6 +219,18 @@ export const NAV: NavGroup[] = [
         statusNote:
           "The three hooks do the work and the chat streams. Every snippet on the page is printed with its import block stripped, so the bubbles are this repo's.",
       },
+      {
+        path: "/custom-look-and-feel/markdown",
+        hasDemo: true,
+        agentId: "chat-markdown",
+        title: "Markdown Rendering",
+        docPath: "/strands-typescript/custom-look-and-feel/markdown",
+        summary:
+          "The markdownRenderer slot on assistant messages in all three forms: a Streamdown components map, a class string, and a whole replacement component.",
+        status: "working",
+        statusNote:
+          "All three snippets run exactly as published. The page defines no CSS for its my-link and my-heading classes, so the first example is only visible in DevTools.",
+      },
     ],
   },
   {
@@ -326,6 +338,30 @@ export const NAV: NavGroup[] = [
         statusNote:
           "Runs end to end. The `display_flight` tool is the published `agent.ts` verbatim; the component tree it reads is published on no Strands page and was carried over from the Google ADK harness, which ships the identical schema for the identical demo.",
       },
+      {
+        path: "/generative-ui/json-render",
+        hasDemo: true,
+        agentId: "byoc_json_render",
+        title: "JSON Render",
+        docPath: "/strands-typescript/generative-ui/json-render",
+        summary:
+          "An agent-emitted { root, elements } spec validated against a Zod catalog and drawn by @json-render/react's Renderer.",
+        status: "broken",
+        statusNote:
+          "As published it throws: the missing code (helpers, components, runtime route, agent prompt) is written in, but the doc's <Renderer spec catalog> call is kept. @json-render/react 0.21 takes registry and needs JSONUIProvider. The demo's \"fixed\" mode has the working version, not yet checked in a browser.",
+      },
+      {
+        path: "/generative-ui/hashbrown",
+        hasDemo: true,
+        agentId: "byoc_hashbrown",
+        title: "Hashbrown",
+        docPath: "/strands-typescript/generative-ui/hashbrown",
+        summary:
+          "Streamed structured output parsed progressively by @hashbrownai/react and rendered through a component catalog.",
+        status: "broken",
+        statusNote:
+          "As published it throws: the missing code (components, runtime route, agent prompt) is written in, but the doc's hook calls are kept. In 0.6.1 useJsonParser needs a schema and useUiKit takes { components }. The page's example output is also the wrong shape for Hashbrown. The demo's \"fixed\" tab has the working version, not yet checked in a browser.",
+      },
     ],
   },
   {
@@ -339,9 +375,9 @@ export const NAV: NavGroup[] = [
         docPath: "/strands-typescript/frontend-tools",
         summary:
           "A tool the agent calls that executes in the browser and changes the page.",
-        status: "working",
+        status: "partial",
         statusNote:
-          "useFrontendTool registers exactly as the page shows, and the adapter's proxy-tool sync gets it to the model. The page never explains that step.",
+          "useFrontendTool registers exactly as the page shows, and the adapter's proxy-tool sync gets it to the model. The page never explains that step. The \"Registering a list of tools\" sub-section is broken: useFrontendTools is not exported by @copilotkit/react-core 1.73.0.",
       },
       {
         path: "/human-in-the-loop",

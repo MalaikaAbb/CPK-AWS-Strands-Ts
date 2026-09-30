@@ -2,6 +2,14 @@ import { RouteHeader } from "@/components/route-header";
 import { SourceCodeGroup } from "@/components/source-code";
 import { Callout, CodeBlock, Panel, TryIt } from "@/components/ui";
 
+// The TypeScript tab of the page's "Using Anthropic instead" callout, verbatim.
+const ANTHROPIC_MODEL = `import { AnthropicModel } from "@strands-agents/sdk/models/anthropic";
+const model = new AnthropicModel({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+  modelId: "claude-sonnet-4-6",
+  maxTokens: 8192,
+});`;
+
 const PUBLISHED_RUNTIME = `const runtime = new CopilotRuntime({
   agents: {
     strands_agent: new HttpAgent({ url: "http://localhost:8000" }),
@@ -60,8 +68,34 @@ export default function Page() {
         <div className="mt-4">
           <TryIt
             prompts={["Can you tell me a joke?", "What do you think about React?"]}
-            expect="The sidebar opens from its launcher with no agentId on it; tokens stream in a word at a time and the reply renders as markdown. That the agent answers at all proves the provider's agent prop did the binding."
-            fail="An error banner. Check that the Node server is up on :8000 and that OPENAI_API_KEY is set — and see the model-id gap above if the error mentions an unknown model."
+            expect="The sidebar opens from its launcher with no agentId on it; tokens stream in a word at a time and the reply renders as markdown. That the agent answers at all proves the provider's agent prop did the binding. Flip the OpenAI / Anthropic toggle at the top of the demo and ask again: the chat resets and the reply comes from the other model."
+            fail="An error banner. Check that the Node server is up on :8000 and that OPENAI_API_KEY is set — and see the model-id gap above if the error mentions an unknown model. On the Anthropic side, the agent only exists if ANTHROPIC_API_KEY was set when the server started; otherwise /gaps on :8000 lists it as unserved."
+          />
+        </div>
+      </Panel>
+
+      <Panel
+        title="Using Anthropic instead"
+        description="The page's callout for swapping the model. The demo's toggle switches between this agent and the OpenAI one on the same route."
+      >
+        <div className="space-y-4">
+          <CodeBlock code="npm install @anthropic-ai/sdk" language="bash" />
+          <CodeBlock code={ANTHROPIC_MODEL} language="ts" filename="main.ts (as published)" />
+          <p className="text-sm text-slate-600 dark:text-slate-400">
+            Used exactly as published, model id included, as its own agent{" "}
+            <code>strands_agent_anthropic</code>. It needs{" "}
+            <code>ANTHROPIC_API_KEY</code> in the agent server&apos;s env.
+            Without the key, <code>AnthropicModel</code> throws when it&apos;s
+            created, so the server skips this one agent rather than failing to
+            start. The frontend is the same <code>page.tsx</code>; only the
+            provider&apos;s <code>agent</code> prop changes.
+          </p>
+          <SourceCodeGroup
+            files={[
+              { file: "backend/src/agents/anthropic-quickstart-agent.ts" },
+              { file: "frontend/src/app/quickstart/providers-anthropic.tsx" },
+              { file: "frontend/src/app/quickstart/provider-switch.tsx" },
+            ]}
           />
         </div>
       </Panel>

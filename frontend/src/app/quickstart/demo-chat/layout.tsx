@@ -1,6 +1,6 @@
 import { DemoFrame } from "@/components/demo-frame";
 
-import { Providers } from "../providers";
+import { ProviderSwitch } from "../provider-switch";
 
 /**
  * The Quickstart's `app/layout.tsx`, as far as a nested layout can carry it.
@@ -18,7 +18,10 @@ import { Providers } from "../providers";
  * exactly as the doc does it — no `agentId` on the component.
  * `lib/inspector.ts` lists this route so the root inspector stands down.
  *
- * `DemoFrame` is the harness's chrome, not the doc's.
+ * `ProviderSwitch` toggles between that provider and `providers-anthropic.tsx`
+ * (the same file bound to `strands_agent_anthropic`, the page's "Using
+ * Anthropic instead" agent). Both `DemoFrame` and the switch are the
+ * harness's chrome, not the doc's.
  */
 export default function QuickstartDemoLayout({
   children,
@@ -26,8 +29,8 @@ export default function QuickstartDemoLayout({
   children: React.ReactNode;
 }) {
   return (
-    <DemoFrame parentPath="/quickstart" subtitle="agent: strands_agent (set on the provider)">
-      <Providers>{children}</Providers>
+    <DemoFrame parentPath="/quickstart" subtitle="OpenAI or Anthropic — toggle below">
+      <ProviderSwitch>{children}</ProviderSwitch>
     </DemoFrame>
   );
 }
