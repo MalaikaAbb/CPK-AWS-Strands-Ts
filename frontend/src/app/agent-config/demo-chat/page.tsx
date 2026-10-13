@@ -1,59 +1,31 @@
 "use client";
 
-import { CopilotChat, useAgentContext } from "@copilotkit/react-core/v2";
-import { useState } from "react";
-
 import { DemoFrame } from "@/components/demo-frame";
 
-import { ConfigCard } from "../config-card";
-import { DEFAULT_CONFIG, type AgentConfig } from "../config-types";
+import AgentConfigDemoPage from "../_demo-code/page";
 
 /**
- * `ConfigContextRelay` is the page's snippet, verbatim — the whole published
- * frontend for this feature:
+ * The page's `strands-typescript::agent-config` demo Code tab, copied
+ * unchanged into `../_demo-code/`. It brings its own
+ * `<CopilotKit runtimeUrl="/api/copilotkit-agent-config" agent="agent-config-demo">`,
+ * so this route is listed in `NESTED_PROVIDER_ROUTES` and the root provider
+ * hands the inspector to it.
  *
- *     function ConfigContextRelay({ config }: { config: AgentConfig }) {
- *       useAgentContext({
- *         description: "Agent response preferences",
- *         value: { tone, expertise, responseLength },
- *       });
- *       return null;
- *     }
+ * The one piece of harness glue is the wrapper class: the demo's
+ * `DemoLayout` is `h-screen`, which inside `DemoFrame`'s header-less remainder
+ * would push the chat input below the clipped edge. The arbitrary variant
+ * resizes it to the frame without editing the published file.
  *
- * A component that renders nothing and exists only to publish state to the
- * agent. Everything around it — the `AgentConfig` type it is annotated with,
- * the state that holds it, the panel that edits it — is not published.
+ * The demo also styles with `var(--border)`, `var(--bg-surface)`,
+ * `var(--text-muted)` and `var(--bg-muted)` — tokens from the showcase app's
+ * stylesheet, which is not part of the bundle. They are left undefined here,
+ * so the card renders with default borders and no fill.
  */
-
-function ConfigContextRelay({ config }: { config: AgentConfig }) {
-  useAgentContext({
-    description: "Agent response preferences",
-    value: {
-      tone: config.tone,
-      expertise: config.expertise,
-      responseLength: config.responseLength,
-    },
-  });
-  return null;
-}
-
 export default function Page() {
-  const [config, setConfig] = useState<AgentConfig>(DEFAULT_CONFIG);
-
   return (
-    <DemoFrame parentPath="/agent-config" subtitle="agent: agent-config">
-      <div className="grid h-full grid-cols-1 lg:grid-cols-[1fr_26rem]">
-        <div className="overflow-y-auto p-6">
-          <ConfigCard config={config} setConfig={setConfig} />
-          <ConfigContextRelay config={config} />
-          <p className="mt-4 max-w-prose text-sm text-slate-500">
-            Ask the same question twice with different settings. The answer
-            should get shorter, more or less technical, and change register.
-          </p>
-        </div>
-        <div className="chat-host min-h-0 border-l border-slate-200 dark:border-slate-800">
-          <CopilotChat agentId="agent-config" />
-        </div>
+    <DemoFrame parentPath="/agent-config" subtitle="agent: agent-config-demo">
+      <div className="h-full [&_.h-screen]:h-full">
+        <AgentConfigDemoPage />
       </div>
     </DemoFrame>
   );

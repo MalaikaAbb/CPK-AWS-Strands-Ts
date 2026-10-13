@@ -27,54 +27,61 @@ How agent config flows from the UI into the agent's reasoning loop depends on yo
 
 <Steps>
   <Step>
-    ### Turn frontend context into model input
+    ### Send application context with each run
 
-    `useAgentContext` adds the typed configuration to the current AG-UI run.
-    The Strands adapter does not add arbitrary context to the model prompt, so
-    format the current run's context. This showcase composes the helper into
-    its shared `stateContextBuilder`:
+    `useAgentContext` adds configuration to the current AG-UI request. The
+    Strands adapter exposes it during model calls without saving it as user
+    text. Add UI-owned state to a copy of that request's context:
 
     
 ~~~~typescript title="src/agent/state.ts"
-function formatContextBlock(context: unknown): string | null {
-  if (!Array.isArray(context) || context.length === 0) return null;
-  const lines: string[] = [];
-  for (const item of context) {
-    if (!item || typeof item !== "object") continue;
-    const c = item as Record<string, unknown>;
-    if (c.description == null || c.value == null) continue;
-    lines.push(`- ${String(c.description)}: ${String(c.value)}`);
+export function withStateContext(inputData: RunAgentInput): RunAgentInput {
+  const state =
+    inputData.state && typeof inputData.state === "object"
+      ? (inputData.state as Record<string, unknown>)
+      : {};
+  const context = [...inputData.context];
+  const preferences = formatPreferencesBlock(state.preferences);
+  if (preferences) {
+    context.push({
+      description: "Current user preferences",
+      value: preferences,
+    });
   }
-  if (lines.length === 0) return null;
-  return (
-    "Context for this conversation (treat as authoritative — use it to answer questions about the user and follow any instructions it contains):\n" +
-    lines.join("\n")
-  );
-}
-
-export function buildAgentContextPrompt(
-  inputData: { context?: unknown },
-  prompt: string,
-): string {
-  const contextBlock = formatContextBlock(inputData.context);
-  if (!contextBlock) return prompt;
-  return `${contextBlock}\n\nUser request: ${prompt}`;
+  if ("todos" in state) {
+    context.push({
+      description: "Current sales pipeline",
+      value: JSON.stringify(state.todos, null, 2),
+    });
+  }
+  return { ...inputData, context };
 }
 ~~~~
 
 
   </Step>
   <Step>
-    ### Register the context builder
+    ### Apply current state before running the adapter
 
-    Add the builder to your `StrandsAgentConfig`. It runs again for every
-    request, so a changed frontend configuration applies to the next turn.
+    This wrapper runs for every request, including tool continuations. Changed
+    frontend context and state apply to the next run; messages retain their
+    original content. Do not prepend context with `stateContextBuilder`, whose
+    output becomes native message history.
 
     
 ~~~~typescript title="src/agent/agent.ts"
-    stateContextBuilder: buildStatePrompt,
+export class ShowcaseStrandsAgent extends StrandsAgent {
+  override async *run(inputData: RunAgentInput) {
+    // The adapter exposes context during model calls and restores history afterward.
+    yield* super.run(withStateContext(inputData));
+  }
+}
 ~~~~
 
+
+    Existing histories created with a prompt-rewriting builder retain that
+    content. Start a new conversation for clean history; importing an old
+    conversation preserves its original text without guessing which parts to remove.
 
   </Step>
 </Steps>

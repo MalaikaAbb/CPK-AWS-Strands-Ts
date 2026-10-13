@@ -37,7 +37,7 @@ export const AGENT_IDS = [
   "programmatic-control",
   "threads-demo",
   "readonly-state-agent-context",
-  "agent-config",
+  "agent-config-demo",
   "subagents",
   "languageAgent",
   "shared-state-read-write",

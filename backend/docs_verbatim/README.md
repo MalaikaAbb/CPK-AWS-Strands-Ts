@@ -17,6 +17,14 @@ Eighteen pages publish it. All eighteen copies are byte-identical
 (`md5 debabacba78ca2705b153fd0c82ea239`), so this is one file, not eighteen
 variants.
 
+**Re-captured 2026-10-08** from the Agent Config page's demo Code-tab bundle
+(`strands-typescript::agent-config`, now `md5 a18ace10392fd7a654b5a2bb2e5dabe1`).
+The published file changed: `buildShowcaseAgent` no longer passes
+`stateContextBuilder: buildStatePrompt`, and a new `ShowcaseStrandsAgent`
+subclass wraps `run()` with `withStateContext` from `./state`. The adapter
+(`@ag-ui/aws-strands` 0.3.0) now shows run context to the model itself, per
+model call, without writing it into history.
+
 The markdown export (`<page>.md`) omits the demo widget entirely, so the file
 does not appear there at all.
 
@@ -33,7 +41,7 @@ nowhere:
 | --- | --- | --- |
 | `./model-factory` (`createModel`) | 6 call sites | Every agent's model. Called bare and as `createModel({ openaiApi: "chat" })`. |
 | `./tools` (`SHOWCASE_TOOLS`) | `buildShowcaseAgent` | The entire tool list for the main agent. |
-| `./state` (`buildStatePrompt`, `salesStateFromArgs`, `notesStateFromArgs`, `stepsStateFromArgs`, `documentStateFromArgs`, `makeSubagentStateFromResult`) | `buildShowcaseAgent` config | Shared-state projection for all six state-bearing demos. |
+| `./state` (`withStateContext` — its body is printed on the Agent Config page, but the `formatPreferencesBlock` it calls is not — `salesStateFromArgs`, `notesStateFromArgs`, `stepsStateFromArgs`, `documentStateFromArgs`, `makeSubagentStateFromResult`) | `buildShowcaseAgent` config | Shared-state projection for all six state-bearing demos. |
 | `./prompts` (`SYSTEM_PROMPT`, `VOICE_SYSTEM_PROMPT`, `BYOC_HASHBROWN_SYSTEM_PROMPT`, `BYOC_JSON_RENDER_SYSTEM_PROMPT`) | 4 agents | Every system prompt except the two A2UI ones. |
 | `./a2ui_schemas/flight_schema.json` | `FLIGHT_SCHEMA` | The pre-authored A2UI component tree for the fixed-schema demo. |
 

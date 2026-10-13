@@ -217,7 +217,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | Route | What it demonstrates | Try | Pass / Fail |
 |---|---|---|---|
 | `/multi-agent/subagents` | A supervisor delegating, with a live delegation log. | "Research, write, then critique a brief." | **Pass:** nothing — Broken by design, the delegation tools are unpublished. **Fail:** an entry appears; update the status. |
-| `/agent-config` | A typed config object the UI owns, published as context. | Ask a question, change expertise to beginner, ask again | **Pass:** the second answer is longer and less jargon-heavy. **Fail:** identical answers. |
+| `/agent-config` | A typed config object the UI owns, published as context; the Strands adapter shows it to the model per call. | Ask a question, change expertise to beginner and length to detailed, ask again | **Pass:** the second answer is longer and less jargon-heavy, and the config text never appears inside your own messages. **Fail:** identical answers, or the config shows up as part of a user message. |
 | `/copilot-runtime` | This repo's live runtime config and its agent roster, cross-checked. | Read the roster panel | **Pass:** 24 agents, "lists agree". **Fail:** a red panel naming agents present on one side only. |
 | `/ag-ui` | `agent.subscribe` walking the raw AG-UI event stream. | "Tell me a two-sentence story." | **Pass:** `RUN_STARTED` → `STATE_SNAPSHOT` → `TEXT_MESSAGE_CONTENT` bursts → `MESSAGES_SNAPSHOT` → `RUN_FINISHED`. **Fail:** only `onStateChanged` rows. |
 
@@ -261,7 +261,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `shared-state/in-app-agent-read` | `/shared-state/in-app-agent-read` | ✅ Working | Page's `agentId` contradicts its own backend. |
 | `shared-state/in-app-agent-write` | `/shared-state/in-app-agent-write` | ✅ Working | `initialState` in the snippet does not exist on the hook. |
 | `multi-agent/subagents` | `/multi-agent/subagents` | ❌ Broken | Three placeholders; only the log component survives. |
-| `agent-config` | `/agent-config` | ✅ Working | Both halves run: the UI publishes the typed config with `useAgentContext`, and a `stateContextBuilder` folds it into the prompt. That builder was supplied separately — the page's backend section is a placeholder and the code it does print is LangGraph Python. |
+| `agent-config` | `/agent-config` | ✅ Working | Runs the page's demo Code tab unchanged on its own runtime (`/api/copilotkit-agent-config`, agent `agent-config-demo`), plus the page's `withStateContext` and `ShowcaseStrandsAgent`. The adapter (0.3.0) shows context to the model per call. `formatPreferencesBlock` is unpublished, so its lines are commented out; this route doesn't use them. |
 | `copilot-runtime` | `/copilot-runtime` | ✅ Working | Page never mentions Strands. |
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
 
@@ -311,13 +311,13 @@ The route now runs. The missing components, runtime route and prompt are written
 
 **Markdown Rendering is complete.** [markdown](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/markdown), fetched 2026-09-21. All three snippets compile and run as published. Two small notes: the page defines no CSS for its example classes `my-link` and `my-heading`, so the first example has no visible effect. And destructuring `node` in order to drop it, as the page advises, triggers `@typescript-eslint/no-unused-vars` warnings. Both are kept as published.
 
-**Seven pages replace their backend section with `setup skipped`** — frontend-tools, tool-based, human-in-the-loop, agent-readonly, agent-config, programmatic-control, subagents.
+**Six pages replace their backend section with `setup skipped`** — frontend-tools, tool-based, human-in-the-loop, agent-readonly, programmatic-control, subagents. (Agent Config gained a real Strands backend section on 2026-10-08.)
 
 **The Quickstart's runtime route exports two verbs; Rich Threads needs four.** The published block ends with `export const GET = handler;` and `export const POST = handler;`. Next.js answers any unexported verb with a 405, and the threads client issues four — GET and POST to list and connect, **PATCH** to rename and archive, **DELETE** to delete (verified against `@copilotkit/core` 1.69.0; it never issues PUT). So a runtime built to the Quickstart serves chat perfectly and 405s every thread mutation — `DELETE /api/copilotkit/threads/<id> 405` followed by `unhandledRejection: Error: Request failed: 405`. Because chat is unaffected the runtime looks healthy. Neither the Quickstart, the Threads Drawer page nor Headless Threads mentions the extra exports. This repo exports PATCH and DELETE on all three runtimes; the Voice page's published route is closer (POST/GET/PUT/DELETE) but still omits PATCH.
 
 **The fixed-schema page says Strands generates the schema; the published code loads it from a file.** Re-fetched 2026-08-31 — the page has been restructured since this repo's first sync, and its five `snippet skipped` markers are now one. The surviving one is the step that matters, `region 'backend-render-operations'`, sitting where the tool that emits the surface should be. Its prose says that for Mastra and Strands "the agent tool runs a *secondary* LLM call… the schema is built on the fly" — but the published `buildA2uiFixedSchemaAgent` does no such thing: it `readFileSync`s a static `flight_schema.json` at module load and passes it to `updateComponents` unchanged, with no secondary LLM call anywhere. Two descriptions of the same demo that cannot both be right. This repo implements the published code.
 
-**Nothing documents how `useAgentContext` reaches a Strands agent.** Agent Config and Agent Read-Only Context both publish a frontend that calls `useAgentContext`, and both replace their backend section with the `setup skipped` placeholder — Agent Config's alternative is LangGraph Python under a generic `backend/agent.py` label. The adapter has no automatic path from `RunAgentInput.context[]` into the model: whatever the `stateContextBuilder` does not write into the prompt, the agent never sees. The builder wiring that channel was supplied separately and lives in `backend/src/agents/agent-context.ts`.
+**Agent Config now documents how `useAgentContext` reaches a Strands agent — and its helper is missing.** Since `@ag-ui/aws-strands` 0.3.0, the adapter adds `RunAgentInput.context[]` to the latest user turn for each model call, then removes it. The page's `withStateContext` (from `src/agent/state.ts`) extends that context with UI-owned state, and its `ShowcaseStrandsAgent` subclass applies it in `run()`. `withStateContext` calls `formatPreferencesBlock`, which is published nowhere, including the demo Code tab. Those lines are commented out in `backend/src/agents/agent-config-agent.ts`. The page also advises against `stateContextBuilder` for context, because its output is stored in message history. The prose relay's description ("Agent response preferences") is shorter than the one the demo runs. The demo's version also tells the model to apply the values, and nothing else in the agent does.
 
 **The Threads Drawer's slot example does not typecheck.** The Customization section lists five slots and shows `<CopilotThreadsDrawer><span slot="header">…</span></CopilotThreadsDrawer>`. `CopilotThreadsDrawerProps` declares eleven members and `children` is not one of them, so that is a type error against `@copilotkit/react-core@1.69.0`. The underlying web component does accept slotted children — it is the React wrapper's typing that withholds them. The same prop table also omits `collapsible` and `onCollapseChange`, which exist on the type.
 
@@ -339,7 +339,6 @@ The route now runs. The missing components, runtime route and prompt are written
 - `delegation-log.tsx` — [subagents](https://docs.copilotkit.ai/strands-typescript/multi-agent/subagents). Four symbols used, none imported or defined.
 
 **Wrong framework in Strands pages:**
-- [agent-config](https://docs.copilotkit.ai/strands-typescript/agent-config) shows `async def my_agent_node(state: AgentState, config: RunnableConfig)` — LangGraph Python — under `backend/agent.py`.
 - [a2ui/dynamic-schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/dynamic-schema) shows `from ag_ui_langgraph import get_a2ui_tools` and says tool calls "stream through LangGraph".
 - [a2ui/fixed-schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/fixed-schema) refers to "the Python SDK's `a2ui.render`" and `src/agents/a2ui_fixed.py`.
 - [headless-ui](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/headless-ui) logs `[langgraph-python:headless-simple]`.
@@ -422,8 +421,9 @@ aws-strands-ts/
 │       ├── server.ts                     one createStrandsApp per agent, mounted at /{id}
 │       └── agents/
 │           ├── model.ts                  the Quickstart's model construction
-│           ├── chat-agents.ts            21 Quickstart-shaped, tool-free agents
+│           ├── chat-agents.ts            22 Quickstart-shaped agents (one has backend tools)
 │           ├── state-agents.ts           the Shared State pages' StrandsAgentConfig
+│           ├── agent-config-agent.ts     Agent Config's withStateContext + ShowcaseStrandsAgent
 │           ├── a2ui-dynamic-agent.ts     agent.ts's one self-contained factory
 │           ├── byoc-hashbrown-agent.ts   agent.ts's Hashbrown factory + a harness-authored prompt
 │           └── registry.ts               id → mount path → builder → gaps
@@ -440,6 +440,7 @@ aws-strands-ts/
         └── app/
             ├── api/copilotkit/                        main runtime, 23 agents
             ├── api/copilotkit-declarative-gen-ui/     A2UI dynamic schema
+            ├── api/copilotkit-agent-config/           Agent Config demo's single-route runtime
             ├── api/copilotkit-voice/[[...slug]]/      v2 handler + TranscriptionService
             ├── <route>/page.tsx                       notes, source, Try it, doc gaps
             └── <route>/demo-chat/page.tsx             the live surface, chrome-free

@@ -34,7 +34,7 @@ const GAP_LIST: DocGap[] = [
     id: "setup-skipped",
     title: "The page emits a placeholder where the backend snippet should be",
     detail:
-      'Instead of Strands code, the published markdown contains the literal comment `<!-- setup skipped: … is not bundled for strands-typescript -->`. The same page for Google ADK prints a full agent definition at that spot. Seven pages are affected: frontend-tools, generative-ui/tool-based, human-in-the-loop, shared-state/agent-readonly, agent-config, programmatic-control, multi-agent/subagents.',
+      'Instead of Strands code, the published markdown contains the literal comment `<!-- setup skipped: … is not bundled for strands-typescript -->`. The same page for Google ADK prints a full agent definition at that spot. Six pages are affected: frontend-tools, generative-ui/tool-based, human-in-the-loop, shared-state/agent-readonly, programmatic-control, multi-agent/subagents. (Agent Config dropped off this list on 2026-10-08, when it gained a real Strands backend section.)',
     severity: "blocking",
     docPath: "/strands-typescript",
   },
@@ -377,11 +377,19 @@ const GAP_LIST: DocGap[] = [
 
   // -------------------------------------------------------------- agent config
   {
-    id: "agent-config-wrong-framework",
-    title: "The Agent Config backend sample is LangGraph Python, not Strands",
+    id: "agent-config-format-preferences-unpublished",
+    title: "`withStateContext` calls a helper no page publishes",
     detail:
-      'Under a `python title="backend/agent.py"` label the page shows `async def my_agent_node(state: AgentState, config: RunnableConfig)` reading `state.get("copilotkit", {}).get("context", [])`. That is the LangGraph node signature and the LangGraph context location. Strands has neither, and this is the TypeScript tree. The Strands half of the page is the `setup skipped` placeholder; the alternative `runtime-properties` branch shows a TypeScript `agentConfigFactory` that belongs to a different architecture again.',
-    severity: "blocking",
+      "The page's `src/agent/state.ts` block builds the run context from `inputData.context`, then calls `formatPreferencesBlock(state.preferences)` to add a preferences entry. `formatPreferencesBlock` is defined nowhere — not in the prose and not in the demo Code tab, which ships `agent.ts` but not `state.ts`. This harness comments those lines out. The route still works, because its config travels as a `useAgentContext` entry and the adapter (0.3.0+) shows run context to the model by itself.",
+    severity: "degraded",
+    docPath: "/strands-typescript/agent-config",
+  },
+  {
+    id: "agent-config-description-drift",
+    title: "The prose relay and the demo relay publish different descriptions",
+    detail:
+      'The page\'s `ConfigContextRelay` snippet publishes the config under the description "Agent response preferences". The demo Code tab\'s `config-context-relay.tsx` — which this route runs — uses "Agent response preferences. Apply tone, expertise level, and response length to every reply." Because the adapter forwards the description to the model verbatim, the longer one doubles as the only instruction the agent gets about the config. The snippet alone gives the model the values but no instruction to apply them.',
+    severity: "note",
     docPath: "/strands-typescript/agent-config",
   },
 
@@ -469,7 +477,7 @@ const GAP_LIST: DocGap[] = [
     id: "json-render-backend-unpublished",
     title: "No agent, prompt or runtime route for `byoc_json_render`",
     detail:
-      "The page's backend section is only an example of the JSON output. The provider targets `/api/copilotkit-byoc-json-render` and `agent=\"byoc_json_render\"`, but the page never shows that route. The published `agent.ts` does include `buildByocJsonRenderAgent`, but it imports `BYOC_JSON_RENDER_SYSTEM_PROMPT` from the unpublished `./prompts`, so the instructions that make the model emit a spec do not exist anywhere in the docs.",
+      "The page's backend section is only an example of the JSON output. The provider targets `/api/copilotkit-byoc-json-render` and `agent=\"byoc_json_render\"`, but the page never shows that route. The published `agent.ts` does include `buildByocJsonRenderAgent`, but it imports `BYOC_JSON_RENDER_SYSTEM_PROMPT` from the unpublished `./prompts`, so the instructions that make the model emit a spec do not exist anywhere in the docs. The harness serves the agent with its own prompt (`backend/src/agents/byoc-json-render-agent.ts`).",
     severity: "blocking",
     docPath: "/strands-typescript/generative-ui/json-render",
   },
@@ -660,7 +668,10 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   //   "no-tool-wiring",
   // ],
 
-  // "/agent-config": ["agent-config-wrong-framework", "setup-skipped"],
+  // "/agent-config": [
+  //   "agent-config-format-preferences-unpublished",
+  //   "agent-config-description-drift",
+  // ],
 
   // "/copilot-runtime": [
   //   "runtime-pages-frameworkless",
