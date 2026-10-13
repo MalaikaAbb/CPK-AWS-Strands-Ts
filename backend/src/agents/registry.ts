@@ -17,8 +17,13 @@ import { CHAT_AGENT_SPECS, buildChatAgent } from "./chat-agents";
 import { buildLanguageAgent, buildStateMirrorAgent } from "./state-agents";
 import { buildA2uiDynamicAgent } from "./a2ui-dynamic-agent";
 import { buildSubagentsAgent } from "./subagents-agent";
+import {
+  AGENT_CONFIG_AGENT_ID,
+  buildAgentConfigAgent,
+} from "./agent-config-agent";
 import { buildA2uiFixedSchemaAgent } from "./a2ui-fixed-agent";
 import { buildByocHashbrownAgent } from "./byoc-hashbrown-agent";
+import { buildByocJsonRenderAgent } from "./byoc-json-render-agent";
 import {
   ANTHROPIC_QUICKSTART_AGENT_ID,
   buildAnthropicQuickstartAgent,
@@ -39,8 +44,9 @@ const SETUP_SKIPPED =
   "The page's backend section is the literal `<!-- setup skipped: … is not bundled for strands-typescript -->` placeholder.";
 
 const AGENT_CONFIG_GAPS = [
-  "The page's backend section is the `setup skipped` placeholder; the alternative it does print is LangGraph Python under a generic `backend/agent.py` label.",
-  "`stateContextBuilder` here folds `RunAgentInput.context[]` into the prompt — the channel both context pages describe and neither publishes. Supplied separately; see `agent-context.ts`.",
+  "`withStateContext` (the page's `src/agent/state.ts` block) calls `formatPreferencesBlock`, which no page or demo Code tab publishes. Those lines are commented out; this route sends its config as context, not `state.preferences`, so it does not need them.",
+  "`buildShowcaseAgent`'s `SYSTEM_PROMPT` and `SHOWCASE_TOOLS` are unpublished, so `ShowcaseStrandsAgent` wraps the Quickstart agent here (one-line prompt, no tools).",
+  "The page's prose snippet publishes the context entry as \"Agent response preferences\"; the demo Code tab this route runs uses a longer description that also tells the model to apply the values.",
 ];
 
 const TOOL_RENDERING_GAPS = [
@@ -65,11 +71,9 @@ function chatEntries(): RegistryEntry[] {
     gaps:
       spec.name === "tool-rendering"
         ? TOOL_RENDERING_GAPS
-        : spec.name === "agent-config"
-          ? AGENT_CONFIG_GAPS
-          : spec.name === "governed-actions"
-            ? GOVERNED_ACTIONS_GAPS
-            : [NO_TOOLS],
+        : spec.name === "governed-actions"
+          ? GOVERNED_ACTIONS_GAPS
+          : [NO_TOOLS],
   }));
 }
 
@@ -108,6 +112,12 @@ export const REGISTRY: RegistryEntry[] = [
     ],
   },
   {
+    id: AGENT_CONFIG_AGENT_ID,
+    mountPath: `/${AGENT_CONFIG_AGENT_ID}`,
+    build: buildAgentConfigAgent,
+    gaps: AGENT_CONFIG_GAPS,
+  },
+  {
     id: "subagents",
     mountPath: "/subagents",
     build: buildSubagentsAgent,
@@ -141,6 +151,15 @@ export const REGISTRY: RegistryEntry[] = [
       "The prompt asks for Hashbrown's `{ \"ui\": [ { \"Name\": { \"props\": … } } ] }` envelope, not the `{ \"type\": … }` shape the page's example output shows, which a UI kit cannot render.",
     ],
   },
+  {
+    id: "byoc_json_render",
+    mountPath: "/byoc_json_render",
+    build: buildByocJsonRenderAgent,
+    gaps: [
+      "Runs `buildByocJsonRenderAgent` from the published `agent.ts`. Its `BYOC_JSON_RENDER_SYSTEM_PROMPT` comes from the unpublished `./prompts`, so the prompt here is harness-authored.",
+      "The prompt asks for the flat `{ root, elements }` spec the page's `parseSpec` validates, using only the page's catalog types plus the `Stack` container its example output uses.",
+    ],
+  },
 ];
 
 /**
@@ -151,9 +170,9 @@ export const REGISTRY: RegistryEntry[] = [
  */
 export const UNSERVED: { id: string; reason: string }[] = [
   {
-    id: "voice_agent / byoc_json_render",
+    id: "voice_agent",
     reason:
-      "Published in `agent.ts` but each depends on a prompt constant from the unpublished `./prompts` module. The Voice route uses the Quickstart-shaped `voice-demo` agent instead. (`byoc_hashbrown` has the same gap and is served with a harness-authored prompt.)",
+      "Published in `agent.ts` but depends on a prompt constant from the unpublished `./prompts` module. The Voice route uses the Quickstart-shaped `voice-demo` agent instead. (`byoc_hashbrown` and `byoc_json_render` have the same gap and are served with harness-authored prompts.)",
   },
   {
     id: "strands_agent (showcase build)",

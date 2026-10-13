@@ -15,6 +15,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Agent, tool } from "@strands-agents/sdk";
 import { z } from "zod";
+import type { RunAgentInput } from "@ag-ui/core";
 import { StrandsAgent } from "@ag-ui/aws-strands";
 import type { StrandsAgentConfig } from "@ag-ui/aws-strands";
 import {
@@ -26,7 +27,7 @@ import {
 import { createModel } from "./model-factory";
 import { SHOWCASE_TOOLS } from "./tools";
 import {
-  buildStatePrompt,
+  withStateContext,
   salesStateFromArgs,
   notesStateFromArgs,
   stepsStateFromArgs,
@@ -40,11 +41,18 @@ import {
   BYOC_JSON_RENDER_SYSTEM_PROMPT,
 } from "./prompts";
 
+export class ShowcaseStrandsAgent extends StrandsAgent {
+  override async *run(inputData: RunAgentInput) {
+    // The adapter exposes context during model calls and restores history afterward.
+    yield* super.run(withStateContext(inputData));
+  }
+}
+
 export async function buildShowcaseAgent(): Promise<StrandsAgent> {
   const config: StrandsAgentConfig = {
-    stateContextBuilder: buildStatePrompt,
     toolBehaviors: {
-      // Sales pipeline lives in shared state; emit the snapshot from args.
+      // The tool keeps the sales pipeline in appState; this snapshot, built
+      // from the args, only carries it to the UI.
       manage_sales_todos: {
         skipMessagesSnapshot: true,
         stateFromArgs: salesStateFromArgs,
@@ -74,7 +82,7 @@ export async function buildShowcaseAgent(): Promise<StrandsAgent> {
     tools: SHOWCASE_TOOLS,
   });
 
-  return new StrandsAgent({
+  return new ShowcaseStrandsAgent({
     agent: strandsAgent,
     name: "strands_agent",
     description:

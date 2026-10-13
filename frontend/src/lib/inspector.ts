@@ -38,6 +38,7 @@ export const NESTED_PROVIDER_ROUTES = [
   "/threads-lifecycle/demo-chat",
   "/generative-ui/json-render/demo-chat",
   "/generative-ui/hashbrown/demo-chat",
+  "/agent-config/demo-chat",
 ] as const;
 
 /**
