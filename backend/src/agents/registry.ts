@@ -11,7 +11,6 @@
  * without reading both files. They are maintained by hand.
  */
 
-import type { StrandsAgent } from "@ag-ui/aws-strands";
 
 import { CHAT_AGENT_SPECS, buildChatAgent } from "./chat-agents";
 import { buildLanguageAgent, buildStateMirrorAgent } from "./state-agents";
@@ -24,6 +23,10 @@ import {
 import { buildA2uiFixedSchemaAgent } from "./a2ui-fixed-agent";
 import { buildByocHashbrownAgent } from "./byoc-hashbrown-agent";
 import { buildByocJsonRenderAgent } from "./byoc-json-render-agent";
+import { buildInterruptAgent } from "./interrupt-agent";
+import { Agent } from "@strands-agents/sdk";
+import { StrandsAgent } from "@ag-ui/aws-strands";
+import { createModel } from "./model";
 import {
   ANTHROPIC_QUICKSTART_AGENT_ID,
   buildAnthropicQuickstartAgent,
@@ -61,6 +64,36 @@ const GOVERNED_ACTIONS_GAPS = [
   "The page's other pattern, `useInterrupt`, needs a runtime that raises AG-UI interrupts. Nothing on the Strands TypeScript side does, and this page publishes no backend that would.",
 ];
 
+const GENUI_GAPS = [
+  "No Strands TypeScript Components page shows a backend. This is the Quickstart agent with the Components overview's one-line prompt; `render_ui` and the catalog guide reach it per run through the adapter.",
+  "`search_products` is repo-authored: the Catalogs page's ProductCard says to copy values from a tool result, and no page publishes a tool that returns products.",
+];
+
+const WEBMCP_GAPS = [
+  "The page needs no backend agent. This Quickstart-shaped one only lets the same frontend tool be tried from the CopilotKit chat; `searchOrders`, which the tool's handler calls, is unpublished and stubbed in the frontend.",
+];
+
+const INTERRUPT_GAPS = [
+  "Runs the published `interrupt-agent.ts` verbatim except for one import: `createModel` comes from this repo's `./model`, because `./model-factory` is unpublished.",
+];
+
+const SHOWCASE_STANDIN_GAPS = [
+  "The MCP Apps and Open Generative UI runtimes point their `HttpAgent` at `${AGENT_URL}/`, where the showcase serves `buildShowcaseAgent`. Its `SYSTEM_PROMPT` and `SHOWCASE_TOOLS` are unpublished, so a Quickstart-shaped agent with no tools stands in at `/`. Both pages' tools (MCP tools, `generateSandboxedUi`) arrive per run through the runtime.",
+];
+
+/**
+ * Stand-in for the showcase agent at the server root. The Quickstart's
+ * `main.ts` shape, with its one-line prompt.
+ */
+async function buildShowcaseStandIn(): Promise<StrandsAgent> {
+  const agent = new Agent({
+    model: createModel(),
+    systemPrompt: "You are a helpful AI assistant.",
+  });
+  await agent.initialize();
+  return new StrandsAgent({ agent, name: "strands_agent" });
+}
+
 const HAS_ANTHROPIC_KEY = Boolean(process.env.ANTHROPIC_API_KEY);
 
 function chatEntries(): RegistryEntry[] {
@@ -73,7 +106,11 @@ function chatEntries(): RegistryEntry[] {
         ? TOOL_RENDERING_GAPS
         : spec.name === "governed-actions"
           ? GOVERNED_ACTIONS_GAPS
-          : [NO_TOOLS],
+          : spec.name === "genui"
+            ? GENUI_GAPS
+            : spec.name === "webmcp"
+              ? WEBMCP_GAPS
+              : [NO_TOOLS],
   }));
 }
 
@@ -159,6 +196,23 @@ export const REGISTRY: RegistryEntry[] = [
       "Runs `buildByocJsonRenderAgent` from the published `agent.ts`. Its `BYOC_JSON_RENDER_SYSTEM_PROMPT` comes from the unpublished `./prompts`, so the prompt here is harness-authored.",
       "The prompt asks for the flat `{ root, elements }` spec the page's `parseSpec` validates, using only the page's catalog types plus the `Stack` container its example output uses.",
     ],
+  },
+  {
+    // The published route maps `gen-ui-interrupt` and `interrupt-headless` to
+    // `/interrupt/`; this mount keeps that path.
+    id: "interrupt",
+    mountPath: "/interrupt",
+    build: buildInterruptAgent,
+    gaps: INTERRUPT_GAPS,
+  },
+
+  // Must stay last: mounted at the root, it would otherwise shadow the
+  // per-agent mounts after it.
+  {
+    id: "showcase-standin",
+    mountPath: "/",
+    build: buildShowcaseStandIn,
+    gaps: SHOWCASE_STANDIN_GAPS,
   },
 ];
 

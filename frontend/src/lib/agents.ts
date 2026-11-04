@@ -45,6 +45,9 @@ export const AGENT_IDS = [
   "declarative-gen-ui",
   "byoc_json_render",
   "byoc_hashbrown",
+  "genui",
+  "webmcp",
+  "interrupt",
 ] as const;
 
 export type AgentId = (typeof AGENT_IDS)[number];

@@ -70,7 +70,7 @@ export function withStateContext(inputData: RunAgentInput): RunAgentInput {
 
     
 ~~~~typescript title="src/agent/agent.ts"
-export class ShowcaseStrandsAgent extends StrandsAgent {
+export class ShowcaseStrandsAgent extends BoardStateStrandsAgent {
   override async *run(inputData: RunAgentInput) {
     // The adapter exposes context during model calls and restores history afterward.
     yield* super.run(withStateContext(inputData));

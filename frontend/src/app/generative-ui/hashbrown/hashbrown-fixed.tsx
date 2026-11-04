@@ -1,7 +1,6 @@
 /**
- * Harness-authored: a working version of the page, for comparison with the
- * published one (./byoc-hashbrown-demo.tsx + ./hashbrown-renderer.tsx, which
- * are left as published and throw).
+ * Harness-authored: a working version of the page. The published renderer
+ * throws on the first reply (see HASHBROWN_FIX.md at the repo root).
  *
  * What changes, and why:
  *

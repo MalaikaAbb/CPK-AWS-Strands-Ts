@@ -346,9 +346,9 @@ export const NAV: NavGroup[] = [
         docPath: "/strands-typescript/generative-ui/json-render",
         summary:
           "An agent-emitted { root, elements } spec validated against a Zod catalog and drawn by @json-render/react's Renderer.",
-        status: "broken",
+        status: "working",
         statusNote:
-          "As published it throws: the missing code (helpers, components, runtime route, agent prompt) is written in, but the doc's <Renderer spec catalog> call is kept. @json-render/react 0.21 takes registry and needs JSONUIProvider. The demo's \"fixed\" mode has the working version, not yet checked in a browser.",
+          "Runs the fixed renderer: the doc's <Renderer spec catalog> call throws on @json-render/react 0.21 (it takes registry and needs JSONUIProvider), so the demo builds a registry from the page's catalog and adds the provider. Missing helpers, components, runtime route and agent prompt are written in.",
       },
       {
         path: "/generative-ui/hashbrown",
@@ -358,9 +358,127 @@ export const NAV: NavGroup[] = [
         docPath: "/strands-typescript/generative-ui/hashbrown",
         summary:
           "Streamed structured output parsed progressively by @hashbrownai/react and rendered through a component catalog.",
-        status: "broken",
+        status: "working",
         statusNote:
-          "As published it throws: the missing code (components, runtime route, agent prompt) is written in, but the doc's hook calls are kept. In 0.6.1 useJsonParser needs a schema and useUiKit takes { components }. The page's example output is also the wrong shape for Hashbrown. The demo's \"fixed\" tab has the working version, not yet checked in a browser.",
+          "Runs the fixed renderer: the doc's hook calls throw on @hashbrownai/react 0.6.1 (useJsonParser needs a schema, useUiKit takes { components }), and its example output is the wrong shape, so the demo exposes the components, parses against kit.schema and prompts for the { ui: [...] } envelope. Missing components, runtime route and agent prompt are written in.",
+      },
+      {
+        path: "/generative-ui/components/surfaces",
+        hasDemo: true,
+        agentId: "genui",
+        title: "Components · Surfaces",
+        docPath: "/strands-typescript/generative-ui/components/surfaces",
+        summary:
+          "GenerativeUISurface page targets the chat can fill, limit, scroll to, and replace, with per-component error boundaries.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. All published snippets run. Product, ProductRow and the product list are repo scaffolding; ./catalog is taken to be the Catalogs page's shopUI; products come from a repo-authored search_products tool.",
+      },
+      {
+        path: "/generative-ui/components/catalogs",
+        hasDemo: true,
+        agentId: "genui",
+        title: "Components · Catalogs",
+        docPath: "/strands-typescript/generative-ui/components/catalogs",
+        summary:
+          "createGenerativeUI catalogs: typed components, zod and Valibot props, extends, parameterOrder and exportA2UICatalog.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. Every snippet runs; Hero, Panel and cartUI are repo scaffolding. fs.writeFileSync is replaced by printing the exported catalog.",
+      },
+      {
+        path: "/generative-ui/components/standard-catalog",
+        hasDemo: true,
+        agentId: "genui",
+        title: "Components · Standard catalog",
+        docPath: "/generative-ui/components/standard-catalog",
+        summary:
+          "standardUI's 69 components as is, extended with a ProductCard, with Map/Video/HtmlView omitted, and with Card overridden.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. This page has no strands-typescript URL; it lives at the framework-neutral path. ProductCard and productSchema are repo scaffolding.",
+      },
+      {
+        path: "/generative-ui/components/state-and-actions",
+        hasDemo: true,
+        agentId: "genui",
+        title: "Components · State and actions",
+        docPath: "/strands-typescript/generative-ui/components/state-and-actions",
+        summary:
+          "App state bound into props, functions run on click, events sent to the agent, and writable props that keep user input.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. Cart, cart.addItem, the state-catalog ProductCard and the catalogs around the fragment snippets are repo scaffolding. Renderer functions cannot be called by the agent in this version, so allowedCallers is shown as exported only.",
+      },
+      {
+        path: "/generative-ui/components/theming",
+        hasDemo: true,
+        agentId: "genui",
+        title: "Components · Theming",
+        docPath: "/strands-typescript/generative-ui/components/theming",
+        summary:
+          "The theme option's CSS variables, a typed GenerativeUITheme file, dark-mode overrides, map styles, and .a2ui-surface CSS.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. The dark-mode script renders in the demo body, not <head>. The page's mapStyle URLs are placeholders, so the Map variant draws no basemap.",
+      },
+      {
+        path: "/generative-ui/components/transports",
+        hasDemo: true,
+        agentId: "genui",
+        title: "Components · Transports",
+        docPath: "/strands-typescript/generative-ui/components/transports",
+        summary:
+          "The render_ui tool transport vs the markdown transport, the runtime's generativeUI flag, and agentIds scoping.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. The runtime sample's agent is undefined; the Quickstart-shaped genui agent stands in, plus a shop agent so agentIds has one agent inside and one outside.",
+      },
+      {
+        path: "/generative-ui/components/markdown-mode",
+        hasDemo: true,
+        agentId: "genui",
+        title: "Components · Markdown mode",
+        docPath: "/strands-typescript/generative-ui/components/markdown-mode",
+        summary:
+          "The agent writes A2UI operations in a2ui code blocks inside its reply; sendContext: false moves the catalog into forwardedProps.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. The sendContext: false variant renders no UI by design: the only backend shown for it is Python reading forwarded_props, which no Strands TypeScript agent does.",
+      },
+      {
+        path: "/generative-ui/components/from-a2ui",
+        hasDemo: true,
+        agentId: "genui",
+        title: "Components · Adopt from A2UI",
+        docPath: "/strands-typescript/generative-ui/components/from-a2ui",
+        summary:
+          "The v0.9 a2ui renderer → A2UI 1.0 migration: the After catalog running on the new engine, with the Before code shown.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. Airport and Arrow are repo scaffolding. The support matrix rules out @ag-ui/a2ui-toolkit 0.0.5 agent tools, which is what this repo's fixed-schema A2UI agent uses.",
+      },
+      {
+        path: "/generative-ui/mcp-apps",
+        hasDemo: true,
+        title: "MCP Apps",
+        docPath: "/strands-typescript/generative-ui/mcp-apps",
+        summary:
+          "An MCP server's UI resources rendered inline in the chat as sandboxed iframes, wired by the runtime's mcpApps.servers.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. The runtime route is the Code tab's, verbatim, pointed at the public Excalidraw server. ./chat and the showcase agent at / are unpublished: a plain CopilotChat and a Quickstart-shaped stand-in replace them.",
+      },
+      {
+        path: "/generative-ui/open-generative-ui",
+        hasDemo: true,
+        title: "Open Generative UI",
+        docPath: "/strands-typescript/generative-ui/open-generative-ui",
+        summary:
+          "generateSandboxedUi streaming agent-written HTML/CSS/JS into a sandboxed iframe, plus sandbox functions that call back into the host.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. The runtime route is verbatim. VISUALIZATION_DESIGN_SKILL and openGenUiSuggestions are unpublished and commented out, so the minimal demo uses the default design skill and the advanced one has no suggestions. ./chat and the agent at / are stand-ins.",
       },
     ],
   },
@@ -380,6 +498,18 @@ export const NAV: NavGroup[] = [
           "useFrontendTool registers exactly as the page shows, and the adapter's proxy-tool sync gets it to the model. The page never explains that step. The \"Registering a list of tools\" sub-section is broken: useFrontendTools is not exported by @copilotkit/react-core 1.73.0.",
       },
       {
+        path: "/webmcp",
+        hasDemo: true,
+        agentId: "webmcp",
+        title: "WebMCP",
+        docPath: "/strands-typescript/webmcp",
+        summary:
+          "A frontend tool mirrored onto document.modelContext so WebMCP browser agents can call it, plus the core-only registration with no agent.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. Both snippets run; searchOrders is a repo-authored stub. WebMCP itself needs Chrome 149+ with the flag or origin trial; elsewhere registration is skipped and only the chat path works.",
+      },
+      {
         path: "/human-in-the-loop",
         hasDemo: true,
         agentId: "hitl-in-chat",
@@ -389,7 +519,7 @@ export const NAV: NavGroup[] = [
           "useHumanInTheLoop suspending the run behind a time picker until the user answers.",
         status: "working",
         statusNote:
-          "Pattern 1 works. Pattern 2 (`useInterrupt`) is LangGraph-only and does not apply to Strands — half the page is inert here.",
+          "Pattern 1 works. This page calls Pattern 2 (`useInterrupt`) LangGraph-only, but the newer useInterrupt and Headless Interrupts pages publish a native Strands interrupt agent — see /human-in-the-loop/useInterrupt.",
       },
       {
         path: "/human-in-the-loop/governed-actions",
@@ -401,7 +531,31 @@ export const NAV: NavGroup[] = [
           "Gating a side-effecting tool call behind an approve/reject card before it runs.",
         status: "partial",
         statusNote:
-          "The useHumanInTheLoop half works: the tool registers, the run suspends on the card, and respond() resumes it. The governance behind it does not exist — no page publishes a policy engine, a tool that emits a GovernedAction, or executeSideEffect, so verdict is whatever the model invents. The page's other pattern (useInterrupt) is not implemented: nothing on the Strands side raises an AG-UI interrupt.",
+          "The useHumanInTheLoop half works: the tool registers, the run suspends on the card, and respond() resumes it. The governance behind it does not exist — no page publishes a policy engine, a tool that emits a GovernedAction, or executeSideEffect, so verdict is whatever the model invents. The page's other pattern (useInterrupt) is not implemented here; the native Strands interrupt it needs is published on the useInterrupt page and runs at /human-in-the-loop/useInterrupt.",
+      },
+      {
+        path: "/human-in-the-loop/useInterrupt",
+        hasDemo: true,
+        agentId: "interrupt",
+        title: "Pausing the Agent (useInterrupt)",
+        docPath: "/strands-typescript/human-in-the-loop/useInterrupt",
+        summary:
+          "A Strands tool pausing itself with context.interrupt(); useInterrupt renders a time picker inline and resolve() resumes the run.",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. The agent and page are published; the agent imports this repo's createModel. The card/button/badge primitives and generateFallbackSlots are repo-authored; the suggestions hook is commented out.",
+      },
+      {
+        path: "/human-in-the-loop/headless",
+        hasDemo: true,
+        agentId: "interrupt",
+        title: "Headless Interrupts",
+        docPath: "/strands-typescript/human-in-the-loop/headless",
+        summary:
+          "The same native interrupt, with the picker rendered in an app panel outside the chat (renderInChat: false).",
+        status: "partial",
+        statusNote:
+          "Built, not yet checked in a browser. The page is published unchanged; only generateFallbackSlots (re-exported from the useInterrupt route) and the agent's createModel import are repo-supplied.",
       },
       {
         path: "/programmatic-control",

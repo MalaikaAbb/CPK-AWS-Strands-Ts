@@ -28,15 +28,22 @@ import {
 // Node server gives each its own app and mounts it at `/{agent_id}` — hence the
 // trailing slash that `agentUrl()` adds. The ids are the same strings the
 // routes pass as `agentId`.
-const agents = Object.fromEntries(
-  // The A2UI dynamic-schema agent deliberately does not go through this
-  // runtime — it has its own at /api/copilotkit-declarative-gen-ui, where the
-  // catalog on the provider is what turns A2UI on.
-  AGENT_IDS.filter((id) => id !== A2UI_DYNAMIC_AGENT_ID).map((id) => [
-    id,
-    new HttpAgent({ url: agentUrl(id) }),
-  ]),
-);
+const agents = {
+  ...Object.fromEntries(
+    // The A2UI dynamic-schema agent deliberately does not go through this
+    // runtime — it has its own at /api/copilotkit-declarative-gen-ui, where the
+    // catalog on the provider is what turns A2UI on.
+    AGENT_IDS.filter((id) => id !== A2UI_DYNAMIC_AGENT_ID).map((id) => [
+      id,
+      new HttpAgent({ url: agentUrl(id) }),
+    ]),
+  ),
+  // From the useInterrupt / headless pages' published `route.ts`, whose
+  // `dedicatedAgentPaths` sends both demo names to the dedicated native-
+  // interrupt agent at `/interrupt/`. Those pages use this runtime URL.
+  "gen-ui-interrupt": new HttpAgent({ url: agentUrl("interrupt") }),
+  "interrupt-headless": new HttpAgent({ url: agentUrl("interrupt") }),
+};
 
 // A2UI, scoped to the fixed-schema agent with tool injection off — exactly as
 // the Copilot Runtime page and the fixed-schema page both describe it.

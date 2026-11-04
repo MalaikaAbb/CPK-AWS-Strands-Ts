@@ -469,7 +469,7 @@ const GAP_LIST: DocGap[] = [
     id: "json-render-renderer-prop",
     title: "`<Renderer catalog={…}>` does not match `@json-render/react`",
     detail:
-      "In `@json-render/react@0.21.0` (npm `latest`), `Renderer` takes `{ spec, registry, loading, fallback }`. There is no `catalog` prop, so the call on the page is a type error even with every missing file supplied. It also reads visibility, action and state contexts that only `<JSONUIProvider>` supplies, and the page never renders one, so the first valid spec throws `useVisibility must be used within a VisibilityProvider` (predicted from the library source). The route keeps the call as published and shows the error; its \"fixed\" mode builds a `registry` and adds the provider.",
+      "In `@json-render/react@0.21.0` (npm `latest`), `Renderer` takes `{ spec, registry, loading, fallback }`. There is no `catalog` prop, so the call on the page is a type error even with every missing file supplied. It also reads visibility, action and state contexts that only `<JSONUIProvider>` supplies, and the page never renders one, so the first valid spec throws `useVisibility must be used within a VisibilityProvider` (predicted from the library source). The route's demo builds a `registry` and adds the provider.",
     severity: "blocking",
     docPath: "/strands-typescript/generative-ui/json-render",
   },
@@ -485,7 +485,7 @@ const GAP_LIST: DocGap[] = [
     id: "json-render-slot-type",
     title: "The `assistantMessage` slot's type rejects the page's plain component",
     detail:
-      "`@copilotkit/react-core` 1.74 types `messageView.assistantMessage` as `typeof CopilotChatAssistantMessage`, static sub-components included. The page's `({ message }) => …` fails that type check (TS2322), which `next dev` hides and `next build` reports. The published line carries a `@ts-expect-error` here. The fixed mode uses the `assistantMessage.markdownRenderer` sub-slot instead, which accepts a plain `({ content })` component.",
+      "`@copilotkit/react-core` 1.74 types `messageView.assistantMessage` as `typeof CopilotChatAssistantMessage`, static sub-components included. The page's `({ message }) => …` fails that type check (TS2322), which `next dev` hides and `next build` reports. The route's demo uses the `assistantMessage.markdownRenderer` sub-slot instead, which accepts a plain `({ content })` component.",
     severity: "degraded",
     docPath: "/strands-typescript/generative-ui/json-render",
   },
@@ -493,7 +493,7 @@ const GAP_LIST: DocGap[] = [
     id: "json-render-suggestions-provider",
     title: "`useConfigureSuggestions` is called outside the page's own `<CopilotKit>`",
     detail:
-      "The page's component calls the hook and then renders `<CopilotKit runtimeUrl=… agent=…>`. The suggestions therefore register on whatever provider is above it (this app's root), and never appear in the page's chat. Nothing errors. The fixed mode calls the hook from a child of `<CopilotKit>`.",
+      "The page's component calls the hook and then renders `<CopilotKit runtimeUrl=… agent=…>`. The suggestions therefore register on whatever provider is above it (this app's root), and never appear in the page's chat. Nothing errors. The route's demo calls the hook from a child of `<CopilotKit>`.",
     severity: "note",
     docPath: "/strands-typescript/generative-ui/json-render",
   },
@@ -511,7 +511,7 @@ const GAP_LIST: DocGap[] = [
     id: "hashbrown-hook-signatures",
     title: "Both Hashbrown calls don't match `@hashbrownai/react`",
     detail:
-      "In `@hashbrownai/react@0.6.1` (0.5.0 when first checked), `useJsonParser(json, schema)` requires a schema and returns `{ parserState, value, error }`, not a value. `useUiKit` takes `{ components, examples? }`, built from `exposeComponent(...)` entries, and returns a UI-kit object, not renderable nodes. The page calls `useJsonParser(content)` and `useUiKit({ catalog, value })` and renders the result directly. The route keeps these calls as published: the first assistant message throws `Cannot read properties of undefined (reading 'forEach')` inside `useUiKit` (predicted from the library source). Its \"fixed\" tab makes the calls correctly.",
+      "In `@hashbrownai/react@0.6.1` (0.5.0 when first checked), `useJsonParser(json, schema)` requires a schema and returns `{ parserState, value, error }`, not a value. `useUiKit` takes `{ components, examples? }`, built from `exposeComponent(...)` entries, and returns a UI-kit object, not renderable nodes. The page calls `useJsonParser(content)` and `useUiKit({ catalog, value })` and renders the result directly. As published, the first assistant message throws `Cannot read properties of undefined (reading 'forEach')` inside `useUiKit`. The route's demo makes the calls correctly.",
     severity: "blocking",
     docPath: "/strands-typescript/generative-ui/hashbrown",
   },
@@ -543,9 +543,75 @@ const GAP_LIST: DocGap[] = [
     id: "hashbrown-slot-and-suggestions",
     title: "Same slot-type and suggestions bugs as JSON Render",
     detail:
-      "`messageView={{ assistantMessage: HashBrownAssistantMessage }}` fails CopilotKit 1.74's slot type (TS2322). `useConfigureSuggestions` is called outside the page's own `<CopilotKit>`, so the suggestions never reach its chat. The fixed tab still replaces the whole `assistantMessage`, as the page does, but casts it (`as unknown as typeof CopilotChatAssistantMessage`) and calls the hook inside the provider.",
+      "`messageView={{ assistantMessage: HashBrownAssistantMessage }}` fails CopilotKit 1.74's slot type (TS2322). `useConfigureSuggestions` is called outside the page's own `<CopilotKit>`, so the suggestions never reach its chat. The route's demo still replaces the whole `assistantMessage`, as the page does, but casts it (`as unknown as typeof CopilotChatAssistantMessage`) and calls the hook inside the provider.",
     severity: "degraded",
     docPath: "/strands-typescript/generative-ui/hashbrown",
+  },
+
+  // ------------------------------------------- components / ogui / interrupts / webmcp
+  {
+    id: "components-app-code-undefined",
+    title: "The Components pages use app code they never define",
+    detail:
+      "The catalogs, hooks and providers are complete, but the snippets use `Product`, `ProductRow`, a product list, `Cart` with `addItem`, `Hero`, `Panel`, `cartUI`, `Airport`, `Arrow`, `productSchema` and several imports without defining them. All are supplied in `generative-ui/components/_shared/scaffolding.tsx` and marked.",
+    severity: "degraded",
+    docPath: "/strands-typescript/generative-ui/components/surfaces",
+  },
+  {
+    id: "components-no-products-tool",
+    title: "ProductCard copies values from a tool result that no page provides",
+    detail:
+      "The Catalogs page's ProductCard description tells the model to copy every value from a product of a tool result. No page publishes a tool that returns products, so the `genui` agent carries a repo-authored `search_products`.",
+    severity: "degraded",
+    docPath: "/strands-typescript/generative-ui/components/catalogs",
+  },
+  {
+    id: "components-no-strands-backend",
+    title: "No Strands backend for Components and surfaces",
+    detail:
+      "The pages say the agent must hand the run's tools and context entries to its model, and show only BuiltInAgent and LangGraph wiring. The Transports runtime sample uses an undefined `agent`. A Quickstart-shaped Strands agent stands in.",
+    severity: "note",
+    docPath: "/strands-typescript/generative-ui/components/transports",
+  },
+  {
+    id: "from-a2ui-toolkit-unsupported",
+    title: "The A2UI 1.0 engine rejects the toolkit the published A2UI agent uses",
+    detail:
+      "The support matrix says agent tools built with `@ag-ui/a2ui-toolkit` 0.0.5 write v0.9 operations and are not supported. The published fixed-schema agent (`display_flight`) is built with that toolkit.",
+    severity: "note",
+    docPath: "/strands-typescript/generative-ui/components/from-a2ui",
+  },
+  {
+    id: "ogui-mcp-unpublished-agent",
+    title: "MCP Apps and Open Generative UI point at an unpublished agent",
+    detail:
+      "Both published runtime routes target `${AGENT_URL}/`, the showcase's `buildShowcaseAgent`, whose prompt and tools are unpublished. `./chat` is unpublished on both pages, and Open Generative UI's `./design-skill` and `./suggestions` are too (commented out here).",
+    severity: "degraded",
+    docPath: "/strands-typescript/generative-ui/open-generative-ui",
+  },
+  {
+    id: "interrupt-unpublished-leaves",
+    title: "The interrupt demos import unpublished leaf modules",
+    detail:
+      "`time-picker-card.tsx` imports shadcn `./card`, `./button` and `./badge`. Both pages import `../_shared/interrupt-fallback-slots`, and the useInterrupt page imports `./suggestions`. The agent imports `createModel` from `./model-factory`. None is published.",
+    severity: "degraded",
+    docPath: "/strands-typescript/human-in-the-loop/useInterrupt",
+  },
+  {
+    id: "interrupt-contradicts-hitl-page",
+    title: "useInterrupt is called LangGraph-only on one page and native to Strands on another",
+    detail:
+      "The Human-in-the-Loop page says `useInterrupt` does not apply to this framework; the newer useInterrupt page publishes a Strands agent whose tool pauses with `context.interrupt(...)`. It also pins `@ag-ui/aws-strands` 0.2.3, while this repo runs 1.0.1.",
+    severity: "note",
+    docPath: "/strands-typescript/human-in-the-loop/useInterrupt",
+  },
+  {
+    id: "webmcp-search-orders-undefined",
+    title: "`searchOrders` is never defined",
+    detail:
+      "Both WebMCP snippets call `searchOrders(status)` inside the handler; the page never defines it. A four-order stub stands in.",
+    severity: "degraded",
+    docPath: "/strands-typescript/webmcp",
   },
 ];
 
@@ -566,22 +632,22 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
     "governed-shadcn-classes",
   ],
 
-  "/generative-ui/json-render": [
-    "json-render-modules-unpublished",
-    "json-render-parser-undefined",
-    "json-render-backend-unpublished",
-    "json-render-renderer-prop",
-    "json-render-slot-type",
-    "json-render-suggestions-provider",
-  ],
-  "/generative-ui/hashbrown": [
-    "hashbrown-modules-unpublished",
-    "hashbrown-hook-signatures",
-    "hashbrown-backend-unpublished",
-    "hashbrown-output-shape",
-    "hashbrown-stack-unregistered",
-    "hashbrown-slot-and-suggestions",
-  ],
+  // "/generative-ui/json-render": [
+  //   "json-render-modules-unpublished",
+  //   "json-render-parser-undefined",
+  //   "json-render-backend-unpublished",
+  //   "json-render-renderer-prop",
+  //   "json-render-slot-type",
+  //   "json-render-suggestions-provider",
+  // ],
+  // "/generative-ui/hashbrown": [
+  //   "hashbrown-modules-unpublished",
+  //   "hashbrown-hook-signatures",
+  //   "hashbrown-backend-unpublished",
+  //   "hashbrown-output-shape",
+  //   "hashbrown-stack-unregistered",
+  //   "hashbrown-slot-and-suggestions",
+  // ],
   "/frontend-tools": [
     "use-frontend-tools-not-exported",
     "use-frontend-tools-free-identifiers",

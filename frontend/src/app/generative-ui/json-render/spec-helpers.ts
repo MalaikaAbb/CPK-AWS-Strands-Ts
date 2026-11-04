@@ -3,9 +3,6 @@
  * never defines them. They are written to do what the page says the renderer
  * does: tolerate prose preamble, code fences and half-streamed JSON, then
  * validate each element against the catalog's Zod schemas.
- *
- * Nothing here works around the API mismatch in `json-render-renderer.tsx`.
- * The spec these produce is handed to `<Renderer>` exactly as the page does.
  */
 
 import type { Spec } from "@json-render/react";
