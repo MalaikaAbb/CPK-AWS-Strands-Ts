@@ -1,7 +1,6 @@
 /**
- * Harness-authored: a working version of the page, for comparison with the
- * published one (./byoc-json-render-demo.tsx + ./json-render-renderer.tsx,
- * which are left as published and throw).
+ * Harness-authored: a working version of the page. The published renderer
+ * throws on the first valid spec (see JSON_RENDERER_FIX.md at the repo root).
  *
  * Four changes, each fixing one thing the published code gets wrong:
  *

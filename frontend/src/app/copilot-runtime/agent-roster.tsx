@@ -56,9 +56,11 @@ export function AgentRoster({ agentUrlBase }: { agentUrlBase: string }) {
   const served = new Set(health.agents.map((a) => a.id));
   const known = new Set<string>(AGENT_IDS);
   const missingOnServer = [...known].filter((id) => !served.has(id));
+  // `showcase-standin` is mounted at the server root and addressed by the
+  // MCP Apps and Open Generative UI runtimes as `${AGENT_URL}/`, not by id.
   const missingInFrontend = health.agents
     .map((a) => a.id)
-    .filter((id) => !known.has(id));
+    .filter((id) => !known.has(id) && id !== "showcase-standin");
   const inSync = missingOnServer.length === 0 && missingInFrontend.length === 0;
 
   return (

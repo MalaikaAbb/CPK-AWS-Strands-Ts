@@ -29,6 +29,7 @@ import { StrandsAgent } from "@ag-ui/aws-strands";
 
 import { createModel } from "./model";
 import { TOOL_RENDERING_TOOLS } from "./tools";
+import { GENUI_TOOLS } from "./genui-tools";
 
 export interface ChatAgentSpec {
   name: string;
@@ -41,7 +42,8 @@ export interface ChatAgentSpec {
    *
    * Left undefined everywhere else, which is the honest default: no Strands
    * TypeScript page passes a populated `tools=` to a Strands `Agent`. See
-   * `tools.ts` for the exception and where its code came from.
+   * `tools.ts` and `genui-tools.ts` for the two exceptions and where their
+   * code came from.
    */
   tools?: ToolList;
 }
@@ -185,6 +187,30 @@ export const CHAT_AGENT_SPECS: ChatAgentSpec[] = [
   {
     name: "gen-ui-interactive",
     description: "Backs Your Components · Interactive.",
+    systemPrompt: USE_FRONTEND_TOOLS,
+  },
+
+  // Components and surfaces (A2UI 1.0). The `render_ui` tool and the catalog
+  // guide arrive per run from the runtime and the provider; the adapter hands
+  // both to the model. The first sentence is the system prompt the Components
+  // overview page gives its agent; the second is this repo's, because the
+  // Catalogs page's ProductCard says to copy values from a tool result.
+  {
+    name: "genui",
+    description: "Backs the Components and surfaces pages.",
+    systemPrompt:
+      "You are a helpful assistant. When a visual answer helps, render it with generative UI. " +
+      "When the user asks about products, call `search_products` first and copy its values into the props the component declares; " +
+      "leave out any value the component has no prop for. " +
+      "Use it only for products: render charts and other data yourself, and never give up on the rest of a request because a search came back empty. " +
+      "In `render_ui` operations, put each prop directly on the component node next to `id` and `component`; never nest props under a `props` key.",
+    tools: GENUI_TOOLS,
+  },
+
+  // WebMCP — the page's frontend tool is the only tool.
+  {
+    name: "webmcp",
+    description: "Backs the WebMCP page.",
     systemPrompt: USE_FRONTEND_TOOLS,
   },
 
