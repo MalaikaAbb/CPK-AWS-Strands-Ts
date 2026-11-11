@@ -558,6 +558,14 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/generative-ui/components/surfaces",
   },
   {
+    id: "components-overview-tanstack-agent",
+    title: "The Components overview's agent is a TanStack BuiltInAgent, not Strands",
+    detail:
+      "Served under `/strands-typescript`, the overview's step 2 builds `new BuiltInAgent({ type: \"tanstack\", factory })` with `openaiText(\"gpt-6-luna\")` and says to pass `convertInputToTanStackAI`'s tools and prompts through. No Strands version is shown. This repo runs a Strands agent (`genui-overview`) with the factory's prompt and no tools; the adapter forwards `render_ui` and the context entries.",
+    severity: "note",
+    docPath: "/strands-typescript/generative-ui/components",
+  },
+  {
     id: "components-no-products-tool",
     title: "ProductCard copies values from a tool result that no page provides",
     detail:

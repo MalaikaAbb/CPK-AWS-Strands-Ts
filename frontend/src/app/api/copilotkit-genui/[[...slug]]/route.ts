@@ -16,7 +16,13 @@ import { agentUrl } from "@/lib/agents";
 // agents. The agent is the Quickstart-shaped `genui` agent, which hands the
 // run's tools and context entries to its model through the adapter.
 const runtime = new CopilotRuntime({
-  agents: { default: new HttpAgent({ url: agentUrl("genui") }) },
+  agents: {
+    default: new HttpAgent({ url: agentUrl("genui") }),
+    // The Components and surfaces overview's own agent: the page's prompt and
+    // nothing else, so the overview runs without the repo-authored
+    // `search_products` the other Components pages need.
+    "genui-overview": new HttpAgent({ url: agentUrl("genui-overview") }),
+  },
 });
 
 const handler = createCopilotRuntimeHandler({
