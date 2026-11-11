@@ -24,6 +24,7 @@ import { buildA2uiFixedSchemaAgent } from "./a2ui-fixed-agent";
 import { buildByocHashbrownAgent } from "./byoc-hashbrown-agent";
 import { buildByocJsonRenderAgent } from "./byoc-json-render-agent";
 import { buildInterruptAgent } from "./interrupt-agent";
+import { buildReasoningAgent } from "./reasoning-agent";
 import { Agent } from "@strands-agents/sdk";
 import { StrandsAgent } from "@ag-ui/aws-strands";
 import { createModel } from "./model";
@@ -69,12 +70,20 @@ const GENUI_GAPS = [
   "`search_products` is repo-authored: the Catalogs page's ProductCard says to copy values from a tool result, and no page publishes a tool that returns products.",
 ];
 
+const GENUI_OVERVIEW_GAPS = [
+  "The Components and surfaces overview prints a TanStack `BuiltInAgent` factory (`openaiText(\"gpt-6-luna\")`). This harness runs its own Strands agent instead: the factory's system prompt verbatim, no tools. `render_ui` and the catalog guide reach it per run through the adapter, which is what the factory's `convertInputToTanStackAI` does for TanStack.",
+];
+
 const WEBMCP_GAPS = [
   "The page needs no backend agent. This Quickstart-shaped one only lets the same frontend tool be tried from the CopilotKit chat; `searchOrders`, which the tool's handler calls, is unpublished and stubbed in the frontend.",
 ];
 
 const INTERRUPT_GAPS = [
   "Runs the published `interrupt-agent.ts` verbatim except for one import: `createModel` comes from this repo's `./model`, because `./model-factory` is unpublished.",
+];
+
+const REASONING_GAPS = [
+  "Runs `buildReasoningAgent` from the Reasoning page's Code-tab `reasoning-agent.ts`, except for one import: `createModel` comes from this repo's `./model`, because `./model-factory` is unpublished. Its `{ openaiApi: \"responses\", reasoning: true, openaiModelId }` options don't exist there, so the agent runs on the plain Quickstart model and requests no reasoning summaries: no REASONING_MESSAGE events reach the chat.",
 ];
 
 const SHOWCASE_STANDIN_GAPS = [
@@ -108,6 +117,8 @@ function chatEntries(): RegistryEntry[] {
           ? GOVERNED_ACTIONS_GAPS
           : spec.name === "genui"
             ? GENUI_GAPS
+            : spec.name === "genui-overview"
+              ? GENUI_OVERVIEW_GAPS
             : spec.name === "webmcp"
               ? WEBMCP_GAPS
               : [NO_TOOLS],
@@ -204,6 +215,14 @@ export const REGISTRY: RegistryEntry[] = [
     mountPath: "/interrupt",
     build: buildInterruptAgent,
     gaps: INTERRUPT_GAPS,
+  },
+  {
+    // The Reasoning page's `route.ts` maps `reasoning-default` and
+    // `reasoning-custom` to `/reasoning/`; this mount keeps that path.
+    id: "reasoning",
+    mountPath: "/reasoning",
+    build: buildReasoningAgent,
+    gaps: REASONING_GAPS,
   },
 
   // Must stay last: mounted at the root, it would otherwise shadow the
