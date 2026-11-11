@@ -679,6 +679,16 @@ export const NAV: NavGroup[] = [
           "useAgent as the AbstractAgent handle, and agent.subscribe walking the full event stream live.",
         status: "working",
       },
+      {
+        path: "/deploy-agentcore",
+        title: "AWS AgentCore",
+        docPath: "/strands-typescript/deploy-agentcore",
+        summary:
+          "Putting a CopilotKit runtime in front of an agent hosted on Bedrock AgentCore: the CLI/CDK template, or an HttpAgent plus a custom runner aimed at /invocations.",
+        status: "reference",
+        statusNote:
+          "Needs an AWS account (CDK, Cognito, AgentCore Runtime) — not testable locally. Page code kept byte-exact in backend/docs_verbatim/deploy-agentcore/ and shown, not run.",
+      },
     ],
   },
   {

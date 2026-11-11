@@ -233,6 +233,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `/agent-config` | A typed config object the UI owns, published as context; the Strands adapter shows it to the model per call. | Ask a question, change expertise to beginner and length to detailed, ask again | **Pass:** the second answer is longer and less jargon-heavy, and the config text never appears inside your own messages. **Fail:** identical answers, or the config shows up as part of a user message. |
 | `/copilot-runtime` | This repo's live runtime config and its agent roster, cross-checked. | Read the roster panel | **Pass:** 24 agents, "lists agree". **Fail:** a red panel naming agents present on one side only. |
 | `/ag-ui` | `agent.subscribe` walking the raw AG-UI event stream. | "Tell me a two-sentence story." | **Pass:** `RUN_STARTED` → `STATE_SNAPSHOT` → `TEXT_MESSAGE_CONTENT` bursts → `MESSAGES_SNAPSHOT` → `RUN_FINISHED`. **Fail:** only `onStateChanged` rows. |
+| `/deploy-agentcore` | Reference: the AgentCore page's CLI/CDK path and its "existing agent" runtime + `AgentCoreRunner`, shown from `backend/docs_verbatim/deploy-agentcore/`. | Open the route and compare each file with the doc page | **Pass:** every block from the page is shown, read from disk, and the AWS callout is visible. **Fail:** a file panel shows a read error. Nothing on this route can run without an AWS account. |
 
 ---
 
@@ -290,8 +291,9 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `agent-config` | `/agent-config` | ✅ Working | Runs the page's demo Code tab unchanged on its own runtime (`/api/copilotkit-agent-config`, agent `agent-config-demo`), plus the page's `withStateContext` and `ShowcaseStrandsAgent`. The adapter (0.3.0) shows context to the model per call. `formatPreferencesBlock` is unpublished, so its lines are commented out; this route doesn't use them. |
 | `copilot-runtime` | `/copilot-runtime` | ✅ Working | Page never mentions Strands. |
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
+| `deploy-agentcore` | `/deploy-agentcore` | 📄 Reference | Needs an AWS account (CDK, Cognito, AgentCore Runtime). Code kept verbatim in `backend/docs_verbatim/deploy-agentcore/`; unused `InMemoryAgentRunner` import, GET/POST only, dead `/agentcore/full-stack-example` link. |
 
-**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 2 ❌ Broken · 3 📄 Reference.
+**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 2 ❌ Broken · 4 📄 Reference.
 
 Live version at `/status`, with the full gap ledger.
 
@@ -299,7 +301,7 @@ Live version at `/status`, with the full gap ledger.
 
 ## 8. Not covered
 
-These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), Reasoning, State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, Deploy/AgentCore, three migration guides, and Telemetry.
+These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), Reasoning, State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, three migration guides, and Telemetry. (Deploy/AgentCore now has a reference route, `/deploy-agentcore`.)
 
 ---
 
@@ -380,6 +382,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 - **The read-only context middleware does not exist.** [agent-readonly](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) credits a `CopilotKitMiddleware`. The adapter flattens `RunAgentInput.context[]` itself and passes it to `stateContextBuilder` as a third `extras` argument — undocumented anywhere.
 - **The model does not exist.** [quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own) sets `modelId: "gpt-5.4"`; its own callout says GPT-4o.
 - **Frontend tools work and nothing says why.** `createProxyTool` / `syncProxyTools`, per run. Google ADK's docs show `AGUIToolset()`; these show a placeholder.
+- **AWS AgentCore can only be read here.** [deploy-agentcore](https://docs.copilotkit.ai/strands-typescript/deploy-agentcore), fetched 2026-11-11. Every path on the page needs an AWS account, so `/deploy-agentcore` shows the code instead of running it. Reading it turns up an `InMemoryAgentRunner` import the runtime route never uses, the same GET/POST-only exports as the Quickstart, and an "Auth in production" link to `/agentcore/full-stack-example` that did not resolve.
 
 ---
 
@@ -510,7 +513,7 @@ Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only
 
 **Add Agent Powers** · [Frontend Tools](https://docs.copilotkit.ai/strands-typescript/frontend-tools) · [Human-in-the-Loop](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop) · [Governed Actions](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/governed-actions) · [Pausing the Agent (useInterrupt)](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/useInterrupt) · [Headless Interrupts](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop/headless) · [WebMCP](https://docs.copilotkit.ai/strands-typescript/webmcp) · [Sub-Agents](https://docs.copilotkit.ai/strands-typescript/multi-agent/subagents) · [Agent Config](https://docs.copilotkit.ai/strands-typescript/agent-config) · [Programmatic Control](https://docs.copilotkit.ai/strands-typescript/programmatic-control)
 
-**Runtime** · [Copilot Runtime](https://docs.copilotkit.ai/strands-typescript/copilot-runtime) · [AG-UI](https://docs.copilotkit.ai/strands-typescript/ag-ui)
+**Runtime** · [Copilot Runtime](https://docs.copilotkit.ai/strands-typescript/copilot-runtime) · [AG-UI](https://docs.copilotkit.ai/strands-typescript/ag-ui) · [AWS AgentCore](https://docs.copilotkit.ai/strands-typescript/deploy-agentcore)
 
 **Not in the sidebar** · [CopilotChat](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat) · [CopilotSidebar](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/sidebar) · [CopilotPopup](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/popup) · [Chat controls](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat-controls) · [CSS](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/css) · [Slots](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/slots) · [Headless UI](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/headless-ui) · [Display-only](https://docs.copilotkit.ai/strands-typescript/generative-ui/your-components/display-only) · [Interactive](https://docs.copilotkit.ai/strands-typescript/generative-ui/your-components/interactive)
 

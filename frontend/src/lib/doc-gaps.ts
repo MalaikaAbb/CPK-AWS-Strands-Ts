@@ -613,6 +613,14 @@ const GAP_LIST: DocGap[] = [
     severity: "degraded",
     docPath: "/strands-typescript/webmcp",
   },
+  {
+    id: "agentcore-dead-link-unused-import",
+    title: "AgentCore's runtime snippet has an unused import and its full-stack link does not resolve",
+    detail:
+      "`app/api/copilotkit/[[...slug]]/route.ts` imports `InMemoryAgentRunner` and passes `new AgentCoreRunner()` instead, so the import is dead. Like the Quickstart it exports only GET and POST. The \"Auth in production\" note links to `/agentcore/full-stack-example`, which did not resolve on 2026-11-11. The whole page needs an AWS account, so the route is reference-only.",
+    severity: "note",
+    docPath: "/strands-typescript/deploy-agentcore",
+  },
 ];
 
 export const DOC_GAPS: Record<string, DocGap> = Object.fromEntries(
