@@ -105,7 +105,7 @@ export default function Page() {
         <SourceCodeGroup
           files={[
             { file: "frontend/src/app/generative-ui/components/demo-chat/page.tsx" },
-            { file: "frontend/src/app/api/copilotkit-genui/[[...slug]]/route.ts" },
+            { file: "frontend/src/app/api/copilotkit-genui-overview/[[...slug]]/route.ts" },
           ]}
         />
       </Panel>
@@ -125,7 +125,7 @@ export default function Page() {
           <li>
             The provider config is the page&apos;s (<code>generativeUI=&#123;&#123; ui: standardUI &#125;&#125;</code>),
             mounted through the shared Components demo harness on{" "}
-            <code>/api/copilotkit-genui</code> rather than as the app&apos;s root
+            <code>/api/copilotkit-genui-overview</code> rather than as the app&apos;s root
             provider.
           </li>
           <li>
