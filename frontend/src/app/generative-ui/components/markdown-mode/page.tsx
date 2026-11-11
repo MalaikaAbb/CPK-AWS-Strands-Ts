@@ -7,14 +7,14 @@ const BASE = "frontend/src/app/generative-ui/components/markdown-mode/demo-chat"
 const EXAMPLE_REPLY = `Here is an estimate you can play with:
 
 \`\`\`a2ui
-{"version":"v1.0","createSurface":{"surfaceId":"plan-estimator","dataModel":{"seats":10,"price":"$290 / month"},"components":[{"id":"root","component":"Card","children":["seats","price"]}]}}
-{"version":"v1.0","updateComponents":{"surfaceId":"plan-estimator","components":[{"id":"seats","component":"Slider","label":"Seats","min":1,"max":50,"value":{"@path":"/seats"}},{"id":"price","component":"Text","text":{"@path":"/price"}}]}}
+{"version":"1.0","createSurface":{"surfaceId":"plan-estimator","dataModel":{"seats":10,"price":"$290 / month"},"components":[{"id":"root","component":"Card","children":["seats","price"]}]}}
+{"version":"1.0","updateComponents":{"surfaceId":"plan-estimator","components":[{"id":"seats","component":"Slider","label":"Seats","min":1,"max":50,"value":{"@path":"/seats"}},{"id":"price","component":"Text","text":{"@path":"/price"}}]}}
 \`\`\`
 
 Move the slider to change the seat count.`;
 
 const ENVELOPE = `{
-  "v1.0": {
+  "1.0": {
     "supportedCatalogIds": ["copilotkit/standard@1"],
     "inlineCatalogs": [
       {
@@ -38,7 +38,7 @@ const ENVELOPE = `{
 }`;
 
 const PYTHON = `ui = input.forwarded_props["copilotkit"]["ui"]
-catalog = ui["v1.0"]["inlineCatalogs"][0]
+catalog = ui["1.0"]["inlineCatalogs"][0]
 system = f"{MY_PROMPT}\\n\\n{catalog['instructions']}\\n\\nComponents:\\n{json.dumps(catalog['components'])}"`;
 
 export default function Page() {
