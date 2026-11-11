@@ -558,6 +558,28 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/generative-ui/components/surfaces",
   },
   {
+    id: "shared-state-overview-no-backend",
+    title: "The Shared State overview prints UI fragments and no Strands backend",
+    detail:
+      "`setup skipped: shared-state-setup` and `snippet skipped: region 'state-streaming-middleware'` stand where the Strands code should be. The `useAgent` and `handlePreferencesChange` snippets are fragments of an unprinted page (`Preferences`, `RWAgentState`, `notes` undefined). The `set_notes` tool that fills the notes card is never shown, nor is the form that calls `handlePreferencesChange`. `notes-card.tsx` has no imports, no `NotesCardProps`, and uses shadcn Card/Button. The write comment credits LangGraph's `PreferencesInjectorMiddleware`.",
+    severity: "blocking",
+    docPath: "/strands-typescript/shared-state",
+  },
+  {
+    id: "state-streaming-not-supported",
+    title: "State Streaming publishes no Strands TypeScript code",
+    detail:
+      "The rendered page shows \"Not supported on AWS Strands (TypeScript)\" with no demo. The `.md` skips `state-streaming-setup` and the `state-streaming-middleware` region. It says direct SDK adapters emit STATE_SNAPSHOT from their streaming loop but shows nothing for Strands. Only a `useAgent` fragment for an undefined `shared-state-streaming` agent remains.",
+    severity: "blocking",
+    docPath: "/strands-typescript/shared-state/streaming",
+    id: "components-overview-tanstack-agent",
+    title: "The Components overview's agent is a TanStack BuiltInAgent, not Strands",
+    detail:
+      "Served under `/strands-typescript`, the overview's step 2 builds `new BuiltInAgent({ type: \"tanstack\", factory })` with `openaiText(\"gpt-6-luna\")` and says to pass `convertInputToTanStackAI`'s tools and prompts through. No Strands version is shown. This repo runs a Strands agent (`genui-overview`) with the factory's prompt and no tools; the adapter forwards `render_ui` and the context entries.",
+    severity: "note",
+    docPath: "/strands-typescript/generative-ui/components",
+  },
+  {
     id: "components-no-products-tool",
     title: "ProductCard copies values from a tool result that no page provides",
     detail:
@@ -606,12 +628,28 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/human-in-the-loop/useInterrupt",
   },
   {
+    id: "reasoning-messages-no-reasoning-source",
+    title: "Reasoning Messages restyles a message its agent cannot produce",
+    detail:
+      "The page's demos run the Code-tab `reasoning-agent.ts`, whose `createModel({ openaiApi: \"responses\", reasoning: true, openaiModelId })` comes from the unpublished `./model-factory`. That module is what requests reasoning summaries, so without it no REASONING_MESSAGE event arrives and none of the four variants (default, sub-slots, render-prop, full replacement) can be seen. The prose snippets also name no agent or provider, and `reasoning-custom`'s `./suggestions` is unpublished.",
+    severity: "blocking",
+    docPath: "/strands-typescript/custom-look-and-feel/reasoning-messages",
+  },
+  {
     id: "webmcp-search-orders-undefined",
     title: "`searchOrders` is never defined",
     detail:
       "Both WebMCP snippets call `searchOrders(status)` inside the handler; the page never defines it. A four-order stub stands in.",
     severity: "degraded",
     docPath: "/strands-typescript/webmcp",
+  },
+  {
+    id: "reasoning-model-factory-unpublished",
+    title: "The Reasoning agent's model setup lives in an unpublished module",
+    detail:
+      "The page's Code-tab `reasoning-agent.ts` builds its model with `createModel({ openaiApi: \"responses\", reasoning: true, openaiModelId })` from `./model-factory`, which no page publishes. That is the part that asks the Responses API for reasoning summaries. Without it the agent emits no REASONING_MESSAGE events, so neither the default card nor a custom `reasoningMessage` slot ever renders. `reasoning-custom`'s `./suggestions` is unpublished too.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/reasoning",
   },
 ];
 
@@ -626,6 +664,8 @@ export type GapId = string;
  * that route goes first, because that is what the panel leads with.
  */
 export const ROUTE_GAPS: Record<string, GapId[]> = {
+  "/generative-ui/reasoning": ["reasoning-model-factory-unpublished"],
+
   "/human-in-the-loop/governed-actions": [
     "governed-no-backend-published",
     "governed-card-defined-in-other-pattern",
@@ -648,6 +688,12 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   //   "hashbrown-stack-unregistered",
   //   "hashbrown-slot-and-suggestions",
   // ],
+  "/shared-state": ["shared-state-overview-no-backend"],
+  "/shared-state/streaming": ["state-streaming-not-supported"],
+  "/custom-look-and-feel/reasoning-messages": [
+    "reasoning-messages-no-reasoning-source",
+  ],
+
   "/frontend-tools": [
     "use-frontend-tools-not-exported",
     "use-frontend-tools-free-identifiers",

@@ -128,6 +128,23 @@ export const NAV: NavGroup[] = [
     ],
   },
   {
+    title: "Chat",
+    routes: [
+      {
+        path: "/generative-ui/reasoning",
+        hasDemo: true,
+        agentId: "reasoning",
+        title: "Reasoning",
+        docPath: "/strands-typescript/generative-ui/reasoning",
+        summary:
+          "Reasoning messages in the chat: the built-in Thinking card, and a custom messageView.reasoningMessage component.",
+        status: "broken",
+        statusNote:
+          "Frontend and runtime wiring are the page's Code tab. The agent's createModel comes from the unpublished ./model-factory; this repo's ./model can't request reasoning summaries, so no reasoning events reach the chat.",
+      },
+    ],
+  },
+  {
     title: "Rich Threads",
     routes: [
       {
@@ -230,6 +247,18 @@ export const NAV: NavGroup[] = [
         status: "working",
         statusNote:
           "All three snippets run exactly as published. The page defines no CSS for its my-link and my-heading classes, so the first example is only visible in DevTools.",
+      },
+      {
+        path: "/custom-look-and-feel/reasoning-messages",
+        hasDemo: true,
+        agentId: "reasoning",
+        title: "Reasoning Messages",
+        docPath: "/strands-typescript/custom-look-and-feel/reasoning-messages",
+        summary:
+          "Restyling the reasoning card: header/contentView sub-slots, render-prop children, or a whole replacement component.",
+        status: "broken",
+        statusNote:
+          "All four variants are the page's code. The shared reasoning agent's model setup (./model-factory) is unpublished, so no reasoning message ever arrives to restyle.",
       },
     ],
   },
@@ -363,6 +392,18 @@ export const NAV: NavGroup[] = [
           "Runs the fixed renderer: the doc's hook calls throw on @hashbrownai/react 0.6.1 (useJsonParser needs a schema, useUiKit takes { components }), and its example output is the wrong shape, so the demo exposes the components, parses against kit.schema and prompts for the { ui: [...] } envelope. Missing components, runtime route and agent prompt are written in.",
       },
       {
+        path: "/generative-ui/components",
+        hasDemo: true,
+        agentId: "genui-overview",
+        title: "Components and surfaces",
+        docPath: "/strands-typescript/generative-ui/components",
+        summary:
+          "The overview's setup: standardUI on the provider, render_ui and the catalog guide handed to the agent per run, a chat that answers with components.",
+        status: "partial",
+        statusNote:
+          "Provider and chat are the page's. The page's TanStack BuiltInAgent is swapped for this repo's Strands agent with the same prompt. Built, not yet checked in a browser.",
+      },
+      {
         path: "/generative-ui/components/surfaces",
         hasDemo: true,
         agentId: "genui",
@@ -391,12 +432,12 @@ export const NAV: NavGroup[] = [
         hasDemo: true,
         agentId: "genui",
         title: "Components · Standard catalog",
-        docPath: "/generative-ui/components/standard-catalog",
+        docPath: "/strands-typescript/generative-ui/components/standard-catalog",
         summary:
           "standardUI's 69 components as is, extended with a ProductCard, with Map/Video/HtmlView omitted, and with Card overridden.",
         status: "partial",
         statusNote:
-          "Built, not yet checked in a browser. This page has no strands-typescript URL; it lives at the framework-neutral path. ProductCard and productSchema are repo scaffolding.",
+          "Built, not yet checked in a browser. Now tracks the strands-typescript URL (added to the sidebar 2026-11-11; same content as the framework-neutral page apart from links). ProductCard and productSchema are repo scaffolding.",
       },
       {
         path: "/generative-ui/components/state-and-actions",
@@ -514,7 +555,9 @@ export const NAV: NavGroup[] = [
         hasDemo: true,
         agentId: "hitl-in-chat",
         title: "Human in the Loop",
-        docPath: "/strands-typescript/human-in-the-loop",
+        // The sidebar now links the "HITL Overview" as `/human-in-the-loop/index`;
+        // its content is byte-identical to `/human-in-the-loop` (2026-11-11).
+        docPath: "/strands-typescript/human-in-the-loop/index",
         summary:
           "useHumanInTheLoop suspending the run behind a time picker until the user answers.",
         status: "working",
@@ -574,6 +617,28 @@ export const NAV: NavGroup[] = [
   {
     title: "Shared State",
     routes: [
+      {
+        path: "/shared-state",
+        hasDemo: true,
+        agentId: "shared-state-read-write",
+        title: "Shared State",
+        docPath: "/strands-typescript/shared-state",
+        summary:
+          "Two-way agent state: useAgent reads the agent's notes, agent.setState writes the user's preferences back for the next turn.",
+        status: "broken",
+        statusNote:
+          "No Strands backend on the page (setup skipped) and set_notes is never printed, so nothing writes notes. The page prints handlePreferencesChange but no form that calls it. Fragments and NotesCard verbatim inside minimal glue; card/button are repo stand-ins.",
+      },
+      {
+        path: "/shared-state/streaming",
+        title: "State Streaming",
+        docPath: "/strands-typescript/shared-state/streaming",
+        summary:
+          "Streaming a tool argument into a state key while the model generates it; the page publishes no Strands code for it.",
+        status: "broken",
+        statusNote:
+          "The rendered page says Strands TypeScript is not supported; setup and middleware snippets skipped. Only the .md's useAgent fragment is shown. Reference only.",
+      },
       {
         path: "/shared-state/rendering-in-app",
         hasDemo: true,

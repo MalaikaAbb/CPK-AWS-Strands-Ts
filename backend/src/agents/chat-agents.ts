@@ -195,6 +195,16 @@ export const CHAT_AGENT_SPECS: ChatAgentSpec[] = [
   // both to the model. The first sentence is the system prompt the Components
   // overview page gives its agent; the second is this repo's, because the
   // Catalogs page's ProductCard says to copy values from a tool result.
+  // Components and surfaces overview. The page's agent is a TanStack
+  // `BuiltInAgent` factory; this repo runs its own Strands agent instead, with
+  // the factory's one-line prompt verbatim and no tools of its own (the page's
+  // factory adds none besides the run's `render_ui`).
+  {
+    name: "genui-overview",
+    description: "Backs the Components and surfaces overview.",
+    systemPrompt:
+      "You are a helpful assistant. When a visual answer helps, render it with generative UI.",
+  },
   {
     name: "genui",
     description: "Backs the Components and surfaces pages.",

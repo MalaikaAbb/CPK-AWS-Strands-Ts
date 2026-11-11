@@ -147,9 +147,11 @@ const config: StrandsAgentConfig = {
  */
 async function runSubagent(name: string, task: string): Promise<string> {
   const systemPrompt = SUBAGENT_SYSTEM_PROMPTS[name];
+  const model = process.env.SUBAGENT_MODEL_ID ?? "gpt-6-luna";
   try {
     const response = await client.chat.completions.create({
-      model: process.env.SUBAGENT_MODEL_ID ?? "gpt-4o-mini",
+      ...(model === "gpt-6-luna" && { reasoning_effort: "none" as const }),
+      model,
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: task },
