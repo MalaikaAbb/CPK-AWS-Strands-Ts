@@ -79,7 +79,7 @@ Then fill in `backend/.env`:
 |---|---|---|
 | `OPENAI_API_KEY` | yes | Model provider key. Without it the server starts and every run fails at the model call. |
 | `ANTHROPIC_API_KEY` | no | Enables `strands_agent_anthropic`, the Quickstart's "Using Anthropic instead" agent (the Anthropic side of the toggle on `/quickstart/demo-chat`). Without it that one agent is left unmounted and everything else runs as normal. |
-| `MODEL_ID` | no | The model every agent is built with. Defaults to `gpt-4o`. Set to `gpt-5.4` to reproduce the Quickstart's published value failing. |
+| `MODEL_ID` | no | The model every agent is built with. Defaults to `gpt-4o`. Set to `gpt-6-luna` to run the Quickstart's published value. |
 | `PORT` | no | Agent server port. Defaults to `8000`. |
 
 and `frontend/.env.local`:
@@ -378,7 +378,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 **Behaviour the docs get wrong:**
 - **Audio attachments are discarded.** [multimodal-attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) lists Audio with a player preview and "Model-dependent" support; `convertAguiContentToStrands` documents `AudioInputContent` as "skipped (Strands has no audio support)". It uploads, previews, sends, and vanishes with no error.
 - **The read-only context middleware does not exist.** [agent-readonly](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) credits a `CopilotKitMiddleware`. The adapter flattens `RunAgentInput.context[]` itself and passes it to `stateContextBuilder` as a third `extras` argument — undocumented anywhere.
-- **The model does not exist.** [quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own) sets `modelId: "gpt-5.4"`; its own callout says GPT-4o.
+- **The harness runs a different model from the Quickstart's.** [quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own) sets `modelId: "gpt-6-luna"` (re-fetched 2026-11-11; it was `gpt-5.4`, which OpenAI did not serve). The routes were last checked on `gpt-4o`, so that stays the `MODEL_ID` default; set `MODEL_ID=gpt-6-luna` to run the published value.
 - **Frontend tools work and nothing says why.** `createProxyTool` / `syncProxyTools`, per run. Google ADK's docs show `AGUIToolset()`; these show a placeholder.
 
 ---
