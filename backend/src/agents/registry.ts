@@ -70,6 +70,10 @@ const GENUI_GAPS = [
   "`search_products` is repo-authored: the Catalogs page's ProductCard says to copy values from a tool result, and no page publishes a tool that returns products.",
 ];
 
+const GENUI_OVERVIEW_GAPS = [
+  "The Components and surfaces overview prints a TanStack `BuiltInAgent` factory (`openaiText(\"gpt-6-luna\")`). This harness runs its own Strands agent instead: the factory's system prompt verbatim, no tools. `render_ui` and the catalog guide reach it per run through the adapter, which is what the factory's `convertInputToTanStackAI` does for TanStack.",
+];
+
 const WEBMCP_GAPS = [
   "The page needs no backend agent. This Quickstart-shaped one only lets the same frontend tool be tried from the CopilotKit chat; `searchOrders`, which the tool's handler calls, is unpublished and stubbed in the frontend.",
 ];
@@ -113,6 +117,8 @@ function chatEntries(): RegistryEntry[] {
           ? GOVERNED_ACTIONS_GAPS
           : spec.name === "genui"
             ? GENUI_GAPS
+            : spec.name === "genui-overview"
+              ? GENUI_OVERVIEW_GAPS
             : spec.name === "webmcp"
               ? WEBMCP_GAPS
               : [NO_TOOLS],

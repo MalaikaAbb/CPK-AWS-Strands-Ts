@@ -392,6 +392,18 @@ export const NAV: NavGroup[] = [
           "Runs the fixed renderer: the doc's hook calls throw on @hashbrownai/react 0.6.1 (useJsonParser needs a schema, useUiKit takes { components }), and its example output is the wrong shape, so the demo exposes the components, parses against kit.schema and prompts for the { ui: [...] } envelope. Missing components, runtime route and agent prompt are written in.",
       },
       {
+        path: "/generative-ui/components",
+        hasDemo: true,
+        agentId: "genui-overview",
+        title: "Components and surfaces",
+        docPath: "/strands-typescript/generative-ui/components",
+        summary:
+          "The overview's setup: standardUI on the provider, render_ui and the catalog guide handed to the agent per run, a chat that answers with components.",
+        status: "partial",
+        statusNote:
+          "Provider and chat are the page's. The page's TanStack BuiltInAgent is swapped for this repo's Strands agent with the same prompt. Built, not yet checked in a browser.",
+      },
+      {
         path: "/generative-ui/components/surfaces",
         hasDemo: true,
         agentId: "genui",
@@ -420,12 +432,12 @@ export const NAV: NavGroup[] = [
         hasDemo: true,
         agentId: "genui",
         title: "Components · Standard catalog",
-        docPath: "/generative-ui/components/standard-catalog",
+        docPath: "/strands-typescript/generative-ui/components/standard-catalog",
         summary:
           "standardUI's 69 components as is, extended with a ProductCard, with Map/Video/HtmlView omitted, and with Card overridden.",
         status: "partial",
         statusNote:
-          "Built, not yet checked in a browser. This page has no strands-typescript URL; it lives at the framework-neutral path. ProductCard and productSchema are repo scaffolding.",
+          "Built, not yet checked in a browser. Now tracks the strands-typescript URL (added to the sidebar 2026-11-11; same content as the framework-neutral page apart from links). ProductCard and productSchema are repo scaffolding.",
       },
       {
         path: "/generative-ui/components/state-and-actions",
