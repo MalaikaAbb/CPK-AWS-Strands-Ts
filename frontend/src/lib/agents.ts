@@ -49,6 +49,7 @@ export const AGENT_IDS = [
   "genui-overview",
   "webmcp",
   "interrupt",
+  "reasoning",
 ] as const;
 
 export type AgentId = (typeof AGENT_IDS)[number];

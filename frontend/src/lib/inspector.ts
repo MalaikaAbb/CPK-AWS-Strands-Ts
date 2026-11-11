@@ -40,6 +40,7 @@ export const NESTED_PROVIDER_ROUTES = [
   "/generative-ui/hashbrown/demo-chat",
   "/agent-config/demo-chat",
   "/generative-ui/components/demo-chat",
+  "/custom-look-and-feel/reasoning-messages/demo-chat",
   "/generative-ui/components/surfaces/demo-chat",
   "/generative-ui/components/catalogs/demo-chat",
   "/generative-ui/components/standard-catalog/demo-chat",
@@ -53,6 +54,7 @@ export const NESTED_PROVIDER_ROUTES = [
   "/generative-ui/open-generative-ui/demo-chat/advanced",
   "/human-in-the-loop/useInterrupt/demo-chat",
   "/human-in-the-loop/headless/demo-chat",
+  "/generative-ui/reasoning/demo-chat",
 ] as const;
 
 /**

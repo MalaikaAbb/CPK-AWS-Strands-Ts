@@ -128,6 +128,23 @@ export const NAV: NavGroup[] = [
     ],
   },
   {
+    title: "Chat",
+    routes: [
+      {
+        path: "/generative-ui/reasoning",
+        hasDemo: true,
+        agentId: "reasoning",
+        title: "Reasoning",
+        docPath: "/strands-typescript/generative-ui/reasoning",
+        summary:
+          "Reasoning messages in the chat: the built-in Thinking card, and a custom messageView.reasoningMessage component.",
+        status: "broken",
+        statusNote:
+          "Frontend and runtime wiring are the page's Code tab. The agent's createModel comes from the unpublished ./model-factory; this repo's ./model can't request reasoning summaries, so no reasoning events reach the chat.",
+      },
+    ],
+  },
+  {
     title: "Rich Threads",
     routes: [
       {
@@ -230,6 +247,18 @@ export const NAV: NavGroup[] = [
         status: "working",
         statusNote:
           "All three snippets run exactly as published. The page defines no CSS for its my-link and my-heading classes, so the first example is only visible in DevTools.",
+      },
+      {
+        path: "/custom-look-and-feel/reasoning-messages",
+        hasDemo: true,
+        agentId: "reasoning",
+        title: "Reasoning Messages",
+        docPath: "/strands-typescript/custom-look-and-feel/reasoning-messages",
+        summary:
+          "Restyling the reasoning card: header/contentView sub-slots, render-prop children, or a whole replacement component.",
+        status: "broken",
+        statusNote:
+          "All four variants are the page's code. The shared reasoning agent's model setup (./model-factory) is unpublished, so no reasoning message ever arrives to restyle.",
       },
     ],
   },

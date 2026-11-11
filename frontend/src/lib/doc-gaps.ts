@@ -614,12 +614,28 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/human-in-the-loop/useInterrupt",
   },
   {
+    id: "reasoning-messages-no-reasoning-source",
+    title: "Reasoning Messages restyles a message its agent cannot produce",
+    detail:
+      "The page's demos run the Code-tab `reasoning-agent.ts`, whose `createModel({ openaiApi: \"responses\", reasoning: true, openaiModelId })` comes from the unpublished `./model-factory`. That module is what requests reasoning summaries, so without it no REASONING_MESSAGE event arrives and none of the four variants (default, sub-slots, render-prop, full replacement) can be seen. The prose snippets also name no agent or provider, and `reasoning-custom`'s `./suggestions` is unpublished.",
+    severity: "blocking",
+    docPath: "/strands-typescript/custom-look-and-feel/reasoning-messages",
+  },
+  {
     id: "webmcp-search-orders-undefined",
     title: "`searchOrders` is never defined",
     detail:
       "Both WebMCP snippets call `searchOrders(status)` inside the handler; the page never defines it. A four-order stub stands in.",
     severity: "degraded",
     docPath: "/strands-typescript/webmcp",
+  },
+  {
+    id: "reasoning-model-factory-unpublished",
+    title: "The Reasoning agent's model setup lives in an unpublished module",
+    detail:
+      "The page's Code-tab `reasoning-agent.ts` builds its model with `createModel({ openaiApi: \"responses\", reasoning: true, openaiModelId })` from `./model-factory`, which no page publishes. That is the part that asks the Responses API for reasoning summaries. Without it the agent emits no REASONING_MESSAGE events, so neither the default card nor a custom `reasoningMessage` slot ever renders. `reasoning-custom`'s `./suggestions` is unpublished too.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/reasoning",
   },
 ];
 
@@ -634,6 +650,8 @@ export type GapId = string;
  * that route goes first, because that is what the panel leads with.
  */
 export const ROUTE_GAPS: Record<string, GapId[]> = {
+  "/generative-ui/reasoning": ["reasoning-model-factory-unpublished"],
+
   "/human-in-the-loop/governed-actions": [
     "governed-no-backend-published",
     "governed-card-defined-in-other-pattern",
@@ -656,6 +674,10 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   //   "hashbrown-stack-unregistered",
   //   "hashbrown-slot-and-suggestions",
   // ],
+  "/custom-look-and-feel/reasoning-messages": [
+    "reasoning-messages-no-reasoning-source",
+  ],
+
   "/frontend-tools": [
     "use-frontend-tools-not-exported",
     "use-frontend-tools-free-identifiers",

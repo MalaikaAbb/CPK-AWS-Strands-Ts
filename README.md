@@ -154,6 +154,12 @@ Every route carries a **Try it** box with the same pass/fail split shown here, p
 | `/prebuilt-components/popup` | The floating launcher with an overlay chat. | "Say hello in one sentence." | **Pass:** placeholder reads "Ask the popup anything...". **Fail:** default placeholder — `labels` did not reach the input slot. |
 | `/prebuilt-components/chat-controls` | Driving modal state from your own buttons; thumbs up/down capture. | "Say something I can rate." | **Pass:** both buttons drive the sidebar; thumbs append a line with the message id. **Fail:** buttons render nothing — they are outside a provider owning modal state. |
 
+### Chat
+
+| Route | What it demonstrates | Try | Pass / Fail |
+|---|---|---|---|
+| `/generative-ui/reasoning` | Reasoning messages: the built-in Thinking card (Default) and a custom `messageView.reasoningMessage` block (Custom), switched at the top of the demo. | "Explain step by step why the sky appears blue during the day but red at sunset." | **Pass (as shipped, Broken):** a normal streamed answer in both variants and no reasoning card, because the agent's unpublished `./model-factory` is what requests reasoning summaries. **Fail:** an error or no stream; check `/reasoning/` is mounted (`GET /health`). If a reasoning card appears, the status is out of date. |
+
 ### Rich Threads
 
 Persistent conversations, served by CopilotKit Intelligence. All four need `INTELLIGENCE_API_KEY`; without it the drawer shows its locked view and `useThreads` has nothing to list — which is the docs' own documented fallback, not a fault here.
@@ -173,6 +179,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `/custom-look-and-feel/slots` | Replacing three sub-components: welcome screen, assistant message, disclaimer. | "Say hello" | **Pass:** gradient card before sending; violet-carded replies after; tagged disclaimer throughout. **Fail:** a default chat. |
 | `/custom-look-and-feel/headless-ui` | A chat from `useAgent` + `useCopilotKit` + `useRenderToolCall`, no CopilotKit chrome. | "Write me a two-line poem" | **Pass:** hand-rolled bubbles, streaming, self-scrolling. **Fail:** nothing on send — check the console. |
 | `/custom-look-and-feel/markdown` | The `markdownRenderer` slot in its three forms, one tab each: Streamdown `components` map, class string, replacement component. | "Reply with a level-2 markdown heading, then a paragraph containing a markdown link to https://copilotkit.ai" | **Pass:** *components map* — in DevTools the `<h2>` has `class="my-heading"` and the `<a>` has `class="my-link"` plus `target="_blank" rel="noopener noreferrer"`, with no `data-streamdown` or `node` attribute. Nothing changes visually, because the page defines no CSS for those classes. *class string* — the container has `text-sm leading-7`. *PlainText* — the raw `##` / `[…](…)` markup shows inside a `<pre>`. A `<reference-chip>` in a reply is removed and its text kept. **Fail:** the anchor still has `data-streamdown="link"`, or the PlainText tab shows formatted HTML. |
+| `/custom-look-and-feel/reasoning-messages` | Four ways to restyle the reasoning card (default, `header`/`contentView` sub-slots, render-prop children, full replacement), one switch each. | "Explain step by step why the sky appears blue during the day but red at sunset." in each variant | **Pass (as shipped, Broken):** plain streamed answers, no reasoning card in any variant, because the shared reasoning agent's `./model-factory` is unpublished. **Fail:** an error or no stream; check `/reasoning/` is mounted. A visible reasoning card means the status is out of date. |
 
 ### Input Modalities
 
@@ -248,6 +255,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `prebuilt-components/sidebar` | `/prebuilt-components/sidebar` | ✅ Working | Off-nav. `MainContent`/`Suggestions` unpublished. |
 | `prebuilt-components/popup` | `/prebuilt-components/popup` | ✅ Working | Off-nav. |
 | `prebuilt-components/chat-controls` | `/prebuilt-components/chat-controls` | ✅ Working | Off-nav. `analytics` in the snippet is undefined. |
+| `generative-ui/reasoning` | `/generative-ui/reasoning` | ❌ Broken | Frontend, suggestions (default demo) and runtime mapping are the page's Code tab. `./model-factory` is unpublished, so the agent can't request reasoning summaries and no reasoning message ever renders. Custom demo's `./suggestions` unpublished, commented out. |
 | `prebuilt-components/copilot-threads-drawer` | `/prebuilt-components/copilot-threads-drawer` | ✅ Working | Wired as published. Needs a licence key to list anything; the page's `slot="header"` example does not typecheck. |
 | `headless-threads` | `/headless-threads` | ✅ Working | Every hook member wired, pagination included. Same licence gate. Page shows one file as two incompatible hook calls. |
 | `threads-lifecycle` | `/threads-lifecycle` | ✅ Working | Both lifecycle setters work without a licence; replay is what needs the store. Two snippets call an undefined `myApi`. |
@@ -256,6 +264,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `custom-look-and-feel/slots` | `/custom-look-and-feel/slots` | ✅ Working | Off-nav. All three overrides take effect; the components behind them are `declare const` in the docs. |
 | `custom-look-and-feel/headless-ui` | `/custom-look-and-feel/headless-ui` | ✅ Working | Off-nav. Chat streams. Every snippet stripped of imports; `generateMessageId` exported by no package. |
 | `custom-look-and-feel/markdown` | `/custom-look-and-feel/markdown` | ✅ Working | All three snippets verbatim, and they type-check. `my-link` / `my-heading` have no CSS on the page, so example 1 is verifiable only in DevTools. |
+| `custom-look-and-feel/reasoning-messages` | `/custom-look-and-feel/reasoning-messages` | ❌ Broken | All four variants are the page's code (snippets + demo Code tab). The reasoning agent's `./model-factory` is unpublished, so no reasoning message arrives to restyle. |
 | `multimodal-attachments` | `/multimodal-attachments` | ✅ Working | Audio is advertised and silently discarded by the adapter. |
 | `voice` | `/voice` | ✅ Working | `VoiceChat` unpublished; needs `OPENAI_API_KEY` for the mic. |
 | `generative-ui/tool-based` | `/generative-ui/tool-based` | ✅ Working | Works via undocumented proxy-tool sync. Component + schema unpublished. |
@@ -301,7 +310,7 @@ Live version at `/status`, with the full gap ledger.
 
 ## 8. Not covered
 
-These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), Reasoning, State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, Deploy/AgentCore, three migration guides, and Telemetry.
+These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, Deploy/AgentCore, three migration guides, and Telemetry.
 
 ---
 
@@ -338,6 +347,8 @@ The page's example agent output, `{ "type": "MetricCard", "title": … }`, is al
 The route now runs, using a fixed renderer. The missing components, runtime route and prompt are written in. The agent is the published `buildByocHashbrownAgent`, with a harness-authored prompt asking for the envelope. `hashbrown-fixed.tsx` exposes the components, including `Stack` and a `MetricCard` adapter for the nullable `delta`, with `s.*` prop schemas. It calls `useJsonParser(content, kit.schema)` and `kit.render(value)`, strips prose and code fences first, replaces the whole `assistantMessage` as the page does (cast to satisfy CopilotKit's slot type), and calls the suggestions hook inside the provider. The full write-up is in `HASHBROWN_FIX.md`.
 
 **Markdown Rendering is complete.** [markdown](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/markdown), fetched 2026-09-21. All three snippets compile and run as published. Two small notes: the page defines no CSS for its example classes `my-link` and `my-heading`, so the first example has no visible effect. And destructuring `node` in order to drop it, as the page advises, triggers `@typescript-eslint/no-unused-vars` warnings. Both are kept as published.
+
+**Reasoning Messages has nothing to restyle.** [reasoning-messages](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/reasoning-messages), fetched 2026-11-11. The page's sub-slot, render-prop and full-replacement snippets are all reproduced, plus its two demo pages, but the demos' Strands agent gets its model from the unpublished `./model-factory` (`{ openaiApi: "responses", reasoning: true, openaiModelId }`). Without it no reasoning summaries are requested, so no reasoning message ever reaches the chat. The prose snippets name no agent or provider (mounted here under `reasoning-default`). The Custom Header snippet spreads `elapsedSeconds`, which its own prop table lists, onto a `<button>`. The Render-Prop snippet's `reasoningMessage: MyReasoningLayout` does not typecheck against `@copilotkit/react-core` 1.84 (TS2322, the component typed as `React.ComponentProps<typeof CopilotChatReasoningMessage>` is not assignable to the slot); kept verbatim under `@ts-expect-error`.
 
 **Six pages replace their backend section with `setup skipped`** — frontend-tools, tool-based, human-in-the-loop, agent-readonly, programmatic-control, subagents. (Agent Config gained a real Strands backend section on 2026-10-08.)
 
@@ -382,6 +393,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 - **The read-only context middleware does not exist.** [agent-readonly](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) credits a `CopilotKitMiddleware`. The adapter flattens `RunAgentInput.context[]` itself and passes it to `stateContextBuilder` as a third `extras` argument — undocumented anywhere.
 - **The model does not exist.** [quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own) sets `modelId: "gpt-5.4"`; its own callout says GPT-4o.
 - **Frontend tools work and nothing says why.** `createProxyTool` / `syncProxyTools`, per run. Google ADK's docs show `AGUIToolset()`; these show a placeholder.
+- **Reasoning can't reason.** [reasoning](https://docs.copilotkit.ai/strands-typescript/generative-ui/reasoning), fetched 2026-11-11. The Code tab publishes the Strands agent, both demos and the runtime mapping, but the agent gets its model from `./model-factory` with `{ openaiApi: "responses", reasoning: true, openaiModelId }`, and that module is unpublished. It is the piece that asks OpenAI for reasoning summaries. With this repo's `./model` swapped in, the agent answers normally and emits no `REASONING_MESSAGE_*` events, so `/generative-ui/reasoning` is Broken. The custom demo's `./suggestions` is unpublished as well.
 
 ---
 
@@ -500,9 +512,11 @@ Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only
 
 **Get Started** · [Introduction](https://docs.copilotkit.ai/strands-typescript) · [Quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own)
 
+**Build Chat UIs — Chat** · [Reasoning](https://docs.copilotkit.ai/strands-typescript/generative-ui/reasoning)
+
 **Build Chat UIs — Rich Threads** · [Threads Drawer](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/copilot-threads-drawer) · [Headless Threads](https://docs.copilotkit.ai/strands-typescript/headless-threads) · [Thread & History Lifecycle](https://docs.copilotkit.ai/strands-typescript/threads-lifecycle) · [Synchronize Thread History](https://docs.copilotkit.ai/strands-typescript/threads-import)
 
-**Build Chat UIs — Custom Look and Feel** · [Markdown Rendering](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/markdown) · [Multimodal Attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) · [Voice](https://docs.copilotkit.ai/strands-typescript/voice)
+**Build Chat UIs — Custom Look and Feel** · [Markdown Rendering](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/markdown) · [Reasoning Messages](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/reasoning-messages) · [Multimodal Attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) · [Voice](https://docs.copilotkit.ai/strands-typescript/voice)
 
 **Build Generative UI — Controlled** · [Components as Tools](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-based) · [Tool Call Rendering](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-rendering)
 

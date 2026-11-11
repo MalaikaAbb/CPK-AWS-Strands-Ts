@@ -24,6 +24,7 @@ import { buildA2uiFixedSchemaAgent } from "./a2ui-fixed-agent";
 import { buildByocHashbrownAgent } from "./byoc-hashbrown-agent";
 import { buildByocJsonRenderAgent } from "./byoc-json-render-agent";
 import { buildInterruptAgent } from "./interrupt-agent";
+import { buildReasoningAgent } from "./reasoning-agent";
 import { Agent } from "@strands-agents/sdk";
 import { StrandsAgent } from "@ag-ui/aws-strands";
 import { createModel } from "./model";
@@ -79,6 +80,10 @@ const WEBMCP_GAPS = [
 
 const INTERRUPT_GAPS = [
   "Runs the published `interrupt-agent.ts` verbatim except for one import: `createModel` comes from this repo's `./model`, because `./model-factory` is unpublished.",
+];
+
+const REASONING_GAPS = [
+  "Runs `buildReasoningAgent` from the Reasoning page's Code-tab `reasoning-agent.ts`, except for one import: `createModel` comes from this repo's `./model`, because `./model-factory` is unpublished. Its `{ openaiApi: \"responses\", reasoning: true, openaiModelId }` options don't exist there, so the agent runs on the plain Quickstart model and requests no reasoning summaries: no REASONING_MESSAGE events reach the chat.",
 ];
 
 const SHOWCASE_STANDIN_GAPS = [
@@ -210,6 +215,14 @@ export const REGISTRY: RegistryEntry[] = [
     mountPath: "/interrupt",
     build: buildInterruptAgent,
     gaps: INTERRUPT_GAPS,
+  },
+  {
+    // The Reasoning page's `route.ts` maps `reasoning-default` and
+    // `reasoning-custom` to `/reasoning/`; this mount keeps that path.
+    id: "reasoning",
+    mountPath: "/reasoning",
+    build: buildReasoningAgent,
+    gaps: REASONING_GAPS,
   },
 
   // Must stay last: mounted at the root, it would otherwise shadow the
