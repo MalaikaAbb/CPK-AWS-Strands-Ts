@@ -555,7 +555,9 @@ export const NAV: NavGroup[] = [
         hasDemo: true,
         agentId: "hitl-in-chat",
         title: "Human in the Loop",
-        docPath: "/strands-typescript/human-in-the-loop",
+        // The sidebar now links the "HITL Overview" as `/human-in-the-loop/index`;
+        // its content is byte-identical to `/human-in-the-loop` (2026-11-11).
+        docPath: "/strands-typescript/human-in-the-loop/index",
         summary:
           "useHumanInTheLoop suspending the run behind a time picker until the user answers.",
         status: "working",
