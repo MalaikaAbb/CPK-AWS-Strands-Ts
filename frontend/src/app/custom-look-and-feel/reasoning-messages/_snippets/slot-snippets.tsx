@@ -99,6 +99,7 @@ export function RenderPropChat() {
   return (
 <CopilotChat
   messageView={{
+    // @ts-expect-error -- verbatim doc snippet: MyReasoningLayout's props (React.ComponentProps<typeof CopilotChatReasoningMessage>) are not assignable to the reasoningMessage slot type in @copilotkit/react-core 1.84 (TS2322). README §9.
     reasoningMessage: MyReasoningLayout,
   }}
 />
