@@ -621,6 +621,14 @@ const GAP_LIST: DocGap[] = [
     severity: "note",
     docPath: "/strands-typescript/deploy-agentcore",
   },
+  {
+    id: "migrate-v2-headless-hook-not-v2",
+    title: "The v2 migration table maps useCopilotChat to a hook /v2 does not export",
+    detail:
+      "Migrate to V2 says to import everything from `@copilotkit/react-core/v2` and lists `useCopilotChatHeadless_c` as the low-level replacement for `useCopilotChat`. In `@copilotkit/react-core` 1.84.0 that hook is exported from the v1 root only. The full example also renders a `YourApp` it never defines.",
+    severity: "note",
+    docPath: "/strands-typescript/troubleshooting/migrate-to-v2",
+  },
 ];
 
 export const DOC_GAPS: Record<string, DocGap> = Object.fromEntries(

@@ -689,6 +689,16 @@ export const NAV: NavGroup[] = [
         statusNote:
           "Needs an AWS account (CDK, Cognito, AgentCore Runtime) — not testable locally. Page code kept byte-exact in backend/docs_verbatim/deploy-agentcore/ and shown, not run.",
       },
+      {
+        path: "/troubleshooting/migrate-to-v2",
+        title: "Migrate to V2",
+        docPath: "/strands-typescript/troubleshooting/migrate-to-v2",
+        summary:
+          "Migration notes for moving a v1 frontend onto @copilotkit/react-core/v2, checked against this repo.",
+        status: "reference",
+        statusNote:
+          "Troubleshooting page, shown as reference. This repo is already on v2; its frontend's @ag-ui/client ^1.0.3 does not match the 1.0.2 the runtime depends on, which is the duplicate the guide warns about.",
+      },
     ],
   },
   {
