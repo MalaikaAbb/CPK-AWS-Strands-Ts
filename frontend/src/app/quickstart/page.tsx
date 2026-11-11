@@ -219,11 +219,11 @@ export default function Page() {
         <ul className="list-disc space-y-1.5 pl-5">
           <li>
             <strong>The model id is read from an env var.</strong> The page
-            hardcodes <code>modelId: &quot;gpt-5.4&quot;</code>, which does not
-            resolve; its own callout says GPT-4o and both Shared State pages use{" "}
-            <code>gpt-4o</code>. <code>MODEL_ID</code> defaults to{" "}
-            <code>gpt-4o</code> here. Set it to <code>gpt-5.4</code> in{" "}
-            <code>backend/.env</code> to reproduce the failure.
+            hardcodes <code>modelId: &quot;gpt-6-luna&quot;</code> (it was{" "}
+            <code>gpt-5.4</code> before the 2026-11-11 sync). <code>MODEL_ID</code>{" "}
+            defaults to <code>gpt-4o</code> here, the model the routes were last
+            checked with. Set it to <code>gpt-6-luna</code> in{" "}
+            <code>backend/.env</code> to run the published value.
           </li>
           <li>
             <strong>One app per agent, mounted side by side.</strong> The page

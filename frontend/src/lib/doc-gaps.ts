@@ -82,9 +82,9 @@ const GAP_LIST: DocGap[] = [
   // -------------------------------------------------------------- quickstart
   {
     id: "quickstart-model-id",
-    title: "The Quickstart names a model that does not exist",
+    title: "The harness runs a different model from the Quickstart's",
     detail:
-      'The TypeScript block sets `modelId: "gpt-5.4"`. The callout immediately under it says the example "uses OpenAI\'s GPT-4o", and both Shared State pages build the same model with `modelId: "gpt-4o"`. This repo defaults to `gpt-4o` and exposes `MODEL_ID` so you can set it back to the literal value and watch it fail.',
+      'The TypeScript block sets `modelId: "gpt-6-luna"` (re-fetched 2026-11-11; it was `gpt-5.4`, which OpenAI did not serve). This repo has not been re-checked on it, so it defaults to `gpt-4o` and exposes `MODEL_ID` so you can set it to the published value.',
     severity: "degraded",
     docPath: "/strands-typescript/quickstart?agent=bring-your-own",
   },

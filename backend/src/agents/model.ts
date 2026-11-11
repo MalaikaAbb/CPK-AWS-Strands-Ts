@@ -6,17 +6,15 @@
  *
  *     const model = new OpenAIModel({
  *       apiKey: process.env.OPENAI_API_KEY ?? "",
- *       modelId: "gpt-5.4",
+ *       modelId: "gpt-6-luna",
  *     });
  *
  * Two departures, both deliberate and both visible on the routes that care:
  *
- *  1. `modelId` defaults to `gpt-4o`, not the published `gpt-5.4`. The callout
- *     directly under that code block says the example "uses OpenAI's GPT-4o",
- *     and both Shared State pages build the same model with
- *     `modelId: "gpt-4o"`. `gpt-5.4` is not a model OpenAI serves. `MODEL_ID`
- *     lets you set it back to the literal published value and watch the run
- *     fail — see the doc gap on /quickstart.
+ *  1. `modelId` defaults to `gpt-4o`, not the published `gpt-6-luna` (the
+ *     Quickstart printed `gpt-5.4` until the 2026-11-11 sync). The harness
+ *     keeps the model every route was last checked with. `MODEL_ID` lets you
+ *     set it to the literal published value — see the doc gap on /quickstart.
  *
  *  2. `api` is exposed. `agent.ts` builds both A2UI agents with
  *     `createModel({ openaiApi: "chat" })` and explains why (the Responses
