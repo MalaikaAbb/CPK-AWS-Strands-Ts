@@ -403,12 +403,12 @@ export const NAV: NavGroup[] = [
         hasDemo: true,
         agentId: "genui",
         title: "Components · Standard catalog",
-        docPath: "/generative-ui/components/standard-catalog",
+        docPath: "/strands-typescript/generative-ui/components/standard-catalog",
         summary:
           "standardUI's 69 components as is, extended with a ProductCard, with Map/Video/HtmlView omitted, and with Card overridden.",
         status: "partial",
         statusNote:
-          "Built, not yet checked in a browser. This page has no strands-typescript URL; it lives at the framework-neutral path. ProductCard and productSchema are repo scaffolding.",
+          "Built, not yet checked in a browser. Now tracks the strands-typescript URL (added to the sidebar 2026-11-11; same content as the framework-neutral page apart from links). ProductCard and productSchema are repo scaffolding.",
       },
       {
         path: "/generative-ui/components/state-and-actions",
