@@ -558,6 +558,14 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/generative-ui/components/surfaces",
   },
   {
+    id: "shared-state-overview-no-backend",
+    title: "The Shared State overview prints UI fragments and no Strands backend",
+    detail:
+      "`setup skipped: shared-state-setup` and `snippet skipped: region 'state-streaming-middleware'` stand where the Strands code should be. The `useAgent` and `handlePreferencesChange` snippets are fragments of an unprinted page (`Preferences`, `RWAgentState`, `notes` undefined). The `set_notes` tool that fills the notes card is never shown, nor is the form that calls `handlePreferencesChange`. `notes-card.tsx` has no imports, no `NotesCardProps`, and uses shadcn Card/Button. The write comment credits LangGraph's `PreferencesInjectorMiddleware`.",
+    severity: "blocking",
+    docPath: "/strands-typescript/shared-state",
+  },
+  {
     id: "components-no-products-tool",
     title: "ProductCard copies values from a tool result that no page provides",
     detail:
@@ -648,6 +656,8 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   //   "hashbrown-stack-unregistered",
   //   "hashbrown-slot-and-suggestions",
   // ],
+  "/shared-state": ["shared-state-overview-no-backend"],
+
   "/frontend-tools": [
     "use-frontend-tools-not-exported",
     "use-frontend-tools-free-identifiers",
