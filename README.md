@@ -221,6 +221,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | Route | What it demonstrates | Try | Pass / Fail |
 |---|---|---|---|
 | `/shared-state` | The overview's two-way state: `useAgent` reads notes into a card, `agent.setState` writes preferences. Fragments verbatim inside glue, on the existing `shared-state-read-write` agent. | "Remember that I prefer short answers and I'm learning Spanish." | **Pass (as shipped, Broken):** the chat answers and the Agent Scratch pad stays empty, since `set_notes` is unpublished and nothing calls `handlePreferencesChange`. **Fail:** an agent-not-found error. |
+| `/shared-state/streaming` | Reference: streaming a tool argument into state. The page says Strands TypeScript isn't supported. | Open the route | **Pass:** the callout and the one `useAgent` fragment show; there is no demo. **Fail:** n/a. Rebuild the route if the page ever publishes Strands code. |
 | `/shared-state/rendering-in-app` | `useAgent` read outside the chat — a canvas and the chat sharing one state object. | Seed the canvas, then "what is on my checklist?" | **Pass:** the agent answers from the canvas and its answer changes when you tick an item. **Fail:** it says it cannot see a checklist. |
 | `/shared-state/agent-readonly` | `useAgentContext` as a one-way UI → agent channel. | "What do you know about me?" | **Pass:** names the current display name, timezone and checked activities; changes when you edit them. **Fail:** it claims no information. |
 | `/shared-state/in-app-agent-read` | Reading `agent.state` in your own components. | "What language are you speaking?" | **Pass:** heading reads `spanish` and the agent replies in Spanish. **Fail:** it replies in English. |
@@ -284,6 +285,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `human-in-the-loop/headless` | `/human-in-the-loop/headless` | ⚠️ Partial | Page unchanged; only `generateFallbackSlots` and `createModel` are repo-supplied. Built, not yet checked in a browser. |
 | `programmatic-control` | `/programmatic-control` | ✅ Working | Google ADK's version, as requested. Three helpers undefined — reconstructed. |
 | `shared-state` | `/shared-state` | ❌ Broken | Backend skipped for Strands TS; `set_notes` and the preferences form never printed. Fragments + `NotesCard` verbatim in glue; card/button are repo stand-ins. |
+| `shared-state/streaming` | `/shared-state/streaming` | ❌ Broken | Rendered page: "Not supported on AWS Strands (TypeScript)". Setup and middleware skipped; only a `useAgent` fragment. Reference only. |
 | `shared-state/rendering-in-app` | `/shared-state/rendering-in-app` | ✅ Working | Byte-identical to ADK's page. Nothing agent-side can write state. |
 | `shared-state/agent-readonly` | `/shared-state/agent-readonly` | ✅ Working | Page credits middleware the adapter does not have. |
 | `shared-state/in-app-agent-read` | `/shared-state/in-app-agent-read` | ✅ Working | Page's `agentId` contradicts its own backend. |
@@ -293,7 +295,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `copilot-runtime` | `/copilot-runtime` | ✅ Working | Page never mentions Strands. |
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
 
-**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 3 ❌ Broken · 3 📄 Reference.
+**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 4 ❌ Broken · 3 📄 Reference.
 
 Live version at `/status`, with the full gap ledger.
 
@@ -379,6 +381,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 
 **Behaviour the docs get wrong:**
 - **The Shared State overview has nothing to run on Strands.** [shared-state](https://docs.copilotkit.ai/strands-typescript/shared-state), fetched 2026-11-11. The backend setup and the streaming snippet are skipped for Strands TypeScript. The frontend snippets are fragments of an unprinted page, the `set_notes` tool that fills the notes card is never shown, and no form calls the printed `handlePreferencesChange`. `/shared-state` runs the fragments inside labelled glue on this repo's existing state-mirror agent, and the card stays empty.
+- **State Streaming is "not supported" here, yet sits in the sidebar.** [shared-state/streaming](https://docs.copilotkit.ai/strands-typescript/shared-state/streaming), fetched 2026-11-11. Same as State Rendering: the rendered page says the framework isn't supported, and the `.md` skips the setup and middleware. Only a `useAgent` fragment for an undefined `shared-state-streaming` agent remains. `/shared-state/streaming` is reference-only.
 - **Audio attachments are discarded.** [multimodal-attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) lists Audio with a player preview and "Model-dependent" support; `convertAguiContentToStrands` documents `AudioInputContent` as "skipped (Strands has no audio support)". It uploads, previews, sends, and vanishes with no error.
 - **The read-only context middleware does not exist.** [agent-readonly](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) credits a `CopilotKitMiddleware`. The adapter flattens `RunAgentInput.context[]` itself and passes it to `stateContextBuilder` as a third `extras` argument — undocumented anywhere.
 - **The model does not exist.** [quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own) sets `modelId: "gpt-5.4"`; its own callout says GPT-4o.
@@ -517,6 +520,6 @@ Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only
 
 **Not in the sidebar** · [CopilotChat](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat) · [CopilotSidebar](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/sidebar) · [CopilotPopup](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/popup) · [Chat controls](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat-controls) · [CSS](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/css) · [Slots](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/slots) · [Headless UI](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/headless-ui) · [Display-only](https://docs.copilotkit.ai/strands-typescript/generative-ui/your-components/display-only) · [Interactive](https://docs.copilotkit.ai/strands-typescript/generative-ui/your-components/interactive)
 
-**Shared State** · [Shared State](https://docs.copilotkit.ai/strands-typescript/shared-state) · [Render state in your app](https://docs.copilotkit.ai/strands-typescript/shared-state/rendering-in-app) · [Agent read-only context](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) · [Reading agent state](https://docs.copilotkit.ai/strands-typescript/shared-state/in-app-agent-read) · [Writing agent state](https://docs.copilotkit.ai/strands-typescript/shared-state/in-app-agent-write)
+**Shared State** · [Shared State](https://docs.copilotkit.ai/strands-typescript/shared-state) · [State Streaming](https://docs.copilotkit.ai/strands-typescript/shared-state/streaming) · [Render state in your app](https://docs.copilotkit.ai/strands-typescript/shared-state/rendering-in-app) · [Agent read-only context](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) · [Reading agent state](https://docs.copilotkit.ai/strands-typescript/shared-state/in-app-agent-read) · [Writing agent state](https://docs.copilotkit.ai/strands-typescript/shared-state/in-app-agent-write)
 
 **Carried over from Google ADK, on request** · [Programmatic Control](https://docs.copilotkit.ai/google-adk/programmatic-control) · [Render state in your app](https://docs.copilotkit.ai/google-adk/shared-state/rendering-in-app)

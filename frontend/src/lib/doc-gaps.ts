@@ -566,6 +566,14 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/shared-state",
   },
   {
+    id: "state-streaming-not-supported",
+    title: "State Streaming publishes no Strands TypeScript code",
+    detail:
+      "The rendered page shows \"Not supported on AWS Strands (TypeScript)\" with no demo. The `.md` skips `state-streaming-setup` and the `state-streaming-middleware` region. It says direct SDK adapters emit STATE_SNAPSHOT from their streaming loop but shows nothing for Strands. Only a `useAgent` fragment for an undefined `shared-state-streaming` agent remains.",
+    severity: "blocking",
+    docPath: "/strands-typescript/shared-state/streaming",
+  },
+  {
     id: "components-no-products-tool",
     title: "ProductCard copies values from a tool result that no page provides",
     detail:
@@ -657,6 +665,7 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   //   "hashbrown-slot-and-suggestions",
   // ],
   "/shared-state": ["shared-state-overview-no-backend"],
+  "/shared-state/streaming": ["state-streaming-not-supported"],
 
   "/frontend-tools": [
     "use-frontend-tools-not-exported",
