@@ -154,6 +154,12 @@ Every route carries a **Try it** box with the same pass/fail split shown here, p
 | `/prebuilt-components/popup` | The floating launcher with an overlay chat. | "Say hello in one sentence." | **Pass:** placeholder reads "Ask the popup anything...". **Fail:** default placeholder — `labels` did not reach the input slot. |
 | `/prebuilt-components/chat-controls` | Driving modal state from your own buttons; thumbs up/down capture. | "Say something I can rate." | **Pass:** both buttons drive the sidebar; thumbs append a line with the message id. **Fail:** buttons render nothing — they are outside a provider owning modal state. |
 
+### Chat
+
+| Route | What it demonstrates | Try | Pass / Fail |
+|---|---|---|---|
+| `/generative-ui/reasoning` | Reasoning messages: the built-in Thinking card (Default) and a custom `messageView.reasoningMessage` block (Custom), switched at the top of the demo. | "Explain step by step why the sky appears blue during the day but red at sunset." | **Pass (as shipped, Broken):** a normal streamed answer in both variants and no reasoning card, because the agent's unpublished `./model-factory` is what requests reasoning summaries. **Fail:** an error or no stream; check `/reasoning/` is mounted (`GET /health`). If a reasoning card appears, the status is out of date. |
+
 ### Rich Threads
 
 Persistent conversations, served by CopilotKit Intelligence. All four need `INTELLIGENCE_API_KEY`; without it the drawer shows its locked view and `useThreads` has nothing to list — which is the docs' own documented fallback, not a fault here.
@@ -247,6 +253,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `prebuilt-components/sidebar` | `/prebuilt-components/sidebar` | ✅ Working | Off-nav. `MainContent`/`Suggestions` unpublished. |
 | `prebuilt-components/popup` | `/prebuilt-components/popup` | ✅ Working | Off-nav. |
 | `prebuilt-components/chat-controls` | `/prebuilt-components/chat-controls` | ✅ Working | Off-nav. `analytics` in the snippet is undefined. |
+| `generative-ui/reasoning` | `/generative-ui/reasoning` | ❌ Broken | Frontend, suggestions (default demo) and runtime mapping are the page's Code tab. `./model-factory` is unpublished, so the agent can't request reasoning summaries and no reasoning message ever renders. Custom demo's `./suggestions` unpublished, commented out. |
 | `prebuilt-components/copilot-threads-drawer` | `/prebuilt-components/copilot-threads-drawer` | ✅ Working | Wired as published. Needs a licence key to list anything; the page's `slot="header"` example does not typecheck. |
 | `headless-threads` | `/headless-threads` | ✅ Working | Every hook member wired, pagination included. Same licence gate. Page shows one file as two incompatible hook calls. |
 | `threads-lifecycle` | `/threads-lifecycle` | ✅ Working | Both lifecycle setters work without a licence; replay is what needs the store. Two snippets call an undefined `myApi`. |
@@ -291,7 +298,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `copilot-runtime` | `/copilot-runtime` | ✅ Working | Page never mentions Strands. |
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
 
-**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 2 ❌ Broken · 3 📄 Reference.
+**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 3 ❌ Broken · 3 📄 Reference.
 
 Live version at `/status`, with the full gap ledger.
 
@@ -299,7 +306,7 @@ Live version at `/status`, with the full gap ledger.
 
 ## 8. Not covered
 
-These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), Reasoning, State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, Deploy/AgentCore, three migration guides, and Telemetry.
+These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, Deploy/AgentCore, three migration guides, and Telemetry.
 
 ---
 
@@ -380,6 +387,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 - **The read-only context middleware does not exist.** [agent-readonly](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) credits a `CopilotKitMiddleware`. The adapter flattens `RunAgentInput.context[]` itself and passes it to `stateContextBuilder` as a third `extras` argument — undocumented anywhere.
 - **The model does not exist.** [quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own) sets `modelId: "gpt-5.4"`; its own callout says GPT-4o.
 - **Frontend tools work and nothing says why.** `createProxyTool` / `syncProxyTools`, per run. Google ADK's docs show `AGUIToolset()`; these show a placeholder.
+- **Reasoning can't reason.** [reasoning](https://docs.copilotkit.ai/strands-typescript/generative-ui/reasoning), fetched 2026-11-11. The Code tab publishes the Strands agent, both demos and the runtime mapping, but the agent gets its model from `./model-factory` with `{ openaiApi: "responses", reasoning: true, openaiModelId }`, and that module is unpublished. It is the piece that asks OpenAI for reasoning summaries. With this repo's `./model` swapped in, the agent answers normally and emits no `REASONING_MESSAGE_*` events, so `/generative-ui/reasoning` is Broken. The custom demo's `./suggestions` is unpublished as well.
 
 ---
 
@@ -495,6 +503,8 @@ Each route is two files: a notes page that renders its own implementation from d
 Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only) are marked.
 
 **Get Started** · [Introduction](https://docs.copilotkit.ai/strands-typescript) · [Quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own)
+
+**Build Chat UIs — Chat** · [Reasoning](https://docs.copilotkit.ai/strands-typescript/generative-ui/reasoning)
 
 **Build Chat UIs — Rich Threads** · [Threads Drawer](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/copilot-threads-drawer) · [Headless Threads](https://docs.copilotkit.ai/strands-typescript/headless-threads) · [Thread & History Lifecycle](https://docs.copilotkit.ai/strands-typescript/threads-lifecycle) · [Synchronize Thread History](https://docs.copilotkit.ai/strands-typescript/threads-import)
 
