@@ -189,6 +189,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `/generative-ui/tool-rendering` | Named renderers plus a wildcard catch-all. | "What's the weather in Berlin?" | **Pass:** a branded WeatherCard with a "calling weather api…" pill, then the reading. Asking for flights gets a plain refusal — that renderer has no tool. **Fail:** the weather answer arrives as plain text; renderer and tool names must match exactly. |
 | `/generative-ui/your-components/display-only` | The one page that publishes schema, component and hook together. | "What's the weather in Denver?" | **Pass:** a bordered card with city, temperature, condition. **Fail:** a plain sentence. |
 | `/generative-ui/your-components/interactive` | An approve/deny gate that suspends the run until the user answers. | "Run `rm -rf /tmp/cache` for me" | **Pass:** the reply stops, a gate shows the command, and either button resumes the run with the agent narrating which you chose. **Fail:** the agent claims it ran the command with no gate. |
+| `/generative-ui/a2ui` | Reference: the A2UI overview (three operations, two approaches, two switches, color variables), linking to the two routes that run each setup path. | Open the route, then follow both links | **Pass:** the four snippets render and both linked routes paint surfaces. **Fail:** a snippet is missing or differs from the page. |
 | `/generative-ui/a2ui/dynamic-schema` | BYO-catalog A2UI: a secondary LLM composes the layout per request. | "Show me the sales dashboard" | **Pass:** KPI tiles, a pie and a bar chart, with a one-sentence reply. **Fail:** empty boxes — the planner emitted a name the catalog lacks. |
 | `/generative-ui/a2ui/fixed-schema` | The pre-authored-tree approach. No demo: the tool is published, the tree is not. | — | Reference only; see §9. |
 | `/generative-ui/json-render` | An agent-emitted `{ root, elements }` spec, checked against a Zod catalog and drawn by `@json-render/react`. The demo runs a fixed renderer: the doc's `<Renderer spec catalog>` call throws on 0.21, so it builds a `registry` and adds `<JSONUIProvider>`. The unpublished helpers, components, runtime route and agent prompt are written in. | "Show me a sales dashboard." | **Pass:** two suggestion pills, then metric cards and a bar or pie chart filling in as the JSON streams. **Fail:** raw JSON or nothing; check in the Inspector that the reply is a `{ root, elements }` object. See `JSON_RENDERER_FIX.md`. |
@@ -261,6 +262,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `generative-ui/tool-rendering` | `/generative-ui/tool-rendering` | ⚠️ Partial | `get_weather` supplied separately and working; `search_flights` still unpublished. Page prints a placeholder for both. |
 | `your-components/display-only` | `/generative-ui/your-components/display-only` | ✅ Working | Off-nav. Fully published — rare. |
 | `your-components/interactive` | `/generative-ui/your-components/interactive` | ✅ Working | Off-nav. Approve/deny gate via `useHumanInTheLoop`; example supplied separately. Page is still 156 bytes of placeholder. |
+| `generative-ui/a2ui` | `/generative-ui/a2ui` | 📄 Reference | Overview. Setup paths run on the dynamic- and fixed-schema routes. Python `a2ui` helpers on a TS page; `myCatalog` / `myAgent` / `children` undefined. |
 | `generative-ui/a2ui/dynamic-schema` | `/generative-ui/a2ui/dynamic-schema` | ⚠️ Partial | Backend is the one runnable factory. `renderers.tsx` has no imports and stops mid-file. |
 | `generative-ui/a2ui/fixed-schema` | `/generative-ui/a2ui/fixed-schema` | ⚠️ Partial | Runs end to end. `display_flight` is the published `agent.ts` verbatim; the component tree it reads is published on no Strands page and was carried over from the Google ADK harness. |
 | `generative-ui/json-render` | `/generative-ui/json-render` | ✅ Working | Runs the fixed renderer (`registry` + `<JSONUIProvider>`); the doc's `<Renderer catalog>` call throws on 0.21. Missing helpers, components, runtime route and prompt are written in. |
@@ -291,7 +293,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `copilot-runtime` | `/copilot-runtime` | ✅ Working | Page never mentions Strands. |
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
 
-**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 2 ❌ Broken · 3 📄 Reference.
+**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 2 ❌ Broken · 4 📄 Reference.
 
 Live version at `/status`, with the full gap ledger.
 
@@ -367,6 +369,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 **Wrong framework in Strands pages:**
 - [a2ui/dynamic-schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/dynamic-schema) shows `from ag_ui_langgraph import get_a2ui_tools` and says tool calls "stream through LangGraph".
 - [a2ui/fixed-schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/fixed-schema) refers to "the Python SDK's `a2ui.render`" and `src/agents/a2ui_fixed.py`.
+- [a2ui](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui) (the overview, fetched 2026-11-11) explains the three operations with `from copilotkit import a2ui` / `a2ui.render(...)`, the Python SDK.
 - [headless-ui](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/headless-ui) logs `[langgraph-python:headless-simple]`.
 - [human-in-the-loop](https://docs.copilotkit.ai/strands-typescript/human-in-the-loop) devotes half its length to `useInterrupt`, whose own table names LangGraph as the backend surface.
 
@@ -502,7 +505,7 @@ Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only
 
 **Build Generative UI — Controlled** · [Components as Tools](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-based) · [Tool Call Rendering](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-rendering)
 
-**Build Generative UI — Declarative** · [A2UI Dynamic Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/dynamic-schema) · [A2UI Fixed Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/fixed-schema) · [JSON Render](https://docs.copilotkit.ai/strands-typescript/generative-ui/json-render) · [Hashbrown](https://docs.copilotkit.ai/strands-typescript/generative-ui/hashbrown)
+**Build Generative UI — Declarative** · [A2UI](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui) · [A2UI Dynamic Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/dynamic-schema) · [A2UI Fixed Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/fixed-schema) · [JSON Render](https://docs.copilotkit.ai/strands-typescript/generative-ui/json-render) · [Hashbrown](https://docs.copilotkit.ai/strands-typescript/generative-ui/hashbrown)
 
 **Build Generative UI — Components and surfaces** · [Surfaces](https://docs.copilotkit.ai/strands-typescript/generative-ui/components/surfaces) · [Catalogs](https://docs.copilotkit.ai/strands-typescript/generative-ui/components/catalogs) · [Standard catalog](https://docs.copilotkit.ai/generative-ui/components/standard-catalog) · [State and actions](https://docs.copilotkit.ai/strands-typescript/generative-ui/components/state-and-actions) · [Theming](https://docs.copilotkit.ai/strands-typescript/generative-ui/components/theming) · [Transports](https://docs.copilotkit.ai/strands-typescript/generative-ui/components/transports) · [Markdown mode](https://docs.copilotkit.ai/strands-typescript/generative-ui/components/markdown-mode) · [Adopt from A2UI](https://docs.copilotkit.ai/strands-typescript/generative-ui/components/from-a2ui)
 
