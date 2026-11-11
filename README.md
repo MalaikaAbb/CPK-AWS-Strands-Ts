@@ -379,6 +379,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 - **Audio attachments are discarded.** [multimodal-attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) lists Audio with a player preview and "Model-dependent" support; `convertAguiContentToStrands` documents `AudioInputContent` as "skipped (Strands has no audio support)". It uploads, previews, sends, and vanishes with no error.
 - **The read-only context middleware does not exist.** [agent-readonly](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) credits a `CopilotKitMiddleware`. The adapter flattens `RunAgentInput.context[]` itself and passes it to `stateContextBuilder` as a third `extras` argument — undocumented anywhere.
 - **The model does not exist.** [quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own) sets `modelId: "gpt-5.4"`; its own callout says GPT-4o.
+- **Sub-agent default model changed.** [subagents](https://docs.copilotkit.ai/strands-typescript/multi-agent/subagents), re-fetched 2026-11-11: `runSubagent` now falls back to `gpt-6-luna` (was `gpt-4o-mini`) and adds `reasoning_effort: "none"` only for that model. `backend/src/agents/subagents-agent.ts` mirrors it. Not run against a live key in this sync; set `SUBAGENT_MODEL_ID` if your OpenAI account can't call that model.
 - **Frontend tools work and nothing says why.** `createProxyTool` / `syncProxyTools`, per run. Google ADK's docs show `AGUIToolset()`; these show a placeholder.
 
 ---
