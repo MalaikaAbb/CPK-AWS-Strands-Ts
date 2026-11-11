@@ -699,6 +699,16 @@ export const NAV: NavGroup[] = [
         statusNote:
           "Troubleshooting page, shown as reference. This repo is already on v2; its frontend's @ag-ui/client ^1.0.3 does not match the 1.0.2 the runtime depends on, which is the duplicate the guide warns about.",
       },
+      {
+        path: "/troubleshooting/migrate-to-1.10.X",
+        title: "Migrate to 1.10.X",
+        docPath: "/strands-typescript/troubleshooting/migrate-to-1.10.X",
+        summary:
+          "v1-era notes: plain-object messages, generativeUI on custom assistant messages, and the useCopilotChatHeadless_c hook.",
+        status: "reference",
+        statusNote:
+          "Troubleshooting page, shown as reference. Every snippet is v1 (@copilotkit/react-ui, message classes) and none of them applies to this v2 repo as written.",
+      },
     ],
   },
   {

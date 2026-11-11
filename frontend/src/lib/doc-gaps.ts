@@ -629,6 +629,14 @@ const GAP_LIST: DocGap[] = [
     severity: "note",
     docPath: "/strands-typescript/troubleshooting/migrate-to-v2",
   },
+  {
+    id: "migrate-1-10-v1-only-snippets",
+    title: "The 1.10.X guide is v1-only and its snippets import almost nothing",
+    detail:
+      "Served under `/strands-typescript`, Migrate to 1.10.X shows `TextMessage`, `MessageRole` and `useCopilotChatHeadless_c` without imports, and imports `AssistantMessageProps` from `@copilotkit/react-ui`, the v1 package the v2 guide removes. The page doesn't say it is superseded by Migrate to V2.",
+    severity: "note",
+    docPath: "/strands-typescript/troubleshooting/migrate-to-1.10.X",
+  },
 ];
 
 export const DOC_GAPS: Record<string, DocGap> = Object.fromEntries(

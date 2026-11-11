@@ -235,6 +235,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `/ag-ui` | `agent.subscribe` walking the raw AG-UI event stream. | "Tell me a two-sentence story." | **Pass:** `RUN_STARTED` → `STATE_SNAPSHOT` → `TEXT_MESSAGE_CONTENT` bursts → `MESSAGES_SNAPSHOT` → `RUN_FINISHED`. **Fail:** only `onStateChanged` rows. |
 | `/deploy-agentcore` | Reference: the AgentCore page's CLI/CDK path and its "existing agent" runtime + `AgentCoreRunner`, shown from `backend/docs_verbatim/deploy-agentcore/`. | Open the route and compare each file with the doc page | **Pass:** every block from the page is shown, read from disk, and the AWS callout is visible. **Fail:** a file panel shows a read error. Nothing on this route can run without an AWS account. |
 | `/troubleshooting/migrate-to-v2` | Reference: the v1 → v2 import/hook mapping and its snippets, checked against this repo. | Read the "This repo against the guide" callout, then run `npm ls @ag-ui/client` in `frontend/` | **Pass:** the page renders all nine snippets; `npm ls` shows the duplicate the callout describes (or one copy, once the pin is fixed — then update the callout). **Fail:** a snippet is missing or differs from the doc page. |
+| `/troubleshooting/migrate-to-1.10.X` | Reference: the 1.10.X message-format and headless-hook notes, all v1. | Open the route | **Pass:** the seven snippets render and match the doc page; the callout links to this repo's v2 slots and headless routes. **Fail:** a snippet is missing or differs. |
 
 ---
 
@@ -294,8 +295,9 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
 | `deploy-agentcore` | `/deploy-agentcore` | 📄 Reference | Needs an AWS account (CDK, Cognito, AgentCore Runtime). Code kept verbatim in `backend/docs_verbatim/deploy-agentcore/`; unused `InMemoryAgentRunner` import, GET/POST only, dead `/agentcore/full-stack-example` link. |
 | `troubleshooting/migrate-to-v2` | `/troubleshooting/migrate-to-v2` | 📄 Reference | Repo is already on v2. Frontend `@ag-ui/client ^1.0.3` vs the runtime's `1.0.2` is the duplicate the guide warns about. The table's `useCopilotChatHeadless_c` is not exported from `/v2`. |
+| `troubleshooting/migrate-to-1.10.X` | `/troubleshooting/migrate-to-1.10.X` | 📄 Reference | v1-only snippets (`@copilotkit/react-ui`, message classes, imports missing); nothing applies to this v2 repo as written. |
 
-**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 2 ❌ Broken · 5 📄 Reference.
+**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 2 ❌ Broken · 6 📄 Reference.
 
 Live version at `/status`, with the full gap ledger.
 
@@ -303,7 +305,7 @@ Live version at `/status`, with the full gap ledger.
 
 ## 8. Not covered
 
-These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), Reasoning, State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, two migration guides, and Telemetry. (Deploy/AgentCore and Migrate to V2 now have reference routes.)
+These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), Reasoning, State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, one migration guide, and Telemetry. (Deploy/AgentCore, Migrate to V2 and Migrate to 1.10.X now have reference routes.)
 
 ---
 
@@ -518,7 +520,7 @@ Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only
 
 **Runtime** · [Copilot Runtime](https://docs.copilotkit.ai/strands-typescript/copilot-runtime) · [AG-UI](https://docs.copilotkit.ai/strands-typescript/ag-ui) · [AWS AgentCore](https://docs.copilotkit.ai/strands-typescript/deploy-agentcore)
 
-**Troubleshooting** · [Migrate to V2](https://docs.copilotkit.ai/strands-typescript/troubleshooting/migrate-to-v2)
+**Troubleshooting** · [Migrate to V2](https://docs.copilotkit.ai/strands-typescript/troubleshooting/migrate-to-v2) · [Migrate to 1.10.X](https://docs.copilotkit.ai/strands-typescript/troubleshooting/migrate-to-1.10.X)
 
 **Not in the sidebar** · [CopilotChat](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat) · [CopilotSidebar](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/sidebar) · [CopilotPopup](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/popup) · [Chat controls](https://docs.copilotkit.ai/strands-typescript/prebuilt-components/chat-controls) · [CSS](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/css) · [Slots](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/slots) · [Headless UI](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/headless-ui) · [Display-only](https://docs.copilotkit.ai/strands-typescript/generative-ui/your-components/display-only) · [Interactive](https://docs.copilotkit.ai/strands-typescript/generative-ui/your-components/interactive)
 
