@@ -8,6 +8,222 @@ Holds the 3 most recent dated entries. When a change lands on a fourth
 date, the oldest entry is dropped. Entries are counted, not aged, so a gap of
 weeks between changes does not expire anything.
 
+## 2026-11-11
+
+### 14:07 UTC — 14 pages, highest severity high
+
+**High — Components · Standard catalog**
+
+`/generative-ui/components/standard-catalog` · route `/generative-ui/components/standard-catalog` · under “What is this?” · in a `tsx` block
+
+93 code lines, 24 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- ```tsx
+- import { standardUI } from "@copilotkit/react-core/v2/generative-ui";
++ <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tab value="React">
++ ```tsx
++ import { standardUI } from "@copilotkit/react-core/v2/generative-ui";
+- <CopilotKitProvider runtimeUrl="/api/copilotkit" generativeUI={{ ui: standardUI }}>
+- ```
+````
+
+**High — A2UI · Dynamic Schema**
+
+`/strands-typescript/generative-ui/a2ui/dynamic-schema` · route `/generative-ui/a2ui/dynamic-schema` · under “The A2UI agent tool” · in a `python` block
+
+2 code lines changed.
+
+````diff
+- "model": ChatOpenAI(model="gpt-4o"),
++ "model": ChatOpenAI(model="gpt-6-luna", reasoning_effort="none"),
+````
+
+**High — Components · Catalogs**
+
+`/strands-typescript/generative-ui/components/catalogs` · route `/generative-ui/components/catalogs` · under “What is this?”
+
+85 code lines, 20 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- A **catalog** lists the components that the agent can use. For each component it holds the React component, a description, and a schema of its props. The agent gets the descriptions and the schemas. Your app gets typed props.
++ A **catalog** lists the components that the agent can use. For each component it holds the component, a description, and a schema of its props. The agent gets the descriptions and the schemas. Your app gets typed props.
+- ```tsx title="app/catalog.tsx"
+- import { z } from "zod";
+- import {
+- createGenerativeUI,
+- type GenerativeUIComponentProps,
+- } from "@copilotkit/react-core/v2/generative-ui";
+````
+
+**High — Components · Adopt from A2UI**
+
+`/strands-typescript/generative-ui/components/from-a2ui` · route `/generative-ui/components/from-a2ui` · under “What is this?”
+
+61 code lines, 21 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- The `a2ui` provider option and `@copilotkit/a2ui-renderer` render A2UI v0.9: you build a catalog with `createCatalog`, and the agent streams a fixed or a generated schema into it. Components and surfaces is the A2UI 1.0 engine. The idea is the same: the agent writes operations, and the browser renders your React components. The engine adds typed catalogs, the [standard catalog](/generative-ui/components/standard-catalog), areas of the page as targets, two transports, dynamic values that compute in the browser, and functions the agent can call. This page maps one to the other.
++ The `a2ui` provider option and `@copilotkit/a2ui-renderer` render A2UI v0.9: you build a catalog with `createCatalog`, and the agent streams a fixed or a generated schema into it. Components and surfaces is the A2UI 1.0 engine. The idea is the same: the agent writes operations, and the browser renders your components. The engine adds typed catalogs, the [standard catalog](/generative-ui/components/standard-catalog), areas of the page as targets, two transports, dynamic values that compute in the browser, and functions the agent can call. This page maps one to the other.
+- ```tsx title="Before"
+- <CopilotKit runtimeUrl="/api/copilotkit" a2ui={{ catalog: myCatalog }}>
+- ```
++ <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tab value="React">
++ ```tsx title="Before"
+````
+
+**High — Components · Markdown mode**
+
+`/strands-typescript/generative-ui/components/markdown-mode` · route `/generative-ui/components/markdown-mode` · under “What is this?” · in a `markdown` block
+
+45 code lines, 17 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- {"version":"v1.0","createSurface":{"surfaceId":"plan-estimator","dataModel":{"seats":10,"price":"$290 / month"},"components":[{"id":"root","component":"Card","children":["seats","price"]}]}}
+- {"version":"v1.0","updateComponents":{"surfaceId":"plan-estimator","components":[{"id":"seats","component":"Slider","label":"Seats","min":1,"max":50,"value":{"@path":"/seats"}},{"id":"price","component":"Text","text":{"@path":"/price"}}]}}
++ {"version":"1.0","createSurface":{"surfaceId":"plan-estimator","dataModel":{"seats":10,"price":"$290 / month"},"components":[{"id":"root","component":"Card","children":["seats","price"]}]}}
++ {"version":"1.0","updateComponents":{"surfaceId":"plan-estimator","components":[{"id":"seats","component":"Slider","label":"Seats","min":1,"max":50,"value":{"@path":"/seats"}},{"id":"price","component":"Text","text":{"@path":"/price"}}]}}
+- ```tsx title="app/providers.tsx"
+- import { CopilotKitProvider } from "@copilotkit/react-core/v2";
+- import { standardUI } from "@copilotkit/react-core/v2/generative-ui";
++ <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
+````
+
+**High — Components · State and actions**
+
+`/strands-typescript/generative-ui/components/state-and-actions` · route `/generative-ui/components/state-and-actions` · under “Show live app state” · in a `tsx` block
+
+117 code lines, 18 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- ```tsx title="app/catalog.tsx"
+- const cartSchema = z.object({
+- items: z.array(z.object({ productId: z.string(), quantity: z.number() })),
+- });
++ <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tab value="React">
++ ```tsx title="app/catalog.tsx"
++ const cartSchema = z.object({
+````
+
+**High — Components · Surfaces**
+
+`/strands-typescript/generative-ui/components/surfaces` · route `/generative-ui/components/surfaces` · under “What is this?”
+
+102 code lines, 31 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- - **A page target.** An area of your page that you mark with `GenerativeUISurface`. The agent sees it only while it is on screen.
++ - **A page target.** An area of your page that you mark with `GenerativeUISurface`, or `<copilot-generative-ui-surface>` in Angular. The agent sees it only while it is on screen.
+- Wrap an area of your page in `GenerativeUISurface`. Give it an id, and tell the agent what the area is for:
++ Wrap an area of your page in a target. Give it an id, and tell the agent what the area is for:
+- ```tsx title="app/page.tsx"
+- import { GenerativeUISurface } from "@copilotkit/react-core/v2/generative-ui";
+- import { shopUI } from "./catalog";
++ <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
+````
+
+**High — Components · Theming**
+
+`/strands-typescript/generative-ui/components/theming` · route `/generative-ui/components/theming` · under “What is this?” · in a `tsx` block
+
+82 code lines, 21 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- ```tsx
+- <CopilotKitProvider
+- runtimeUrl="/api/copilotkit"
+- generativeUI={{
+- ui: standardUI,
+- theme: {
+- "--a2ui-color-accent": "#d97706",
+- "--a2ui-font-family": "Inter, sans-serif",
+````
+
+**High — Components · Transports**
+
+`/strands-typescript/generative-ui/components/transports` · route `/generative-ui/components/transports` · under “Tool transport” · in a `tsx` block
+
+33 code lines, 18 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- ```tsx
+- <CopilotKitProvider runtimeUrl="/api/copilotkit" generativeUI={{ ui: standardUI }}>
+- ```
++ <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tab value="React">
++ ```tsx
++ <CopilotKitProvider runtimeUrl="/api/copilotkit" generativeUI={{ ui: standardUI }}>
++ ```
+````
+
+**High — MCP Apps**
+
+`/strands-typescript/generative-ui/mcp-apps` · route `/generative-ui/mcp-apps` · under “MCP Apps with Intelligence” · in a `typescript` block
+
+2 code lines changed.
+
+````diff
+- model: "openai/gpt-5.4",
++ model: "openai/gpt-6-luna",
+````
+
+**High — Sub-Agents**
+
+`/strands-typescript/multi-agent/subagents` · route `/multi-agent/subagents` · under “Setting up sub-agents” · in a `typescript` block
+
+4 code lines changed.
+
+````diff
++ const model = process.env.SUBAGENT_MODEL_ID ?? "gpt-6-luna";
+- model: process.env.SUBAGENT_MODEL_ID ?? "gpt-4o-mini",
++ ...(model === "gpt-6-luna" && { reasoning_effort: "none" as const }),
++ model,
+````
+
+**High — Quickstart**
+
+`/strands-typescript/quickstart` · route `/quickstart` · under “Expose your agent via AG-UI” · in a `python` block
+
+4 code lines changed.
+
+````diff
+- model_id="gpt-5.4",
++ model_id="gpt-6-luna",
+- modelId: "gpt-5.4",
++ modelId: "gpt-6-luna",
+````
+
+**High — Reading agent state**
+
+`/strands-typescript/shared-state/in-app-agent-read` · route `/shared-state/in-app-agent-read` · under “Setup your agent with state” · in a `python` block
+
+4 code lines changed.
+
+````diff
+- model_id="gpt-4o",
++ model_id="gpt-6-luna",
+- modelId: "gpt-4o",
++ modelId: "gpt-6-luna",
+````
+
+**High — Writing agent state**
+
+`/strands-typescript/shared-state/in-app-agent-write` · route `/shared-state/in-app-agent-write` · under “Setup your agent with state” · in a `python` block
+
+4 code lines changed.
+
+````diff
+- model_id="gpt-4o",
++ model_id="gpt-6-luna",
+- modelId: "gpt-4o",
++ modelId: "gpt-6-luna",
+````
+
+---
+
 ## 2026-11-03
 
 ### 16:06 UTC — 13 pages, highest severity none
@@ -89,6 +305,8 @@ Now tracked for the first time.
 `/strands-typescript/webmcp` · route `/webmcp`
 
 Now tracked for the first time.
+
+---
 
 ---
 
@@ -271,89 +489,6 @@ Now tracked for the first time.
 + instance from another copy or another major version fails type-checking, even
 + when it looks the same.
 + 
-````
-
----
-
----
-
-## 2026-10-08
-
-### 07:26 UTC — 5 pages, highest severity high
-
-**High — Agent Config**
-
-`/strands-typescript/agent-config` · route `/agent-config` · under “Turn frontend context into model input”
-
-48 code lines, 4 headings, 17 prose lines changed.
-
-````diff
-- ### Turn frontend context into model input
-+ ### Send application context with each run
-- `useAgentContext` adds the typed configuration to the current AG-UI run.
-- The Strands adapter does not add arbitrary context to the model prompt, so
-- format the current run's context. This showcase composes the helper into
-- its shared `stateContextBuilder`:
-+ `useAgentContext` adds configuration to the current AG-UI request. The
-+ Strands adapter exposes it during model calls without saving it as user
-````
-
-**High — Quickstart**
-
-`/strands-typescript/quickstart` · route `/quickstart` · under “Install CopilotKit packages” · in a `npm` block
-
-2 code lines changed.
-
-````diff
-- npm install @copilotkit/react-ui @copilotkit/react-core @copilotkit/runtime @ag-ui/client@1.0.1
-+ npm install @copilotkit/react-ui @copilotkit/react-core @copilotkit/runtime @ag-ui/client@1.0.2
-````
-
-**High — Synchronize Thread History**
-
-`/strands-typescript/threads-import` · route `/threads-import` · under “Add Intelligence to your existing app”
-
-2 code lines, 18 prose lines changed.
-
-````diff
-+ For a concrete example without historical import, see [keep an existing LangGraph conversation](/strands-typescript/intelligence/bring-your-own-thread-system#example-keep-an-existing-langgraph-conversation).
-+ 
-- If you also want users to reopen history recorded before Intelligence was connected, copy supported history into Intelligence using the steps below. The importer currently supports Google ADK, LangGraph, and Mastra stores. It copies historical content; it does not enable live delivery, recover past execution, or establish ongoing database replication.
-+ If you also want users to reopen history recorded before Intelligence was connected, copy supported history into Intelligence using the steps below. This guide covers Google ADK, LangGraph, and Mastra stores. It copies historical content; it does not enable live delivery, recover past execution, or establish ongoing database replication.
-- By default, the importer targets the CopilotKit Intelligence project selected when you created the app with the CopilotKit CLI. If that is the project that should receive the imported threads, continue to the dry run.
-+ Choose the Intelligence project that will receive the history. Its app-api URL and project-scoped runtime key select the destination. You will export those values before importing.
-- To target a different cloud-hosted project, select it before the dry run:
-+ For a CLI-created app, you can select a cloud-hosted project:
-````
-
-**Medium — Thread & History Lifecycle**
-
-`/strands-typescript/threads-lifecycle` · route `/threads-lifecycle` · under “Future runs can remain durable in both places”
-
-1 heading, 7 prose lines changed.
-
-````diff
-- After historical import, future conversations that run through CopilotKit are
-- written to CopilotKit Intelligence as threads. If your LangGraph agent
-+ Once Intelligence is connected, conversations that run through that runtime are
-+ recorded automatically in Intelligence. Historical import is optional. If your LangGraph agent
-+ 
-+ ## Example: keep an existing LangGraph conversation
-+ 
-+ Follow [Bring your own thread system](/strands-typescript/intelligence/bring-your-own-thread-system#example-keep-an-existing-langgraph-conversation) for an example that keeps native persistence and continues the same conversation.
-````
-
-**Low — Programmatic Control**
-
-`/strands-typescript/programmatic-control` · route `/programmatic-control` · under “What is this?”
-
-4 prose lines changed.
-
-````diff
-- - `agent.subscribe(subscriber)` — low-level AG-UI event subscription (`onCustomEvent`, `onRunStartedEvent`, `onRunFinalized`, `onRunFailed`, …). Pairs with `copilotkit.runAgent({ agent, forwardedProps: { command: { resume, interruptEvent } } })` to drive interrupt resolution from arbitrary UI.
-+ - `agent.subscribe(subscriber)` — low-level AG-UI event subscription (`onCustomEvent`, `onRunStartedEvent`, `onRunFinalized`, `onRunFailed`, …). Pairs with `copilotkit.runAgent({ agent, resume })` for standard AG-UI interrupts, or `copilotkit.runAgent({ agent, forwardedProps: { command: { resume, interruptEvent } } })` for legacy `on_interrupt` custom events, to drive interrupt resolution from arbitrary UI.
-- - **`agent.runAgent(options)`** — low-level method on the agent instance. Sends the request to the runtime but does **not** execute frontend tools or chain follow-ups. Reach for this only when you need direct control. (For the interrupt-resume case, use `copilotkit.runAgent({ agent, forwardedProps: { command: { resume, interruptEvent } } })` — see the snippet below — so the subscriber lifecycle still wraps the resumed run.)
-+ - **`agent.runAgent(options)`** — low-level method on the agent instance. Sends the request to the runtime but does **not** execute frontend tools or chain follow-ups. Reach for this only when you need direct control. (For the interrupt-resume case, use `copilotkit.runAgent({ agent, resume })` for standard AG-UI interrupts, or `copilotkit.runAgent({ agent, forwardedProps: { command: { resume, interruptEvent } } })` for legacy `on_interrupt` custom events — the snippet below shows the legacy form — so the subscriber lifecycle still wraps the resumed run.)
 ````
 
 ---
