@@ -618,6 +618,28 @@ export const NAV: NavGroup[] = [
     title: "Shared State",
     routes: [
       {
+        path: "/shared-state",
+        hasDemo: true,
+        agentId: "shared-state-read-write",
+        title: "Shared State",
+        docPath: "/strands-typescript/shared-state",
+        summary:
+          "Two-way agent state: useAgent reads the agent's notes, agent.setState writes the user's preferences back for the next turn.",
+        status: "broken",
+        statusNote:
+          "No Strands backend on the page (setup skipped) and set_notes is never printed, so nothing writes notes. The page prints handlePreferencesChange but no form that calls it. Fragments and NotesCard verbatim inside minimal glue; card/button are repo stand-ins.",
+      },
+      {
+        path: "/shared-state/streaming",
+        title: "State Streaming",
+        docPath: "/strands-typescript/shared-state/streaming",
+        summary:
+          "Streaming a tool argument into a state key while the model generates it; the page publishes no Strands code for it.",
+        status: "broken",
+        statusNote:
+          "The rendered page says Strands TypeScript is not supported; setup and middleware snippets skipped. Only the .md's useAgent fragment is shown. Reference only.",
+      },
+      {
         path: "/shared-state/rendering-in-app",
         hasDemo: true,
         agentId: "shared-state-read-write",

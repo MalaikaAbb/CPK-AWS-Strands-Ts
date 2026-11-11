@@ -558,6 +558,20 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/generative-ui/components/surfaces",
   },
   {
+    id: "shared-state-overview-no-backend",
+    title: "The Shared State overview prints UI fragments and no Strands backend",
+    detail:
+      "`setup skipped: shared-state-setup` and `snippet skipped: region 'state-streaming-middleware'` stand where the Strands code should be. The `useAgent` and `handlePreferencesChange` snippets are fragments of an unprinted page (`Preferences`, `RWAgentState`, `notes` undefined). The `set_notes` tool that fills the notes card is never shown, nor is the form that calls `handlePreferencesChange`. `notes-card.tsx` has no imports, no `NotesCardProps`, and uses shadcn Card/Button. The write comment credits LangGraph's `PreferencesInjectorMiddleware`.",
+    severity: "blocking",
+    docPath: "/strands-typescript/shared-state",
+  },
+  {
+    id: "state-streaming-not-supported",
+    title: "State Streaming publishes no Strands TypeScript code",
+    detail:
+      "The rendered page shows \"Not supported on AWS Strands (TypeScript)\" with no demo. The `.md` skips `state-streaming-setup` and the `state-streaming-middleware` region. It says direct SDK adapters emit STATE_SNAPSHOT from their streaming loop but shows nothing for Strands. Only a `useAgent` fragment for an undefined `shared-state-streaming` agent remains.",
+    severity: "blocking",
+    docPath: "/strands-typescript/shared-state/streaming",
     id: "components-overview-tanstack-agent",
     title: "The Components overview's agent is a TanStack BuiltInAgent, not Strands",
     detail:
@@ -674,6 +688,8 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   //   "hashbrown-stack-unregistered",
   //   "hashbrown-slot-and-suggestions",
   // ],
+  "/shared-state": ["shared-state-overview-no-backend"],
+  "/shared-state/streaming": ["state-streaming-not-supported"],
   "/custom-look-and-feel/reasoning-messages": [
     "reasoning-messages-no-reasoning-source",
   ],
