@@ -606,6 +606,14 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/human-in-the-loop/useInterrupt",
   },
   {
+    id: "reasoning-messages-no-reasoning-source",
+    title: "Reasoning Messages restyles a message its agent cannot produce",
+    detail:
+      "The page's demos run the Code-tab `reasoning-agent.ts`, whose `createModel({ openaiApi: \"responses\", reasoning: true, openaiModelId })` comes from the unpublished `./model-factory`. That module is what requests reasoning summaries, so without it no REASONING_MESSAGE event arrives and none of the four variants (default, sub-slots, render-prop, full replacement) can be seen. The prose snippets also name no agent or provider, and `reasoning-custom`'s `./suggestions` is unpublished.",
+    severity: "blocking",
+    docPath: "/strands-typescript/custom-look-and-feel/reasoning-messages",
+  },
+  {
     id: "webmcp-search-orders-undefined",
     title: "`searchOrders` is never defined",
     detail:
@@ -648,6 +656,10 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   //   "hashbrown-stack-unregistered",
   //   "hashbrown-slot-and-suggestions",
   // ],
+  "/custom-look-and-feel/reasoning-messages": [
+    "reasoning-messages-no-reasoning-source",
+  ],
+
   "/frontend-tools": [
     "use-frontend-tools-not-exported",
     "use-frontend-tools-free-identifiers",

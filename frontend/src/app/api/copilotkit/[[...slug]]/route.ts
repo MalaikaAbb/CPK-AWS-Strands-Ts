@@ -43,6 +43,10 @@ const agents = {
   // interrupt agent at `/interrupt/`. Those pages use this runtime URL.
   "gen-ui-interrupt": new HttpAgent({ url: agentUrl("interrupt") }),
   "interrupt-headless": new HttpAgent({ url: agentUrl("interrupt") }),
+  // From the Reasoning page's published `route.ts`: `dedicatedAgentPaths` sends
+  // both demo names to the dedicated reasoning agent at `/reasoning/`.
+  "reasoning-default": new HttpAgent({ url: agentUrl("reasoning") }),
+  "reasoning-custom": new HttpAgent({ url: agentUrl("reasoning") }),
 };
 
 // A2UI, scoped to the fixed-schema agent with tool injection off — exactly as
