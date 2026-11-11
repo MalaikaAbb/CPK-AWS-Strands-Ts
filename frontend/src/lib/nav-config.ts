@@ -266,6 +266,16 @@ export const NAV: NavGroup[] = [
     title: "Generative UI",
     routes: [
       {
+        path: "/generative-ui/state-rendering",
+        title: "State Rendering",
+        docPath: "/strands-typescript/generative-ui/state-rendering",
+        summary:
+          "UI rendered from agent state with useAgent, filled in as the agent streams; the page publishes no Strands code for it.",
+        status: "broken",
+        statusNote:
+          "The rendered page says Strands TypeScript is not supported: no Code tab, setup and middleware snippets skipped. Only the Markdown export's useAgent fragment is shown. Reference only.",
+      },
+      {
         path: "/generative-ui/tool-based",
         hasDemo: true,
         agentId: "gen-ui-tool-based",

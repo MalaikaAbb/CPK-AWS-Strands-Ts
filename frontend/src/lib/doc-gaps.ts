@@ -558,6 +558,14 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/generative-ui/components/surfaces",
   },
   {
+    id: "state-rendering-not-supported",
+    title: "State Rendering publishes no Strands TypeScript code",
+    detail:
+      "The rendered page shows \"Not supported on AWS Strands (TypeScript)\" and has no Code tab. Its Markdown export has `setup skipped: state-streaming-setup` and `snippet skipped: region 'state-streaming-middleware'`, plus one `useAgent` fragment of a page that is never shown. No agent, no state-streaming tool, no document view.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/state-rendering",
+  },
+  {
     id: "components-no-products-tool",
     title: "ProductCard copies values from a tool result that no page provides",
     detail:
@@ -648,6 +656,8 @@ export const ROUTE_GAPS: Record<string, GapId[]> = {
   //   "hashbrown-stack-unregistered",
   //   "hashbrown-slot-and-suggestions",
   // ],
+  "/generative-ui/state-rendering": ["state-rendering-not-supported"],
+
   "/frontend-tools": [
     "use-frontend-tools-not-exported",
     "use-frontend-tools-free-identifiers",

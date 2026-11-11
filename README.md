@@ -185,6 +185,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 
 | Route | What it demonstrates | Try | Pass / Fail |
 |---|---|---|---|
+| `/generative-ui/state-rendering` | Reference: rendering agent state as it streams. The page says Strands TypeScript isn't supported. | Open the route | **Pass:** the callout and the one `useAgent` fragment show; there is no demo. **Fail:** n/a. If the page ever publishes Strands code, rebuild the route. |
 | `/generative-ui/tool-based` | `useComponent` registering a React component as a callable tool. | "Chart this quarterly revenue: Q1 120, Q2 145, Q3 132, Q4 189." | **Pass:** a bar chart renders inline. **Fail:** a markdown table instead. |
 | `/generative-ui/tool-rendering` | Named renderers plus a wildcard catch-all. | "What's the weather in Berlin?" | **Pass:** a branded WeatherCard with a "calling weather api…" pill, then the reading. Asking for flights gets a plain refusal — that renderer has no tool. **Fail:** the weather answer arrives as plain text; renderer and tool names must match exactly. |
 | `/generative-ui/your-components/display-only` | The one page that publishes schema, component and hook together. | "What's the weather in Denver?" | **Pass:** a bordered card with city, temperature, condition. **Fail:** a plain sentence. |
@@ -258,6 +259,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `multimodal-attachments` | `/multimodal-attachments` | ✅ Working | Audio is advertised and silently discarded by the adapter. |
 | `voice` | `/voice` | ✅ Working | `VoiceChat` unpublished; needs `OPENAI_API_KEY` for the mic. |
 | `generative-ui/tool-based` | `/generative-ui/tool-based` | ✅ Working | Works via undocumented proxy-tool sync. Component + schema unpublished. |
+| `generative-ui/state-rendering` | `/generative-ui/state-rendering` | ❌ Broken | Rendered page: "Not supported on AWS Strands (TypeScript)". Setup and middleware snippets skipped; only a `useAgent` fragment in the `.md`. Reference only. |
 | `generative-ui/tool-rendering` | `/generative-ui/tool-rendering` | ⚠️ Partial | `get_weather` supplied separately and working; `search_flights` still unpublished. Page prints a placeholder for both. |
 | `your-components/display-only` | `/generative-ui/your-components/display-only` | ✅ Working | Off-nav. Fully published — rare. |
 | `your-components/interactive` | `/generative-ui/your-components/interactive` | ✅ Working | Off-nav. Approve/deny gate via `useHumanInTheLoop`; example supplied separately. Page is still 156 bytes of placeholder. |
@@ -291,7 +293,7 @@ Persistent conversations, served by CopilotKit Intelligence. All four need `INTE
 | `copilot-runtime` | `/copilot-runtime` | ✅ Working | Page never mentions Strands. |
 | `ag-ui` | `/ag-ui` | ✅ Working | Page never mentions Strands. |
 
-**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 2 ❌ Broken · 3 📄 Reference.
+**Totals:** 28 ✅ Working · 18 ⚠️ Partial · 3 ❌ Broken · 3 📄 Reference.
 
 Live version at `/status`, with the full gap ledger.
 
@@ -299,7 +301,7 @@ Live version at `/status`, with the full gap ledger.
 
 ## 8. Not covered
 
-These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), Reasoning, State Rendering, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, Deploy/AgentCore, three migration guides, and Telemetry.
+These appear in the doc sidebar and are outside this repo's scope: CLI, Build with agents, all five Concepts pages, Rich Threads (5 pages), Reasoning, six Runtime pages, Inspector, VS Code Extension, the four Intelligence Platform pages, Deploy/AgentCore, three migration guides, and Telemetry.
 
 ---
 
@@ -377,6 +379,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 
 **Behaviour the docs get wrong:**
 - **Audio attachments are discarded.** [multimodal-attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) lists Audio with a player preview and "Model-dependent" support; `convertAguiContentToStrands` documents `AudioInputContent` as "skipped (Strands has no audio support)". It uploads, previews, sends, and vanishes with no error.
+- **State Rendering is "not supported" here, yet sits in the sidebar.** [state-rendering](https://docs.copilotkit.ai/strands-typescript/generative-ui/state-rendering), fetched 2026-11-11. The page is listed under Generative UI › Controlled for Strands TypeScript, but its rendered version says the framework doesn't support it, and the `.md` skips both the setup and the middleware snippet. Only a `useAgent` fragment of an unpublished page remains. `/generative-ui/state-rendering` is reference-only.
 - **The read-only context middleware does not exist.** [agent-readonly](https://docs.copilotkit.ai/strands-typescript/shared-state/agent-readonly) credits a `CopilotKitMiddleware`. The adapter flattens `RunAgentInput.context[]` itself and passes it to `stateContextBuilder` as a third `extras` argument — undocumented anywhere.
 - **The model does not exist.** [quickstart](https://docs.copilotkit.ai/strands-typescript/quickstart?agent=bring-your-own) sets `modelId: "gpt-5.4"`; its own callout says GPT-4o.
 - **Frontend tools work and nothing says why.** `createProxyTool` / `syncProxyTools`, per run. Google ADK's docs show `AGUIToolset()`; these show a placeholder.
@@ -500,7 +503,7 @@ Grouped as the doc sidebar groups them. Off-sidebar pages (reachable by URL only
 
 **Build Chat UIs — Custom Look and Feel** · [Markdown Rendering](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/markdown) · [Multimodal Attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments) · [Voice](https://docs.copilotkit.ai/strands-typescript/voice)
 
-**Build Generative UI — Controlled** · [Components as Tools](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-based) · [Tool Call Rendering](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-rendering)
+**Build Generative UI — Controlled** · [State Rendering](https://docs.copilotkit.ai/strands-typescript/generative-ui/state-rendering) · [Components as Tools](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-based) · [Tool Call Rendering](https://docs.copilotkit.ai/strands-typescript/generative-ui/tool-rendering)
 
 **Build Generative UI — Declarative** · [A2UI Dynamic Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/dynamic-schema) · [A2UI Fixed Schema](https://docs.copilotkit.ai/strands-typescript/generative-ui/a2ui/fixed-schema) · [JSON Render](https://docs.copilotkit.ai/strands-typescript/generative-ui/json-render) · [Hashbrown](https://docs.copilotkit.ai/strands-typescript/generative-ui/hashbrown)
 
