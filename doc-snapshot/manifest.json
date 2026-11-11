@@ -1,19 +1,19 @@
 {
   "schema": 1,
   "docsRoot": "https://docs.copilotkit.ai/strands-typescript",
-  "syncedAt": "2026-11-03T16:06:30.300Z",
+  "syncedAt": "2026-11-11T14:07:26.094Z",
   "pages": {
     "/generative-ui/components/standard-catalog": {
       "file": "generative-ui__components__standard-catalog.md",
-      "sha256": "cc731460a4de7b9898576fc68fb242e2756a0b09c4f4a0ee16051f10c921fb28",
-      "bytes": 11267,
-      "lines": 111,
+      "sha256": "42fd29a3daa041eb9c0c3e5c4a659989bc81272b81e2919f48edf4a4a8c2012d",
+      "bytes": 13860,
+      "lines": 181,
       "routes": [
         "/generative-ui/components/standard-catalog"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:26 GMT"
     },
     "/strands-typescript": {
       "file": "strands-typescript.md",
@@ -26,7 +26,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/ag-ui": {
       "file": "strands-typescript__ag-ui.md",
@@ -38,7 +38,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/agent-config": {
       "file": "strands-typescript__agent-config.md",
@@ -50,7 +50,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/copilot-runtime": {
       "file": "strands-typescript__copilot-runtime.md",
@@ -62,7 +62,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/custom-look-and-feel/css": {
       "file": "strands-typescript__custom-look-and-feel__css.md",
@@ -74,7 +74,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/custom-look-and-feel/headless-ui": {
       "file": "strands-typescript__custom-look-and-feel__headless-ui.md",
@@ -86,7 +86,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/custom-look-and-feel/markdown": {
       "file": "strands-typescript__custom-look-and-feel__markdown.md",
@@ -98,7 +98,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/custom-look-and-feel/slots": {
       "file": "strands-typescript__custom-look-and-feel__slots.md",
@@ -110,7 +110,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/frontend-tools": {
       "file": "strands-typescript__frontend-tools.md",
@@ -122,19 +122,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/generative-ui/a2ui/dynamic-schema": {
       "file": "strands-typescript__generative-ui__a2ui__dynamic-schema.md",
-      "sha256": "0fe51c0e39a90c0e1382df2ffcc44d9267bda5e51c5e88ea1696eb6b34e1900e",
-      "bytes": 22954,
+      "sha256": "706aaf55243fb3d837ee3628e759e2205cb024c5938004c08f48d0b5dea1eaf4",
+      "bytes": 22983,
       "lines": 688,
       "routes": [
         "/generative-ui/a2ui/dynamic-schema"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/generative-ui/a2ui/fixed-schema": {
       "file": "strands-typescript__generative-ui__a2ui__fixed-schema.md",
@@ -146,91 +146,91 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/generative-ui/components/catalogs": {
       "file": "strands-typescript__generative-ui__components__catalogs.md",
-      "sha256": "4bf0643853dc0e3bd37ea6c370b7bb6f9fee4470dd5ac99c28b5b794d68acf5c",
-      "bytes": 9166,
-      "lines": 178,
+      "sha256": "4730e3a390a54868eafa0f942cbe76bc4ab16197e3a7eefe69f1c76aef240872",
+      "bytes": 13646,
+      "lines": 304,
       "routes": [
         "/generative-ui/components/catalogs"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:31 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/generative-ui/components/from-a2ui": {
       "file": "strands-typescript__generative-ui__components__from-a2ui.md",
-      "sha256": "32655bd616649b7297812a7b0bf36e8fc65a44ab0612b33943baf8906ef59c28",
-      "bytes": 11217,
-      "lines": 146,
+      "sha256": "478ad198376acfd782176d93fd01bc847338d7a8f67355ee6903d563305f3da6",
+      "bytes": 13278,
+      "lines": 206,
       "routes": [
         "/generative-ui/components/from-a2ui"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:27 GMT"
     },
     "/strands-typescript/generative-ui/components/markdown-mode": {
       "file": "strands-typescript__generative-ui__components__markdown-mode.md",
-      "sha256": "bca628e80521b05749a93e2048d8d20d80f2cfb7301c3f6ad7081fe8d93d35a1",
-      "bytes": 6397,
-      "lines": 134,
+      "sha256": "db568aab72fc0bdf28787b8163af6dccd386ce7d85a6f807aedfbae8c3491eb0",
+      "bytes": 7447,
+      "lines": 160,
       "routes": [
         "/generative-ui/components/markdown-mode"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/components/state-and-actions": {
       "file": "strands-typescript__generative-ui__components__state-and-actions.md",
-      "sha256": "297823087a8ff7b320f3d67111c882b933238c74dae47e458eb3f37dfeba032a",
-      "bytes": 8689,
-      "lines": 181,
+      "sha256": "58cd01d15c0c6bed1b7f35a39fea1421da930682ddea5460d567c275c1f88cd4",
+      "bytes": 13961,
+      "lines": 333,
       "routes": [
         "/generative-ui/components/state-and-actions"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/components/surfaces": {
       "file": "strands-typescript__generative-ui__components__surfaces.md",
-      "sha256": "3112de687a8cf1052154f57d65145ed3817de4ba0397d3928d899406c88eda8d",
-      "bytes": 4678,
-      "lines": 115,
+      "sha256": "fccd691f1cd00351a523bf8dc57bb21d951b4c0dc395fc3e2731927f3fa99c39",
+      "bytes": 8466,
+      "lines": 210,
       "routes": [
         "/generative-ui/components/surfaces"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/components/theming": {
       "file": "strands-typescript__generative-ui__components__theming.md",
-      "sha256": "ef167178eae88891e8d28649020cca059693ad102aa4c5862ca8aa3d2e8f35da",
-      "bytes": 3582,
-      "lines": 109,
+      "sha256": "9fd29e6c376088733371c5862401ba5faf8ed042dfd2ae15d2f70d844d316153",
+      "bytes": 4995,
+      "lines": 156,
       "routes": [
         "/generative-ui/components/theming"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/components/transports": {
       "file": "strands-typescript__generative-ui__components__transports.md",
-      "sha256": "aafe142b17f8ad0b58d4170d17759630666423c43604d0b4902e1cd0d5b60b64",
-      "bytes": 3234,
-      "lines": 79,
+      "sha256": "78f9decdff09a312f899ad95290ae5f48d7917a01514170cbd404b8a5fb492a8",
+      "bytes": 3949,
+      "lines": 106,
       "routes": [
         "/generative-ui/components/transports"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/hashbrown": {
       "file": "strands-typescript__generative-ui__hashbrown.md",
@@ -242,7 +242,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/json-render": {
       "file": "strands-typescript__generative-ui__json-render.md",
@@ -254,19 +254,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/mcp-apps": {
       "file": "strands-typescript__generative-ui__mcp-apps.md",
-      "sha256": "e18d2f9cec37298361c504fc098a7ec026e273e9705ab6495b85011054216689",
-      "bytes": 8473,
+      "sha256": "0af87040e954ded64b4ab87e9385b323a232fa966363e42ca5529c8732e4586b",
+      "bytes": 8476,
       "lines": 237,
       "routes": [
         "/generative-ui/mcp-apps"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/open-generative-ui": {
       "file": "strands-typescript__generative-ui__open-generative-ui.md",
@@ -278,7 +278,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/tool-based": {
       "file": "strands-typescript__generative-ui__tool-based.md",
@@ -290,7 +290,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/tool-rendering": {
       "file": "strands-typescript__generative-ui__tool-rendering.md",
@@ -302,7 +302,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/your-components/display-only": {
       "file": "strands-typescript__generative-ui__your-components__display-only.md",
@@ -314,7 +314,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/generative-ui/your-components/interactive": {
       "file": "strands-typescript__generative-ui__your-components__interactive.md",
@@ -326,7 +326,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:32 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/headless-threads": {
       "file": "strands-typescript__headless-threads.md",
@@ -338,7 +338,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/human-in-the-loop": {
       "file": "strands-typescript__human-in-the-loop.md",
@@ -350,7 +350,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/human-in-the-loop/governed-actions": {
       "file": "strands-typescript__human-in-the-loop__governed-actions.md",
@@ -362,7 +362,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:28 GMT"
     },
     "/strands-typescript/human-in-the-loop/headless": {
       "file": "strands-typescript__human-in-the-loop__headless.md",
@@ -374,7 +374,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/human-in-the-loop/useInterrupt": {
       "file": "strands-typescript__human-in-the-loop__useInterrupt.md",
@@ -386,19 +386,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/multi-agent/subagents": {
       "file": "strands-typescript__multi-agent__subagents.md",
-      "sha256": "365b9ee7e2d7e99e7c86fd61189e94756807101aeb0937242af00f16bcbbbee6",
-      "bytes": 16767,
-      "lines": 459,
+      "sha256": "fe17d03c6e85dd569ec32623fdcdf619139dbc89dd9a6964051aba54f3bd1413",
+      "bytes": 16858,
+      "lines": 461,
       "routes": [
         "/multi-agent/subagents"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/multimodal-attachments": {
       "file": "strands-typescript__multimodal-attachments.md",
@@ -410,7 +410,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/prebuilt-components/chat": {
       "file": "strands-typescript__prebuilt-components__chat.md",
@@ -422,7 +422,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/prebuilt-components/chat-controls": {
       "file": "strands-typescript__prebuilt-components__chat-controls.md",
@@ -434,7 +434,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/prebuilt-components/copilot-threads-drawer": {
       "file": "strands-typescript__prebuilt-components__copilot-threads-drawer.md",
@@ -446,7 +446,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/prebuilt-components/popup": {
       "file": "strands-typescript__prebuilt-components__popup.md",
@@ -458,7 +458,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/prebuilt-components/sidebar": {
       "file": "strands-typescript__prebuilt-components__sidebar.md",
@@ -470,7 +470,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/programmatic-control": {
       "file": "strands-typescript__programmatic-control.md",
@@ -482,19 +482,19 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     },
     "/strands-typescript/quickstart": {
       "file": "strands-typescript__quickstart.md",
-      "sha256": "8d1b72118e6d458fcb01ba25e1d07e3f2d0161615bb6d7d93c85bc2d3c30bd2e",
-      "bytes": 23249,
+      "sha256": "b2c3b6747c6d166c673edd195d6d163a737a56a334f06ef0a595d1e587dc4a43",
+      "bytes": 23255,
       "lines": 612,
       "routes": [
         "/quickstart"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:29 GMT"
     },
     "/strands-typescript/shared-state/agent-readonly": {
       "file": "strands-typescript__shared-state__agent-readonly.md",
@@ -506,31 +506,31 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     },
     "/strands-typescript/shared-state/in-app-agent-read": {
       "file": "strands-typescript__shared-state__in-app-agent-read.md",
-      "sha256": "6637550c1fe27ae3bf392f4f018235d39c308e1086683928033ae5e11414cb90",
-      "bytes": 7263,
+      "sha256": "12c5a170e0ef49b76f5c3125e23eb7c75b6fd144c373913900125cc888a12080",
+      "bytes": 7271,
       "lines": 211,
       "routes": [
         "/shared-state/in-app-agent-read"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     },
     "/strands-typescript/shared-state/in-app-agent-write": {
       "file": "strands-typescript__shared-state__in-app-agent-write.md",
-      "sha256": "9ac1eb26f8a717fecb066111809d81bfdefeec24ef51e2418c9af3e24cbc1ec0",
-      "bytes": 7046,
+      "sha256": "bcc949a66d64421a8ca6777428c7ff46091b5fa6c4814df29f1493754e2e3a27",
+      "bytes": 7054,
       "lines": 191,
       "routes": [
         "/shared-state/in-app-agent-write"
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:33 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     },
     "/strands-typescript/shared-state/rendering-in-app": {
       "file": "strands-typescript__shared-state__rendering-in-app.md",
@@ -542,7 +542,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:34 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     },
     "/strands-typescript/threads-import": {
       "file": "strands-typescript__threads-import.md",
@@ -554,7 +554,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:34 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     },
     "/strands-typescript/threads-lifecycle": {
       "file": "strands-typescript__threads-lifecycle.md",
@@ -566,7 +566,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:34 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     },
     "/strands-typescript/voice": {
       "file": "strands-typescript__voice.md",
@@ -578,7 +578,7 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:34 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     },
     "/strands-typescript/webmcp": {
       "file": "strands-typescript__webmcp.md",
@@ -590,11 +590,11 @@
       ],
       "status": "ok",
       "age": 0,
-      "date": "Tue, 03 Nov 2026 16:06:34 GMT"
+      "date": "Wed, 11 Nov 2026 14:07:30 GMT"
     }
   },
   "sitemap": {
-    "fetchedAt": "2026-11-03T16:06:30.300Z",
+    "fetchedAt": "2026-11-11T14:07:26.094Z",
     "urlsUnderRoot": 172,
     "knownUnmapped": [
       "https://docs.copilotkit.ai/strands-typescript/AG-UI-Streams",
