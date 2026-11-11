@@ -248,6 +248,18 @@ export const NAV: NavGroup[] = [
         statusNote:
           "All three snippets run exactly as published. The page defines no CSS for its my-link and my-heading classes, so the first example is only visible in DevTools.",
       },
+      {
+        path: "/custom-look-and-feel/reasoning-messages",
+        hasDemo: true,
+        agentId: "reasoning",
+        title: "Reasoning Messages",
+        docPath: "/strands-typescript/custom-look-and-feel/reasoning-messages",
+        summary:
+          "Restyling the reasoning card: header/contentView sub-slots, render-prop children, or a whole replacement component.",
+        status: "broken",
+        statusNote:
+          "All four variants are the page's code. The shared reasoning agent's model setup (./model-factory) is unpublished, so no reasoning message ever arrives to restyle.",
+      },
     ],
   },
   {

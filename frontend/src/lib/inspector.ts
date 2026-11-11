@@ -39,6 +39,7 @@ export const NESTED_PROVIDER_ROUTES = [
   "/generative-ui/json-render/demo-chat",
   "/generative-ui/hashbrown/demo-chat",
   "/agent-config/demo-chat",
+  "/custom-look-and-feel/reasoning-messages/demo-chat",
   "/generative-ui/components/surfaces/demo-chat",
   "/generative-ui/components/catalogs/demo-chat",
   "/generative-ui/components/standard-catalog/demo-chat",
