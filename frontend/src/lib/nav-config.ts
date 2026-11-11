@@ -315,6 +315,16 @@ export const NAV: NavGroup[] = [
           "The gate suspends the run and resumes it on either button. The doc page is still 156 bytes of placeholder — the example was supplied separately.",
       },
       {
+        path: "/generative-ui/a2ui",
+        title: "A2UI",
+        docPath: "/strands-typescript/generative-ui/a2ui",
+        summary:
+          "The A2UI overview: three operations, two approaches, two ways to switch it on, and the surface color variables.",
+        status: "reference",
+        statusNote:
+          "Overview page. Its two setup paths run on the Dynamic Schema (catalog on provider) and Fixed Schema (runtime a2ui block) routes. The snippets are shown, not run: myCatalog, myAgent and children are undefined, and the operation helpers are Python.",
+      },
+      {
         path: "/generative-ui/a2ui/dynamic-schema",
         hasDemo: true,
         agentId: "declarative-gen-ui",

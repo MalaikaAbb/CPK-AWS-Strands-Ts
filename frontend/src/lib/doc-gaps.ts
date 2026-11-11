@@ -558,6 +558,14 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/generative-ui/components/surfaces",
   },
   {
+    id: "a2ui-overview-python-helpers",
+    title: "The A2UI overview explains the operations with Python helpers",
+    detail:
+      "On the strands-typescript A2UI overview, \"How it works\" shows `from copilotkit import a2ui` and `a2ui.render(...)`, the CopilotKit Python SDK. Both setup snippets use `myCatalog` / `myAgent` / `children` without defining them, and the opt-out names `getA2UITools()` for TypeScript without showing a call.",
+    severity: "note",
+    docPath: "/strands-typescript/generative-ui/a2ui",
+  },
+  {
     id: "components-no-products-tool",
     title: "ProductCard copies values from a tool result that no page provides",
     detail:
