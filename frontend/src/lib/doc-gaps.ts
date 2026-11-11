@@ -613,6 +613,14 @@ const GAP_LIST: DocGap[] = [
     severity: "degraded",
     docPath: "/strands-typescript/webmcp",
   },
+  {
+    id: "reasoning-model-factory-unpublished",
+    title: "The Reasoning agent's model setup lives in an unpublished module",
+    detail:
+      "The page's Code-tab `reasoning-agent.ts` builds its model with `createModel({ openaiApi: \"responses\", reasoning: true, openaiModelId })` from `./model-factory`, which no page publishes. That is the part that asks the Responses API for reasoning summaries. Without it the agent emits no REASONING_MESSAGE events, so neither the default card nor a custom `reasoningMessage` slot ever renders. `reasoning-custom`'s `./suggestions` is unpublished too.",
+    severity: "blocking",
+    docPath: "/strands-typescript/generative-ui/reasoning",
+  },
 ];
 
 export const DOC_GAPS: Record<string, DocGap> = Object.fromEntries(
@@ -626,6 +634,8 @@ export type GapId = string;
  * that route goes first, because that is what the panel leads with.
  */
 export const ROUTE_GAPS: Record<string, GapId[]> = {
+  "/generative-ui/reasoning": ["reasoning-model-factory-unpublished"],
+
   "/human-in-the-loop/governed-actions": [
     "governed-no-backend-published",
     "governed-card-defined-in-other-pattern",

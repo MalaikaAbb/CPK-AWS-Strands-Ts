@@ -128,6 +128,23 @@ export const NAV: NavGroup[] = [
     ],
   },
   {
+    title: "Chat",
+    routes: [
+      {
+        path: "/generative-ui/reasoning",
+        hasDemo: true,
+        agentId: "reasoning",
+        title: "Reasoning",
+        docPath: "/strands-typescript/generative-ui/reasoning",
+        summary:
+          "Reasoning messages in the chat: the built-in Thinking card, and a custom messageView.reasoningMessage component.",
+        status: "broken",
+        statusNote:
+          "Frontend and runtime wiring are the page's Code tab. The agent's createModel comes from the unpublished ./model-factory; this repo's ./model can't request reasoning summaries, so no reasoning events reach the chat.",
+      },
+    ],
+  },
+  {
     title: "Rich Threads",
     routes: [
       {
