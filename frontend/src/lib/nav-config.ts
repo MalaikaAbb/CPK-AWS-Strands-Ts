@@ -709,6 +709,16 @@ export const NAV: NavGroup[] = [
         statusNote:
           "Troubleshooting page, shown as reference. Every snippet is v1 (@copilotkit/react-ui, message classes) and none of them applies to this v2 repo as written.",
       },
+      {
+        path: "/troubleshooting/migrate-to-1.8.2",
+        title: "Migrate to 1.8.2",
+        docPath: "/strands-typescript/troubleshooting/migrate-to-1.8.2",
+        summary:
+          "v1-era notes: new chat look, thumbs-up/down handlers, per-message buttons replacing ResponseButton, built-in dark mode.",
+        status: "reference",
+        statusNote:
+          "Troubleshooting page, shown as reference. Its one snippet (onThumbsUp / onThumbsDown) still works in v2 and runs on /prebuilt-components/chat-controls.",
+      },
     ],
   },
   {

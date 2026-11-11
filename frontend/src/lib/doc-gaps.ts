@@ -637,6 +637,14 @@ const GAP_LIST: DocGap[] = [
     severity: "note",
     docPath: "/strands-typescript/troubleshooting/migrate-to-1.10.X",
   },
+  {
+    id: "migrate-1-8-2-unprefixed-links",
+    title: "Migrate to 1.8.2 links to a look-and-feel page that does not exist",
+    detail:
+      "Both look-and-feel links on the page point to `/custom-look-and-feel`, with no framework prefix; that URL did not resolve on 2026-11-11. The thumbs snippet also has no import line.",
+    severity: "note",
+    docPath: "/strands-typescript/troubleshooting/migrate-to-1.8.2",
+  },
 ];
 
 export const DOC_GAPS: Record<string, DocGap> = Object.fromEntries(
