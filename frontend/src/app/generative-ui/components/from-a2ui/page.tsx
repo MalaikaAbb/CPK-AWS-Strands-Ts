@@ -27,6 +27,27 @@ export const myCatalog = createCatalog(definitions, renderers, {
   includeBasicCatalog: true,
 });`;
 
+const V1_PROVIDER = `import { basicCatalogV1 } from "@copilotkit/a2ui-renderer";
+
+<CopilotKit runtimeUrl="/api/copilotkit" a2ui={{ catalog: basicCatalogV1 }}>
+  {/* Your app */}
+</CopilotKit>`;
+const V1_CUSTOM_CATALOG = `import { z } from "zod";
+import {
+  createCatalog,
+  DynamicStringSchemaV1,
+} from "@copilotkit/a2ui-renderer";
+
+const myCatalog = createCatalog(
+  { Greeting: { props: z.object({ name: DynamicStringSchemaV1 }) } },
+  { Greeting: ({ props }) => <p>Hello {props.name}</p> },
+  {
+    catalogId: "acme/greetings@1",
+    protocolVersion: "1.0",
+    includeBasicCatalog: true,
+  },
+);`;
+
 export default function Page() {
   return (
     <>
@@ -34,8 +55,9 @@ export default function Page() {
 
       <Panel title="What it demonstrates">
         <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-          The migration from the <code>a2ui</code> renderer (A2UI v0.9) to
-          components and surfaces (A2UI 1.0). The provider takes a{" "}
+          The migration from the <code>a2ui</code> renderer (A2UI v0.9 by
+          default, with opt-in 1.0 catalogs in React) to components and
+          surfaces, a separate A2UI 1.0 engine. The provider takes a{" "}
           <code>ui</code> instead of a <code>catalog</code>; the runtime drops
           its A2UI option; each component becomes one entry with a description
           and plain prop types, because the engine resolves bindings before the
@@ -68,6 +90,16 @@ export default function Page() {
         </div>
       </Panel>
 
+      <Panel
+        title="Use 1.0 with the React a2ui renderer — published, not run"
+        description="The page's alternative to migrating: keep the a2ui provider option and opt into A2UI 1.0 catalogs."
+      >
+        <div className="space-y-4">
+          <CodeBlock code={V1_PROVIDER} filename="Native 1.0 basic catalog" language="tsx" />
+          <CodeBlock code={V1_CUSTOM_CATALOG} filename="Custom 1.0 catalog" language="tsx" />
+        </div>
+      </Panel>
+
       <Callout tone="warn" title="Gaps and harness changes">
         <ul className="space-y-1.5">
           <li>
@@ -88,6 +120,17 @@ export default function Page() {
             fixed-schema agent (from the published <code>agent.ts</code>) uses,
             so its <code>display_flight</code> surfaces cannot move to this
             engine as published.
+          </li>
+          <li>
+            · &ldquo;Use 1.0 with the React a2ui renderer&rdquo; is shown
+            only. <code>basicCatalogV1</code>,{" "}
+            <code>DynamicStringSchemaV1</code> and the{" "}
+            <code>protocolVersion</code> option of <code>createCatalog</code>{" "}
+            first ship in <code>@copilotkit/a2ui-renderer</code> 1.87; this
+            repo pins 1.84.0, which has none of them. The page also requires
+            the agent to emit native 1.0 <code>a2ui_operations</code>, and the
+            published Strands agent writes v0.9 operations
+            (<code>@ag-ui/a2ui-toolkit</code> 0.0.5, above).
           </li>
           <li>
             · The Before catalog is shown only: running it belongs to the A2UI

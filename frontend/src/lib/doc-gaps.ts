@@ -127,7 +127,7 @@ const GAP_LIST: DocGap[] = [
     id: "renderers-missing-imports",
     title: "Both A2UI pages print renderers.tsx with no imports",
     detail:
-      "The dynamic-schema page's block opens directly at `export const myRenderers: CatalogRenderers<MyDefinitions> = {` and has no import line at all, so ten distinct symbols are used and none is bound: `React`, `CatalogRenderers`, `MyDefinitions`, ten recharts primitives, four lucide icons, and the `CardShell` / `Badge` / `Button` / `c` / `CHART_COLORS` chrome the renderers are built on. `MyDefinitions` is not merely unimported — `definitions.ts` exports the value `myDefinitions` and no such type. The fixed-schema page has the same defect: its block opens at `export const renderers: CatalogRenderers<Definitions> = {` and uses `Card`, `Badge`, `Separator`, `UIButton` and a helper `s()`, none imported or defined. Neither block compiles as printed. This repo splits the difference on the dynamic page — the packaged symbols get the import line the block omits, the five unpublished ones are reconstructed in `primitives.tsx` from the call sites that pin their signatures, and the route lists all of them.",
+      "The dynamic-schema page's block opens directly at `export const myRenderers: CatalogRenderers<MyDefinitions> = {` and has no import line at all, so ten distinct symbols are used and none is bound: `React`, `CatalogRenderers`, `MyDefinitions`, ten recharts primitives, four lucide icons, and the `CardShell` / `Badge` / `Button` / `c` / `CHART_COLORS` chrome the renderers are built on. `MyDefinitions` is not merely unimported — `definitions.ts` exports the value `myDefinitions` and no such type. The fixed-schema page has the same defect: its block opens at `export const renderers: CatalogRenderers<Definitions> = {` and uses `Card`, `Badge`, `Separator`, `UIButton` and a helper `s()`, none imported or defined. Neither block compiles as printed. This repo splits the difference on the dynamic page — the packaged symbols get the import line the block omits, the five unpublished ones are reconstructed in `primitives.tsx` from the call sites that pin their signatures, and the route lists all of them. Since the 2026-11 dark-mode update the block also passes `contentStyle={tooltipStyle}` and `cursor={barCursor}` to the Recharts tooltips without defining either; the Strands TypeScript Code tab doesn't ship `renderers.tsx`, so both constants are borrowed into `primitives.tsx` from the showcase renderers (the LangGraph rendering of this page's Code tab).",
     severity: "degraded",
     docPath: "/strands-typescript/generative-ui/a2ui/dynamic-schema",
   },
@@ -600,6 +600,14 @@ const GAP_LIST: DocGap[] = [
     title: "The A2UI 1.0 engine rejects the toolkit the published A2UI agent uses",
     detail:
       "The support matrix says agent tools built with `@ag-ui/a2ui-toolkit` 0.0.5 write v0.9 operations and are not supported. The published fixed-schema agent (`display_flight`) is built with that toolkit.",
+    severity: "note",
+    docPath: "/strands-typescript/generative-ui/components/from-a2ui",
+  },
+  {
+    id: "from-a2ui-v1-renderer-needs-1-87",
+    title: "The \"Use 1.0 with the React a2ui renderer\" snippets need a newer renderer",
+    detail:
+      "Added to the page in November 2026: `basicCatalogV1`, `DynamicStringSchemaV1` and `createCatalog(..., { protocolVersion: \"1.0\" })`. None of them exists in `@copilotkit/a2ui-renderer` 1.84.0, which this repo pins; they first appear in 1.87. The path also needs the agent to emit native 1.0 `a2ui_operations`, which the published Strands agent (a2ui-toolkit 0.0.5, v0.9) does not. Shown as text on the route, not run.",
     severity: "note",
     docPath: "/strands-typescript/generative-ui/components/from-a2ui",
   },
