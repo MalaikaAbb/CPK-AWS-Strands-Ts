@@ -8,6 +8,261 @@ Holds the 3 most recent dated entries. When a change lands on a fourth
 date, the oldest entry is dropped. Entries are counted, not aged, so a gap of
 weeks between changes does not expire anything.
 
+## 2026-11-13
+
+### 11:08 UTC — 20 pages, highest severity high
+
+**High — A2UI · Dynamic Schema**
+
+`/strands-typescript/generative-ui/a2ui/dynamic-schema` · route `/generative-ui/a2ui/dynamic-schema` · under “Implement the React renderers” · in a `typescript` block
+
+9 code lines changed.
+
+````diff
+- up: "#059669",
+- down: "#dc2626",
++ up: "light-dark(#059669, #34d399)",
++ down: "light-dark(#dc2626, #f87171)",
++ stroke="var(--card)"
+- <Tooltip />
++ <Tooltip contentStyle={tooltipStyle} />
+- <Tooltip />
+````
+
+**High — A2UI · Fixed Schema**
+
+`/strands-typescript/generative-ui/a2ui/fixed-schema` · route `/generative-ui/a2ui/fixed-schema` · under “Implement the React renderers” · in a `typescript` block
+
+16 code lines changed.
+
+````diff
+- <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500">
++ <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-500 dark:text-muted-foreground">
+- <h3 className="text-base font-semibold leading-none tracking-tight text-neutral-900">
++ <h3 className="text-base font-semibold leading-none tracking-tight text-neutral-900 dark:text-foreground">
+- <span className="font-mono text-2xl font-semibold tracking-wider text-neutral-900">
++ <span className="font-mono text-2xl font-semibold tracking-wider text-neutral-900 dark:text-foreground">
+- <Separator className="flex-1 bg-neutral-200" />
++ <Separator className="flex-1 bg-neutral-200 dark:bg-border" />
+````
+
+**High — Components · Catalogs**
+
+`/strands-typescript/generative-ui/components/catalogs` · route `/generative-ui/components/catalogs` · under “Create a catalog”
+
+128 code lines, 43 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tabs groupId="frontend_framework" items={["React", "Angular", "React Native", "Vue"]} persist>
++ <Tab value="React Native">
++ A component of the catalog is a React Native component. It renders native views, and a slot arrives as React nodes:
++ 
++ ```tsx title="src/shopUI.tsx"
++ import { Image, StyleSheet, Text, View } from "react-native";
++ import { z } from "zod";
+````
+
+**High — Components · Adopt from A2UI**
+
+`/strands-typescript/generative-ui/components/from-a2ui` · route `/generative-ui/components/from-a2ui` · under “Adopt from A2UI”
+
+49 code lines, 1 heading, 35 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- > Move an app from the a2ui renderer (A2UI v0.9) to components and surfaces (A2UI 1.0): the provider, the catalog, the operations, and what the agent receives.
++ > Move an app from the a2ui renderer to components and surfaces: the provider, the catalog, the operations, and what the agent receives.
+- The `a2ui` provider option and `@copilotkit/a2ui-renderer` render A2UI v0.9: you build a catalog with `createCatalog`, and the agent streams a fixed or a generated schema into it. Components and surfaces is the A2UI 1.0 engine. The idea is the same: the agent writes operations, and the browser renders your components. The engine adds typed catalogs, the [standard catalog](/generative-ui/components/standard-catalog), areas of the page as targets, two transports, dynamic values that compute in the browser, and functions the agent can call. This page maps one to the other.
++ The `a2ui` provider option and `@copilotkit/a2ui-renderer` render A2UI v0.9 by default, with explicit A2UI 1.0 support in React: you build a catalog with `createCatalog`, and the agent streams a fixed or a generated schema into it. Components and surfaces is a separate A2UI 1.0 engine. The idea is the same: the agent writes operations, and the browser renders your components. The engine adds typed catalogs, the [standard catalog](/generative-ui/components/standard-catalog), areas of the page as targets, two transports, dynamic values that compute in the browser, and functions the agent can call. This page maps one to the other.
++ ## Use 1.0 with the React a2ui renderer
++ 
++ You can keep the `a2ui` provider option and opt into the native 1.0 basic catalog:
++ 
+````
+
+**High — Components · Markdown mode**
+
+`/strands-typescript/generative-ui/components/markdown-mode` · route `/generative-ui/components/markdown-mode` · under “What is this?”
+
+18 code lines, 14 prose lines changed. The number of fenced code blocks changed.
+
+````diff
++ <Callout type="info" title="React Native">
++ Markdown mode is not available on React Native yet. `GenerativeUIProvider` from `@copilotkit/react-native/generative-ui` uses the [tool transport](/strands-typescript/generative-ui/components/transports#tool-transport) only: `transport: "markdown"` is a type error, and passed from JavaScript it is dropped, with a warning in development.
++ </Callout>
++ 
+- <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tabs groupId="frontend_framework" items={["React", "Angular", "Vue"]} persist>
++ <Tab value="Vue">
++ ```vue title="src/App.vue"
+````
+
+**High — Components · State and actions**
+
+`/strands-typescript/generative-ui/components/state-and-actions` · route `/generative-ui/components/state-and-actions` · under “Show live app state”
+
+175 code lines, 52 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tabs groupId="frontend_framework" items={["React", "Angular", "React Native", "Vue"]} persist>
++ <Tab value="React Native">
++ ```tsx title="src/shopUI.tsx"
++ const cartSchema = z.object({
++ items: z.array(z.object({ productId: z.string(), quantity: z.number() })),
++ });
++ 
+````
+
+**High — Components · Surfaces**
+
+`/strands-typescript/generative-ui/components/surfaces` · route `/generative-ui/components/surfaces` · under “What is this?”
+
+149 code lines, 59 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- - **The chat.** Always there. The agent can use every component of the catalog.
+- - **A page target.** An area of your page that you mark with `GenerativeUISurface`, or `<copilot-generative-ui-surface>` in Angular. The agent sees it only while it is on screen.
++ - **The chat.** Always there. The agent can use every component of the catalog. On React Native, you draw chat surfaces yourself, with `GenerativeUIActivity`; see [Chat surfaces on React Native](#chat-surfaces-on-react-native). The agent is offered the chat target even when the app shows no chat, so a React Native app that renders only `GenerativeUISurface` targets, or only the prebuilt `CopilotChat` (which does not draw surfaces yet), never shows a surface aimed at the chat.
++ - **A page target.** An area of your page that you mark with `GenerativeUISurface`, or `<copilot-generative-ui-surface>` in Angular. The agent sees it only while it is mounted.
+- <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tabs groupId="frontend_framework" items={["React", "Angular", "React Native", "Vue"]} persist>
++ <Tab value="React Native">
++ ```tsx title="src/FeaturedProducts.tsx"
+````
+
+**High — Components · Theming**
+
+`/strands-typescript/generative-ui/components/theming` · route `/generative-ui/components/theming` · under “What is this?”
+
+35 code lines, 18 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tabs groupId="frontend_framework" items={["React", "Angular", "Vue"]} persist>
++ <Tab value="Vue">
++ ```vue
++ <script setup lang="ts">
++ import { CopilotKitProvider } from "@copilotkit/vue/v2";
++ import { standardUI, type GenerativeUITheme } from "@copilotkit/vue/v2/generative-ui";
++ 
+````
+
+**High — Components · Transports**
+
+`/strands-typescript/generative-ui/components/transports` · route `/generative-ui/components/transports` · under “What is this?”
+
+18 code lines, 29 prose lines changed. The number of fenced code blocks changed.
+
+````diff
+- The agent must send the UI to the browser somehow. Some agents are good at tool calls. Others only stream text, or you build their prompt yourself. A **transport** is the way the UI travels:
++ The agent must send the UI to the app somehow: the browser, or a React Native app. Some agents are good at tool calls. Others only stream text, or you build their prompt yourself. A **transport** is the way the UI travels:
+- Both transports use the same catalogs, surfaces, and components. Only the path between the agent and the browser changes.
++ Both transports use the same catalogs, surfaces, and components. Only the path between the agent and the app changes.
+- | Checked before the browser gets it | yes, by the runtime, and again in the browser | in the browser |
++ | Checked before the app gets it | yes, by the runtime, and again in the app | in the app |
+- <Tabs groupId="frontend_framework" items={["React", "Angular"]} persist>
++ <Tabs groupId="frontend_framework" items={["React", "Angular", "React Native", "Vue"]} persist>
+````
+
+**High — Headless Interrupts**
+
+`/strands-typescript/human-in-the-loop/headless` · route `/human-in-the-loop/headless` · under “The primitives” · in a `typescript` block
+
+4 code lines changed.
+
+````diff
+- <div className="grid h-screen grid-cols-[1fr_420px] bg-[#FAFAFC]">
++ <div className="grid h-screen grid-cols-[1fr_420px] bg-[#FAFAFC] dark:bg-background">
+- <div className="border-l border-[#DBDBE5] bg-white">
++ <div className="border-l border-[#DBDBE5] bg-white dark:border-border dark:bg-background">
+````
+
+**High — Pausing the Agent (useInterrupt)**
+
+`/strands-typescript/human-in-the-loop/useInterrupt` · route `/human-in-the-loop/useInterrupt` · under “The frontend: `useInterrupt` render prop” · in a `typescript` block
+
+2 code lines changed.
+
+````diff
+- className="m-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800"
++ className="m-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800 dark:border-red-900 dark:bg-red-950/40 dark:text-red-300"
+````
+
+**High — Sub-Agents**
+
+`/strands-typescript/multi-agent/subagents` · route `/multi-agent/subagents` · under “Rendering a live delegation log” · in a `typescript` block
+
+30 code lines changed.
+
+````diff
+- className="w-full h-full flex flex-col bg-white rounded-2xl shadow-sm border border-[#DBDBE5] overflow-hidden"
++ className="w-full h-full flex flex-col bg-white rounded-2xl shadow-sm border border-[#DBDBE5] overflow-hidden dark:bg-card dark:border-border"
+- <div className="flex items-center justify-between px-6 py-3 border-b border-[#E9E9EF] bg-[#FAFAFC]">
++ <div className="flex items-center justify-between px-6 py-3 border-b border-[#E9E9EF] bg-[#FAFAFC] dark:border-border dark:bg-muted">
+- <span className="text-lg font-semibold text-[#010507]">
++ <span className="text-lg font-semibold text-[#010507] dark:text-foreground">
+- className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-[#BEC2FF] bg-[#BEC2FF1A] text-[#010507] text-[10px] font-semibold uppercase tracking-[0.12em]"
++ className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-[#BEC2FF] bg-[#BEC2FF1A] text-[#010507] text-[10px] font-semibold uppercase tracking-[0.12em] dark:text-foreground"
+````
+
+**High — Programmatic Control**
+
+`/strands-typescript/programmatic-control` · route `/programmatic-control` · under “Resolving a LangGraph interrupt from a button” · in a `typescript` block
+
+4 code lines changed.
+
+````diff
+- <div className="grid h-screen grid-cols-[1fr_420px] bg-[#FAFAFC]">
++ <div className="grid h-screen grid-cols-[1fr_420px] bg-[#FAFAFC] dark:bg-background">
+- <div className="border-l border-[#DBDBE5] bg-white">
++ <div className="border-l border-[#DBDBE5] bg-white dark:border-border dark:bg-background">
+````
+
+**Info — Reasoning Messages**
+
+`/strands-typescript/custom-look-and-feel/reasoning-messages` · route `/custom-look-and-feel/reasoning-messages`
+
+Now tracked for the first time.
+
+**Info — Components and surfaces**
+
+`/strands-typescript/generative-ui/components` · route `/generative-ui/components`
+
+Now tracked for the first time.
+
+**Info — Components · Standard catalog**
+
+`/strands-typescript/generative-ui/components/standard-catalog` · route `/generative-ui/components/standard-catalog`
+
+Now tracked for the first time.
+
+**Info — Reasoning**
+
+`/strands-typescript/generative-ui/reasoning` · route `/generative-ui/reasoning`
+
+Now tracked for the first time.
+
+**Info — Human in the Loop**
+
+`/strands-typescript/human-in-the-loop/index` · route `/human-in-the-loop`
+
+Now tracked for the first time.
+
+**Info — Shared State**
+
+`/strands-typescript/shared-state` · route `/shared-state`
+
+Now tracked for the first time.
+
+**Info — State Streaming**
+
+`/strands-typescript/shared-state/streaming` · route `/shared-state/streaming`
+
+Now tracked for the first time.
+
+---
+
 ## 2026-11-11
 
 ### 14:07 UTC — 14 pages, highest severity high
@@ -224,6 +479,8 @@ weeks between changes does not expire anything.
 
 ---
 
+---
+
 ## 2026-11-03
 
 ### 16:06 UTC — 13 pages, highest severity none
@@ -305,191 +562,6 @@ Now tracked for the first time.
 `/strands-typescript/webmcp` · route `/webmcp`
 
 Now tracked for the first time.
-
----
-
----
-
-## 2026-10-29
-
-### 20:26 UTC — 11 pages, highest severity high
-
-**High — Agent Config**
-
-`/strands-typescript/agent-config` · route `/agent-config` · under “Apply current state before running the adapter” · in a `typescript` block
-
-2 code lines changed.
-
-````diff
-- export class ShowcaseStrandsAgent extends StrandsAgent {
-+ export class ShowcaseStrandsAgent extends BoardStateStrandsAgent {
-````
-
-**High — Slots**
-
-`/strands-typescript/custom-look-and-feel/slots` · route `/custom-look-and-feel/slots` · under “Tool calls”
-
-23 code lines, 1 heading, 15 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-+ ### Tool calls
-+ 
-+ The `assistantMessage` slot holds `toolCallsView`, which renders the tool calls
-+ of one assistant message. Wrap the default `CopilotChatToolCallsView` to change
-+ the container while keeping your registered tool renderers:
-+ 
-+ ```tsx title="page.tsx"
-+ import {
-````
-
-**High — Hashbrown**
-
-`/strands-typescript/generative-ui/hashbrown` · route `/generative-ui/hashbrown` · under “Hashbrown”
-
-40 code lines, 2 headings, 7 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-- > Bring your own component library. Have the agent stream structured output and let Hashbrown's progressive JSON parser render it as React components in real time.
-+ > Stream a structured sales dashboard through Hashbrown's UI kit and progressive JSON parser.
-+ ```typescript
-+ // src/app/demos/declarative-hashbrown/page.tsx
-+ "use client";
-- You have a chat surface and you want the agent to draw a dashboard, not just describe one in prose. By the end of this guide, the agent will stream a structured output object, [`@hashbrownai/react`](https://www.npmjs.com/package/@hashbrownai/react)'s progressive JSON parser will hand each finished slice to your renderer as it arrives, and the user sees the dashboard fill in live.
-+ import { CopilotKit } from "@copilotkit/react-core/v2";
-+ import { HashBrownDashboard } from "./hashbrown-renderer";
-````
-
-**High — JSON Render**
-
-`/strands-typescript/generative-ui/json-render` · route `/generative-ui/json-render` · under “JSON Render”
-
-55 code lines, 2 headings, 10 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-- > Bring your own component library. Have the agent emit a JSON spec and let json-render render it against a Zod-validated catalog of React components.
-+ > Bring your own component library. Have the agent emit a JSON spec and render allowed component types through a typed React registry.
-+ ```typescript
-+ // src/app/demos/declarative-json-render/chat.tsx
-+ "use client";
-- You have a chat surface and you want the agent to draw a dashboard from a typed JSON spec. By the end of this guide, the agent will emit a `{ root, elements }` object, [`@json-render/react`](https://www.npmjs.com/package/@json-render/react) will validate it against a Zod-described catalog, and the user sees the dashboard render as a single React tree.
-+ import type { CopilotChatAssistantMessage } from "@copilotkit/react-core/v2";
-+ import { CopilotChat } from "@copilotkit/react-core/v2";
-````
-
-**High — Tool Call Rendering**
-
-`/strands-typescript/generative-ui/tool-rendering` · route `/generative-ui/tool-rendering` · under “Default tool rendering (zero-config)”
-
-15 code lines, 1 heading, 35 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-- any UI.
-+ any UI. Calls the agent makes in a row are grouped into one card; see
-+ [Grouping tool calls](#grouping-tool-calls).
-+ 
-+ ## Grouping tool calls
-+ 
-+ Agents often call several tools in a row. By default, CopilotKit collapses
-+ each run of calls drawn by the built-in card from `useDefaultRenderTool()` into
-````
-
-**High — Sub-Agents**
-
-`/strands-typescript/multi-agent/subagents` · route `/multi-agent/subagents` · under “Sub-Agents” · in a `typescript` block
-
-30 code lines changed.
-
-````diff
-+ /** Republish authoritative reads so a reconnect can rebuild an empty board. */
-+ export function salesStateFromResult(
-+ ctx: Pick<ToolResultContext, "resultData">,
-+ ): StatePayload {
-+ const result = ctx.resultData;
-+ // Parsed native records may carry arbitrary metadata, including "text".
-+ // Only transport text blocks should pass through flattenResult.
-+ const nativeList =
-````
-
-**High — Threads Drawer**
-
-`/strands-typescript/prebuilt-components/copilot-threads-drawer` · route `/prebuilt-components/copilot-threads-drawer` · under “Add your own "New conversation" button”
-
-41 code lines, 1 heading, 19 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-+ ## Add your own "New conversation" button
-+ 
-+ The Drawer has its own "New Conversation" row. Your app can also keep its own
-+ button, for example in a toolbar or a page header. To start a new conversation
-+ from that button, call `startNewThread()` from
-+ [`useCopilotChatConfiguration`](/reference/hooks/useCopilotChatConfiguration).
-+ This is the same function the Drawer calls for its own row.
-+ 
-````
-
-**High — Synchronize Thread History**
-
-`/strands-typescript/threads-import` · route `/threads-import` · under “Add AG-UI Streams to Existing Threads”
-
-1 code line, 7 headings, 32 prose lines changed. The number of fenced code blocks changed.
-
-````diff
-- # Add AG-UI Streams to Existing Threads
-+ # Add AG-UI Streams to Strands Conversations
-- 
-- Add reconnection, catch-up, and delivery across devices to the conversations your agent already manages. Follow the [Intelligence quickstart](/strands-typescript/intelligence/quickstart) to connect your existing CopilotKit app and Runtime, then verify that a new conversation is saved. That setup enables AG-UI streams for runs through CopilotKit; importing old conversations is not required.
-- 
-- Your framework continues managing agent context and execution state. Keep your durable LangGraph checkpointer or durable ADK session service configured and keep the mapping between CopilotKit `threadId` values and native framework conversation identifiers stable. See [AG-UI Streams & Framework Threads](/strands-typescript/intelligence/threads-explained#how-threads-work-with-framework-storage) for the responsibilities of each layer.
-+ Give users reconnection, catch-up, and delivery across devices around your Strands agent. Follow the [Intelligence quickstart](/strands-typescript/intelligence/quickstart) to connect your existing CopilotKit app and Runtime, then verify that a new conversation is saved. This enables AG-UI streams for runs through CopilotKit; no historical import is required.
-- For a concrete example without historical import, see [keep an existing LangGraph conversation](/strands-typescript/intelligence/bring-your-own-thread-system#example-keep-an-existing-langgraph-conversation).
-````
-
-**Low — Copilot Runtime**
-
-`/strands-typescript/copilot-runtime` · route `/copilot-runtime` · under “CopilotKit Intelligence”
-
-4 prose lines changed.
-
-````diff
-- Features like [threads](/strands-typescript/threads) and the [inspector](/strands-typescript/inspector) are provided through the runtime and CopilotKit Intelligence. These give you conversation persistence and debugging capabilities out of the box.
-+ Features like [threads](/strands-typescript/AG-UI-Streams) and the [inspector](/strands-typescript/inspector) are provided through the runtime and CopilotKit Intelligence. These give you conversation persistence and debugging capabilities out of the box.
-- 2. **Many ecosystem features won't work.** The AG-UI protocol supports a middleware layer designed to run on the backend. Many features in the CopilotKit ecosystem depend on this server-side middleware. Without the runtime, these features — including [threads](/strands-typescript/threads) and other capabilities — will not be available.
-+ 2. **Many ecosystem features won't work.** The AG-UI protocol supports a middleware layer designed to run on the backend. Many features in the CopilotKit ecosystem depend on this server-side middleware. Without the runtime, these features — including [threads](/strands-typescript/AG-UI-Streams) and other capabilities — will not be available.
-````
-
-**Low — Open, close, and feedback**
-
-`/strands-typescript/prebuilt-components/chat-controls` · route `/prebuilt-components/chat-controls` · under “Capture message feedback (thumbs up / down)”
-
-12 prose lines changed.
-
-````diff
-- slot**. The buttons only render when a handler is provided:
-+ slot**. Without Automatic Learning capture, the buttons only render when a
-+ handler or a custom thumb slot is provided:
-+ 
-+ With [Automatic Learning capture](/strands-typescript/intelligence/capture-interactions#collect-reply-ratings)
-+ on and a Trajectory started, the buttons appear without handlers in every chat
-+ that renders messages with `CopilotChatMessageView` inside a
-+ `CopilotChatConfigurationProvider`, as `CopilotChat`, `CopilotPopup`, and
-````
-
-**Low — Voice**
-
-`/strands-typescript/voice` · route `/voice` · under “Custom transcription backends”
-
-18 prose lines changed.
-
-````diff
-+ <Callout type="info" title="TranscriptionServiceOpenAI takes an openai 5.x client">
-+ `@copilotkit/voice` depends on `openai` `^5.9.0`, and the `openai` option of
-+ `TranscriptionServiceOpenAI` is typed against the copy of `openai` that
-+ `@copilotkit/voice` resolves. Pass an `OpenAI` instance created from that same
-+ installed copy. The `OpenAI` class has private (`#private`) members, so an
-+ instance from another copy or another major version fails type-checking, even
-+ when it looks the same.
-+ 
-````
 
 ---
 
