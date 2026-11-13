@@ -604,6 +604,14 @@ const GAP_LIST: DocGap[] = [
     docPath: "/strands-typescript/generative-ui/components/from-a2ui",
   },
   {
+    id: "from-a2ui-v1-renderer-needs-1-87",
+    title: "The \"Use 1.0 with the React a2ui renderer\" snippets need a newer renderer",
+    detail:
+      "Added to the page in November 2026: `basicCatalogV1`, `DynamicStringSchemaV1` and `createCatalog(..., { protocolVersion: \"1.0\" })`. None of them exists in `@copilotkit/a2ui-renderer` 1.84.0, which this repo pins; they first appear in 1.87. The path also needs the agent to emit native 1.0 `a2ui_operations`, which the published Strands agent (a2ui-toolkit 0.0.5, v0.9) does not. Shown as text on the route, not run.",
+    severity: "note",
+    docPath: "/strands-typescript/generative-ui/components/from-a2ui",
+  },
+  {
     id: "ogui-mcp-unpublished-agent",
     title: "MCP Apps and Open Generative UI point at an unpublished agent",
     detail:
