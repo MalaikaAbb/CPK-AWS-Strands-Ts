@@ -161,7 +161,9 @@ async function runSubagent(name: string, task: string): Promise<string> {
     const text = content.trim();
     return text || SUBAGENT_EMPTY_RESULT;
   } catch (err) {
-   console.error(`Sub-agent ${name} failed:`, err);
+    console.error(`Sub-agent ${name} failed:`, err);
+    const cls = err instanceof Error ? err.constructor.name : "Error";
+    return `${SUBAGENT_FAILURE_MARKER}${cls}`;
   }
 }
 
