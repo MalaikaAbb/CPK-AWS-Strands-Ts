@@ -572,6 +572,8 @@ const GAP_LIST: DocGap[] = [
       "The rendered page shows \"Not supported on AWS Strands (TypeScript)\" with no demo. The `.md` skips `state-streaming-setup` and the `state-streaming-middleware` region. It says direct SDK adapters emit STATE_SNAPSHOT from their streaming loop but shows nothing for Strands. Only a `useAgent` fragment for an undefined `shared-state-streaming` agent remains.",
     severity: "blocking",
     docPath: "/strands-typescript/shared-state/streaming",
+  },
+  {
     id: "components-overview-tanstack-agent",
     title: "The Components overview's agent is a TanStack BuiltInAgent, not Strands",
     detail:

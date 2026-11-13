@@ -156,7 +156,15 @@ function AgentPane({
       onToolCallArgsEvent: () => push("TOOL_CALL_ARGS"),
       onToolCallEndEvent: () => push("TOOL_CALL_END"),
       onToolCallResultEvent: ({ event }) =>
-        push("TOOL_CALL_RESULT", event.content?.slice(0, 120)),
+        // @ag-ui/core 1.x widened tool-result `content` to
+        // `string | ContentPart[]`; stringify the multimodal form for the log.
+        push(
+          "TOOL_CALL_RESULT",
+          (typeof event.content === "string"
+            ? event.content
+            : JSON.stringify(event.content ?? "")
+          ).slice(0, 120),
+        ),
       onStateSnapshotEvent: ({ event }) =>
         push("STATE_SNAPSHOT", JSON.stringify(event.snapshot ?? {})),
       onStateDeltaEvent: () => push("STATE_DELTA"),

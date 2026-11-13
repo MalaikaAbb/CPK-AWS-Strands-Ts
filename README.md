@@ -81,6 +81,8 @@ Then fill in `backend/.env`:
 | `ANTHROPIC_API_KEY` | no | Enables `strands_agent_anthropic`, the Quickstart's "Using Anthropic instead" agent (the Anthropic side of the toggle on `/quickstart/demo-chat`). Without it that one agent is left unmounted and everything else runs as normal. |
 | `MODEL_ID` | no | The model every agent is built with. Defaults to `gpt-4o`. Set to `gpt-6-luna` to run the Quickstart's published value. |
 | `PORT` | no | Agent server port. Defaults to `8000`. |
+| `SUBAGENT_MODEL_ID` | no | Model the `/multi-agent/subagents` delegate sub-agents call. Defaults to `gpt-6-luna`. |
+| `OPENAI_REASONING_MODEL` | no | Model name exported by the reasoning agent. Defaults to `gpt-6-luna`. |
 
 and `frontend/.env.local`:
 
@@ -90,6 +92,7 @@ and `frontend/.env.local`:
 | `AGENT_URL` | no | Where the runtime reaches the agent server. Defaults to `http://localhost:8000`. |
 | `INTELLIGENCE_API_KEY` | no | CopilotKit Intelligence licence key. With it, Threads and the Inspector work and threads are scoped per user. Without it the runtime drops `intelligence` + `identifyUser` and falls back to SSE with an in-memory runner — the Quickstart's own documented fallback. |
 | `NEXT_PUBLIC_COPILOTKIT_INSPECTOR` | no | Set to `off` to disable the inspector everywhere. |
+| `MCP_SERVER_URL` | no | MCP server the MCP Apps route connects to. Defaults to `https://mcp.excalidraw.com`. |
 
 **Ports:** frontend `3000`, backend `8000`.
 
