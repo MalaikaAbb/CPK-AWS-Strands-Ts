@@ -58,6 +58,20 @@ export const CHART_COLORS = [
 ] as const;
 
 /**
+ * Recharts tooltip / bar-cursor styles. The page's renderers snippet passes
+ * `contentStyle={tooltipStyle}` and `cursor={barCursor}` but never defines
+ * either, and the Strands TypeScript Code tab doesn't ship `renderers.tsx`.
+ * Borrowed from the showcase `declarative-gen-ui/a2ui/renderers.tsx` (as
+ * shown in the LangGraph rendering of this same page's Code tab, via
+ * CPK-LangGraph-TS), not from this doc page.
+ */
+export const tooltipStyle = {
+  backgroundColor: "light-dark(#fff, var(--card))",
+  border: "1px solid light-dark(#ccc, var(--border))",
+};
+export const barCursor = { fill: "light-dark(#ccc, var(--accent))" };
+
+/**
  * The titled container shared by `Card`, `PieChart` and `BarChart`.
  *
  * `testid` is required because all three callers pass a distinct one

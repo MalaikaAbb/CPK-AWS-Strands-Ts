@@ -379,6 +379,7 @@ The route now runs, using a fixed renderer. The missing components, runtime rout
 - `generateMessageId()` — [headless-ui](https://docs.copilotkit.ai/strands-typescript/custom-look-and-feel/headless-ui). Exported by no CopilotKit package.
 - `onError={(event) => event.code}` — [multimodal-attachments](https://docs.copilotkit.ai/strands-typescript/multimodal-attachments). `onError` overlaps React's DOM handler, so `event` is a union and neither `code` nor `error` is on both arms.
 - `renderers.tsx`, both A2UI pages — no import line at all, and the dynamic-schema copy stops mid-JSX with ten of eleven renderers unpublished.
+- Dynamic-schema `renderers.tsx` (2026-11 dark-mode update) — the chart tooltips use `tooltipStyle` and `barCursor`, which the page never defines and the Strands TypeScript Code tab doesn't ship; both are borrowed into `a2ui/primitives.tsx` from the showcase renderers (LangGraph rendering of the same Code tab).
 - `delegation-log.tsx` — [subagents](https://docs.copilotkit.ai/strands-typescript/multi-agent/subagents). Four symbols used, none imported or defined.
 
 **Wrong framework in Strands pages:**
